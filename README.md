@@ -3,6 +3,7 @@
 > **Aplikacia BlockEditor (projekt do predmetu ICP 2018 @ FIT VUT, BRNO)**
 
 [Oficialne zadanie](https://www.fit.vutbr.cz/study/courses/ICP/public/ICP-PRJ-zadani.html)
+
 [Stránka predmetu](https://www.fit.vutbr.cz/study/courses/ICP/public/)
 
 ## Základní zadání
