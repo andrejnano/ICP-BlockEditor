@@ -1,9 +1,9 @@
-
 # ICP-BlockEditor
 
 > **Aplikacia BlockEditor (projekt do predmetu ICP 2018 @ FIT VUT, BRNO)**
-> [Oficialne zadanie](https://www.fit.vutbr.cz/study/courses/ICP/public/ICP-PRJ-zadani.html)
-> [Stránka predmetu](https://www.fit.vutbr.cz/study/courses/ICP/public/)
+
+[Oficialne zadanie](https://www.fit.vutbr.cz/study/courses/ICP/public/ICP-PRJ-zadani.html)
+[Stránka predmetu](https://www.fit.vutbr.cz/study/courses/ICP/public/)
 
 ## Základní zadání
 
@@ -40,32 +40,31 @@ Navrhněte a implementujte aplikaci pro návrh a editaci blokových schémat.
 
 #### Součást odevzdání
 
-    > připravte předem alespoň 5 různých bloků a 3 různé typy (množiny) dat
+Připravte předem alespoň 5 různých bloků a 3 různé typy (množiny) dat
 
 #### Doporučení
 
-    > zamyslete se nad použitím vhodných návrhových vzorů
-
+Zamyslete se nad použitím vhodných návrhových vzorů
 
 ## Užitočné materiály
 
 ### C++ learning
 
-    * [ICP prednasky :)](https://www.fit.vutbr.cz/study/courses/ICP/public/Prednasky/ICP.pdf)
-    * [Learn C++ in Y minutes](https://learnxinyminutes.com/docs/c++/)
-    * [TheChernoProject](https://www.youtube.com/channel/UCQ-W1KE9EYfdxhL6S4twUNw)
-    * [C++ crash course](http://www.labri.fr/perso/nrougier/teaching/c++-crash-course/#foreword)
-    * [Learn C++](http://www.learncpp.com/)
+* [ICP prednasky :)](https://www.fit.vutbr.cz/study/courses/ICP/public/Prednasky/ICP.pdf)
+* [Learn C++ in Y minutes](https://learnxinyminutes.com/docs/c++/)
+* [TheChernoProject](https://www.youtube.com/channel/UCQ-W1KE9EYfdxhL6S4twUNw)
+* [C++ crash course](http://www.labri.fr/perso/nrougier/teaching/c++-crash-course/#foreword)
+* [Learn C++](http://www.learncpp.com/)
 
-#### C++ reference / quick lookup
+### C++ reference / quick lookup
 
-    * [C++ cheatsheet](https://github.com/mortennobel/cpp-cheatsheet)
-    * [C++ reference](http://en.cppreference.com/w/cpp)
-    * [C++ DevDocs](http://devdocs.io/cpp/)
+* [C++ cheatsheet](https://github.com/mortennobel/cpp-cheatsheet)
+* [C++ reference](http://en.cppreference.com/w/cpp)
+* [C++ DevDocs](http://devdocs.io/cpp/)
 
-#### Code style guidelines
+### Code style guidelines
 
-    * [Design Patterns](https://sourcemaking.com/design_patterns)
-    * [C++ Core Guidelines](http://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines)
-    * [Google C++ Style Guide](https://google.github.io/styleguide/cppguide.html)
-    * ... viac na [stranke predmetu](https://www.fit.vutbr.cz/study/courses/ICP/public/)
+* [Design Patterns](https://sourcemaking.com/design_patterns)
+* [C++ Core Guidelines](http://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines)
+* [Google C++ Style Guide](https://google.github.io/styleguide/cppguide.html)
+* ... viac na [stranke predmetu](https://www.fit.vutbr.cz/study/courses/ICP/public/)
