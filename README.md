@@ -63,13 +63,36 @@ Zamyslete se nad použitím vhodných návrhových vzorů
 * [C++ reference](http://en.cppreference.com/w/cpp)
 * [C++ DevDocs](http://devdocs.io/cpp/)
 
-### Code style guidelines
+### Code style & Design patterns
 
+* [Design patterns for humans](https://github.com/kamranahmedse/design-patterns-for-humans)
 * [Design Patterns](https://sourcemaking.com/design_patterns)
 * [C++ Core Guidelines](http://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines)
 * [Google C++ Style Guide](https://google.github.io/styleguide/cppguide.html)
 * ... viac na [stranke predmetu](https://www.fit.vutbr.cz/study/courses/ICP/public/)
 
-## Diagram objektov
+### Diagram objektov
 
 ![block schema](https://raw.githubusercontent.com/andrejnano/ICP-BlockEditor/master/block_schema.png?token=AJo3v1pCtgZkIUmrwMcnkzVy_bmZaef1ks5aundSwA%3D%3D "ICP Block schema")
+
+### keywords, nápady, návhrové vzory, inšpirácia,... 
+
+> **keywords**: execution chain, assembly line, pipeline, stream, sequence of tasks, stages, dataflow, source, sink, pipe, lazy evaluation, ...
+
+Tento navrhovy vzor je podobny tomu co robime:
+
+[Chain of responsibility - Design patter](https://en.wikipedia.org/wiki/Chain-of-responsibility_pattern)
+
+Mozne ukladanie schemy blokov:
+
+[Memento](https://github.com/kamranahmedse/design-patterns-for-humans#-memento)
+[Memento wiki](https://en.wikipedia.org/wiki/Memento_pattern)
+
+...
+
+[Pipeline](https://www.cise.ufl.edu/research/ParallelPatterns/PatternLanguage/AlgorithmStructure/Pipeline.htm)
+[Collection Pipeline](https://martinfowler.com/articles/collection-pipeline/)
+[Pipes and filters](https://docs.microsoft.com/en-us/azure/architecture/patterns/pipes-and-filters)
+[Dataflow](https://en.wikipedia.org/wiki/Dataflow)
+[Dataflow architecture](https://en.wikipedia.org/wiki/Dataflow_architecture)
+[Lazy evaluation](https://en.wikipedia.org/wiki/Lazy_evaluation)
