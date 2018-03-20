@@ -2,8 +2,7 @@
 
 > **Aplikacia BlockEditor (projekt do predmetu ICP 2018 @ FIT VUT, BRNO)**
 
-[Oficialne zadanie](https://www.fit.vutbr.cz/study/courses/ICP/public/ICP-PRJ-zadani.html)
-
+[Oficialne zadanie](https://www.fit.vutbr.cz/study/courses/ICP/public/ICP-PRJ-zadani.html) | 
 [Stránka predmetu](https://www.fit.vutbr.cz/study/courses/ICP/public/)
 
 ## Základní zadání
@@ -77,7 +76,8 @@ Zamyslete se nad použitím vhodných návrhových vzorů
 
 ### keywords, nápady, návhrové vzory, inšpirácia,... 
 
-> **keywords**: execution chain, assembly line, pipeline, stream, sequence of tasks, stages, dataflow, source, sink, pipe, lazy evaluation, ...
+**keywords**:
+> execution chain, assembly line, pipeline, stream, sequence of tasks, stages, dataflow, source, sink, pipe, lazy evaluation, ...
 
 Tento navrhovy vzor je podobny tomu co robime:
 
@@ -86,13 +86,23 @@ Tento navrhovy vzor je podobny tomu co robime:
 Mozne ukladanie schemy blokov:
 
 [Memento](https://github.com/kamranahmedse/design-patterns-for-humans#-memento)
+
 [Memento wiki](https://en.wikipedia.org/wiki/Memento_pattern)
 
 ...
 
+[I/O Automaton](https://en.wikipedia.org/wiki/Input/output_automaton)
+
 [Pipeline](https://www.cise.ufl.edu/research/ParallelPatterns/PatternLanguage/AlgorithmStructure/Pipeline.htm)
+
 [Collection Pipeline](https://martinfowler.com/articles/collection-pipeline/)
+
 [Pipes and filters](https://docs.microsoft.com/en-us/azure/architecture/patterns/pipes-and-filters)
+
 [Dataflow](https://en.wikipedia.org/wiki/Dataflow)
+
+[Dataflow programming](https://en.wikipedia.org/wiki/Dataflow_programming) *****
+
 [Dataflow architecture](https://en.wikipedia.org/wiki/Dataflow_architecture)
+
 [Lazy evaluation](https://en.wikipedia.org/wiki/Lazy_evaluation)
