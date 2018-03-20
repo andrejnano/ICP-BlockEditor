@@ -69,3 +69,7 @@ Zamyslete se nad použitím vhodných návrhových vzorů
 * [C++ Core Guidelines](http://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines)
 * [Google C++ Style Guide](https://google.github.io/styleguide/cppguide.html)
 * ... viac na [stranke predmetu](https://www.fit.vutbr.cz/study/courses/ICP/public/)
+
+## Diagram objektov
+
+![block schema](https://raw.githubusercontent.com/andrejnano/ICP-BlockEditor/master/block_schema.png?token=AJo3v1pCtgZkIUmrwMcnkzVy_bmZaef1ks5aundSwA%3D%3D "ICP Block schema")
