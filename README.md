@@ -74,15 +74,23 @@ Zamyslete se nad použitím vhodných návrhových vzorů
 
 ![block schema](https://raw.githubusercontent.com/andrejnano/ICP-BlockEditor/master/block_schema.png?token=AJo3v1pCtgZkIUmrwMcnkzVy_bmZaef1ks5aundSwA%3D%3D "ICP Block schema")
 
-### keywords, nápady, návhrové vzory, inšpirácia,... 
+### Research
 
-**keywords & concepts**:
+Odkazy, zdroje, poznamky, atd. co som zatial zistil... ( je tu toho mozno zbytocne vela :D )
+
+**keywords**:
 > execution chain, assembly line, pipeline, stream, sequence of tasks, stages, dataflow, source, sink, pipe, lazy evaluation,
 message passing, network of "black box" processes, Flow-based programming, data factory, scheduler, ports, list of connections, Loose coupling
 
-Tento navrhovy vzor je podobny tomu co robime:
+Tento navrhovy vzor je asi najviac podobny tomu co robime:
 
 [Chain of responsibility - Design patter](https://en.wikipedia.org/wiki/Chain-of-responsibility_pattern) <--
+
+Avsak nie uplne, len co sa tyka toho konceptu retazenia. Bud spravit modifikaciu tohto alebo nieco ine...
+
+...
+
+Koncepcne asi nieco taketo:
 
 [Flow-based programming](https://en.wikipedia.org/wiki/Flow-based_programming)
 > Flow-based programming defines applications using the metaphor of a "data factory". It views an application not as a single, sequential process, which starts at a point in time, and then does one thing at a time until it is finished, but as a network of asynchronous processes communicating by means of streams of structured data chunks, called "information packets" (IPs). In this view, the focus is on the application data and the transformations applied to it to produce the desired outputs. The network is defined externally to the processes, as a list of connections which is interpreted by a piece of software, usually called the "scheduler".
@@ -106,30 +114,25 @@ Mozne ukladanie schemy blokov:
 [Memento](https://github.com/kamranahmedse/design-patterns-for-humans#-memento)
 
 [Memento wiki](https://en.wikipedia.org/wiki/Memento_pattern)
+
 (The internal state of an object should be saved externally so that the object can be restored to this state later.)
 
 #### dalsie zdroje, podobne temy, problemy, oblasti, atd.
 
+Vela z tohto sa netyka nasho zadania, ale pomohlo mi si predstavit co treba asi spravit.. 
 ...
 
-[I/O Automaton](https://en.wikipedia.org/wiki/Input/output_automaton) <--
-
-[Pipeline](https://www.cise.ufl.edu/research/ParallelPatterns/PatternLanguage/AlgorithmStructure/Pipeline.htm)
-
-[Collection Pipeline](https://martinfowler.com/articles/collection-pipeline/)
-
-[Pipes and filters](https://docs.microsoft.com/en-us/azure/architecture/patterns/pipes-and-filters)
-
-[Dataflow](https://en.wikipedia.org/wiki/Dataflow)
-
-[Dataflow programming](https://en.wikipedia.org/wiki/Dataflow_programming) <--
-
-[Dataflow architecture](https://en.wikipedia.org/wiki/Dataflow_architecture)
-
-[Lazy evaluation](https://en.wikipedia.org/wiki/Lazy_evaluation)
+* [I/O Automaton](https://en.wikipedia.org/wiki/Input/output_automaton) <--
+* [Pipeline](https://www.cise.ufl.edu/research/ParallelPatterns/PatternLanguage/AlgorithmStructure/Pipeline.htm)
+* [Collection Pipeline](https://martinfowler.com/articles/collection-pipeline/)
+* [Pipes and filters](https://docs.microsoft.com/en-us/azure/architecture/patterns/pipes-and-filters)
+* [Dataflow](https://en.wikipedia.org/wiki/Dataflow)
+* [Dataflow programming](https://en.wikipedia.org/wiki/Dataflow_programming) <--
+* [Dataflow architecture](https://en.wikipedia.org/wiki/Dataflow_architecture)
+* [Lazy evaluation](https://en.wikipedia.org/wiki/Lazy_evaluation)
 
 ### Existujuce aplikacie
 
-[Labview](http://www.ni.com/labview)
-[Circuit simulator](https://simulator.io/)
-[Scratch](https://en.wikipedia.org/wiki/Scratch_(programming_language)) alebo ine [vizualne programovacie jazyky](https://en.wikipedia.org/wiki/Visual_programming_language)
+* [Labview](http://www.ni.com/labview)
+* [Circuit simulator](https://simulator.io/)
+* [Scratch](https://en.wikipedia.org/wiki/Scratch_(programming_language)) alebo ine [vizualne programovacie jazyky](https://en.wikipedia.org/wiki/Visual_programming_language)
