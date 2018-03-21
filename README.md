@@ -95,6 +95,8 @@ Koncepcne asi nieco taketo:
 [Flow-based programming](https://en.wikipedia.org/wiki/Flow-based_programming)
 > Flow-based programming defines applications using the metaphor of a "data factory". It views an application not as a single, sequential process, which starts at a point in time, and then does one thing at a time until it is finished, but as a network of asynchronous processes communicating by means of streams of structured data chunks, called "information packets" (IPs). In this view, the focus is on the application data and the transformations applied to it to produce the desired outputs. The network is defined externally to the processes, as a list of connections which is interpreted by a piece of software, usually called the "scheduler".
 
+Velmi dobry clanok : [How to start flowing with flow based programming](https://colab.coop/blog/how-to-start-flowing-with-flow-based-programming/) <--
+
 Zatial triedy/objekty v projekte ktore ma napadaju:
 
 * loader/control/main
@@ -122,6 +124,7 @@ Mozne ukladanie schemy blokov:
 Vela z tohto sa netyka nasho zadania, ale pomohlo mi si predstavit co treba asi spravit.. 
 ...
 
+* [Flowbased Circuit C++ example](http://flowbasedprogramming.com/docs/html/index.html)
 * [I/O Automaton](https://en.wikipedia.org/wiki/Input/output_automaton) <--
 * [Pipeline](https://www.cise.ufl.edu/research/ParallelPatterns/PatternLanguage/AlgorithmStructure/Pipeline.htm)
 * [Collection Pipeline](https://martinfowler.com/articles/collection-pipeline/)
@@ -133,6 +136,7 @@ Vela z tohto sa netyka nasho zadania, ale pomohlo mi si predstavit co treba asi 
 
 ### Existujuce aplikacie
 
+* [BlockEditor](https://www.microbit.co.uk/blocks/editor)
 * [Labview](http://www.ni.com/labview)
 * [Circuit simulator](https://simulator.io/)
 * [Scratch](https://en.wikipedia.org/wiki/Scratch_(programming_language)) alebo ine [vizualne programovacie jazyky](https://en.wikipedia.org/wiki/Visual_programming_language)
