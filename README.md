@@ -76,22 +76,43 @@ Zamyslete se nad použitím vhodných návrhových vzorů
 
 ### keywords, nápady, návhrové vzory, inšpirácia,... 
 
-**keywords**:
-> execution chain, assembly line, pipeline, stream, sequence of tasks, stages, dataflow, source, sink, pipe, lazy evaluation, ...
+**keywords & concepts**:
+> execution chain, assembly line, pipeline, stream, sequence of tasks, stages, dataflow, source, sink, pipe, lazy evaluation,
+message passing, network of "black box" processes, Flow-based programming, data factory, scheduler, ports, list of connections, Loose coupling
 
 Tento navrhovy vzor je podobny tomu co robime:
 
-[Chain of responsibility - Design patter](https://en.wikipedia.org/wiki/Chain-of-responsibility_pattern)
+[Chain of responsibility - Design patter](https://en.wikipedia.org/wiki/Chain-of-responsibility_pattern) <--
+
+[Flow-based programming](https://en.wikipedia.org/wiki/Flow-based_programming)
+> Flow-based programming defines applications using the metaphor of a "data factory". It views an application not as a single, sequential process, which starts at a point in time, and then does one thing at a time until it is finished, but as a network of asynchronous processes communicating by means of streams of structured data chunks, called "information packets" (IPs). In this view, the focus is on the application data and the transformations applied to it to produce the desired outputs. The network is defined externally to the processes, as a list of connections which is interpreted by a piece of software, usually called the "scheduler".
+
+Zatial triedy/objekty v projekte ktore ma napadaju:
+
+* loader/control/main
+* scheduler (executes the computation, step by step, reading the scheme)
+* scheme (map of all the blocks & connections)
+* block (single I/O automat, takes input, processes, outputs)
+* ... types ?
+
+Dr. Peringer sa udajne vyjadril ze by to mali byt:
+
+"Bloky elementárních operací (+, -, *, /, ...), ideálně o n vstupech a 1-n výstupech"
+
+Otazka je potom aj to, ci ukladat spojenia blokov v objekte schemy, alebo v objekte bloku (zoznam dalsich blokov s ktorymi je spojeny objekt)
 
 Mozne ukladanie schemy blokov:
 
 [Memento](https://github.com/kamranahmedse/design-patterns-for-humans#-memento)
 
 [Memento wiki](https://en.wikipedia.org/wiki/Memento_pattern)
+(The internal state of an object should be saved externally so that the object can be restored to this state later.)
+
+#### dalsie zdroje, podobne temy, problemy, oblasti, atd.
 
 ...
 
-[I/O Automaton](https://en.wikipedia.org/wiki/Input/output_automaton)
+[I/O Automaton](https://en.wikipedia.org/wiki/Input/output_automaton) <--
 
 [Pipeline](https://www.cise.ufl.edu/research/ParallelPatterns/PatternLanguage/AlgorithmStructure/Pipeline.htm)
 
@@ -101,8 +122,14 @@ Mozne ukladanie schemy blokov:
 
 [Dataflow](https://en.wikipedia.org/wiki/Dataflow)
 
-[Dataflow programming](https://en.wikipedia.org/wiki/Dataflow_programming) *****
+[Dataflow programming](https://en.wikipedia.org/wiki/Dataflow_programming) <--
 
 [Dataflow architecture](https://en.wikipedia.org/wiki/Dataflow_architecture)
 
 [Lazy evaluation](https://en.wikipedia.org/wiki/Lazy_evaluation)
+
+### Existujuce aplikacie
+
+[Labview](http://www.ni.com/labview)
+[Circuit simulator](https://simulator.io/)
+[Scratch](https://en.wikipedia.org/wiki/Scratch_(programming_language)) alebo ine [vizualne programovacie jazyky](https://en.wikipedia.org/wiki/Visual_programming_language)
