@@ -99,7 +99,7 @@ Zamyslete se nad použitím vhodných návrhových vzorů
 
 ### Diagram objektov
 
-![block schema](https://raw.githubusercontent.com/andrejnano/ICP-BlockEditor/master/block_schema.png?token=AJo3v1pCtgZkIUmrwMcnkzVy_bmZaef1ks5aundSwA%3D%3D "ICP Block schema")
+![block schema](https://github.com/andrejnano/ICP-BlockEditor/blob/master/block_schema.png?raw=true "ICP Block schema")
 
 ### Research
 
