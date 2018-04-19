@@ -44,5 +44,8 @@ namespace CL {
 // default is to exit, but can be turned of by passing false
 void error(err_code_t error_code, std::string error_msg, bool do_exit=true);
 
+// show help and usage informations
+void help();
+
 
 #endif // BLOCKEDITOR_MISC_H_
