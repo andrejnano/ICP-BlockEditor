@@ -1,11 +1,26 @@
-# ICP project - Block Editor
+##
+#	@file       Makefile
+# @authors    Andrej Nano (xnanoa00), Stanislav Mechl (xmechl00)
+# @date       2018-05-05
+# @version    0.1
+#
+# @brief ICP 2018, Project - Block Editor. Makefile.
+# 
+# @section Description
+#
 
+
+# compiler
 CXX = g++
+
+# compiler flags
 CXXFLAGS = -O2 -std=c++14 -Wall
 
-TARGET=blockeditor 			# name of program
-FILES=$(wildcard *.cc) 	# all C++ source files
+# all C++ source files
+FILES=$(wildcard *.cc)
 
+# executable name
+TARGET=blockeditor
 
 all: build
 

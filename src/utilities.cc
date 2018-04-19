@@ -1,15 +1,13 @@
 /**
- *  @file       misc.cc
- *  @authors    Andrej Nano (xnanoa00), Stanislav Mechl
+ *  @file       utilities.cc
+ *  @authors    Andrej Nano (xnanoa00), Stanislav Mechl (xmechl00)
  *  @date       2018-05-05
  *  @version    0.1
  * 
- *  @brief ICP 2018, Project - Block Editor. Misc
+ *  @brief ICP 2018, Project - Block Editor. Utilities.
  *  
  *  @section Description
  * 
- *  @section Usage
- *  
  */
 
 #include <iostream>

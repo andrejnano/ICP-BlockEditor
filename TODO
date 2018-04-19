@@ -1,14 +1,13 @@
-Makefile
-main.cc
-  -> load schema
-    -> run schema
-    -> edit schema
-  -> create schema
-  -> save schema
-block.cc
-port.cc
-block_schema.cc
-types.cc
-loader.cc (xml,...)
-scheduler.cc (kontrola loopu)
-
+  [X] Makefile
+  [ ] main.cc
+    -> load schema
+      -> run schema
+      -> edit schema
+    -> create schema
+    -> save schema
+  [ ] block.cc
+  [ ] port.cc
+  [ ] block_schema.cc
+  [ ] types.cc
+  [ ] loader.cc (xml,...)
+  [ ] scheduler.cc (kontrola loopu)

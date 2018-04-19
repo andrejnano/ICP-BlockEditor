@@ -1,14 +1,22 @@
+/**
+ *  @file       port.h
+ *  @authors    Andrej Nano (xnanoa00), Stanislav Mechl (xmechl00)
+ *  @date       2018-05-05
+ *  @version    0.1
+ * 
+ *  @brief ICP 2018, Project - Block Editor. Port class header.
+ *  
+ *  @section Description
+ * 
+ */
 
-// port.h
-
-#ifndef PORT_H
-#define PORT_H
+#ifndef BLOCKEDITOR_PORT_H_
+#define BLOCKEDITOR_PORT_H_
 
 #include <vector>
 #include <iostream>
 #include <map>
 #include <list>
-
 
 enum data_type {t_simple};
 

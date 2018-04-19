@@ -1,8 +1,17 @@
+/**
+ *  @file       blocks.h
+ *  @authors    Andrej Nano (xnanoa00), Stanislav Mechl (xmechl00)
+ *  @date       2018-05-05
+ *  @version    0.1
+ * 
+ *  @brief ICP 2018, Project - Block Editor. Block class header.
+ *  
+ *  @section Description
+ *  
+ */
 
-// blocks.h
-
-#ifndef BLOCKS_H
-#define BLOCKS_H
+#ifndef BLOCKEDITOR_BLOCKS_H_
+#define BLOCKEDITOR_BLOCKS_H_
 
 #include <vector>
 #include <iostream>

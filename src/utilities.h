@@ -1,3 +1,14 @@
+/**
+ *  @file       utilities.h
+ *  @authors    Andrej Nano (xnanoa00), Stanislav Mechl (xmechl00)
+ *  @date       2018-05-05
+ *  @version    0.1
+ * 
+ *  @brief ICP 2018, Project - Block Editor. Utilities header.
+ *  
+ *  @section Description
+ *  
+ */
 
 #ifndef BLOCKEDITOR_MISC_H_
 #define BLOCKEDITOR_MISC_H_

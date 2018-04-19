@@ -1,5 +1,15 @@
-
-// port.cc
+/**
+ *  @file       port.cc
+ *  @authors    Andrej Nano (xnanoa00), Stanislav Mechl (xmechl00)
+ *  @date       2018-05-05
+ *  @version    0.1
+ * 
+ *  @brief ICP 2018, Project - Block Editor. Port class.
+ *  
+ *  @section Description
+ * 
+ *  
+ */
 
 #include <vector>
 #include <iostream>
