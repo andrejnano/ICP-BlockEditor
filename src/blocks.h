@@ -8,7 +8,6 @@
 #include <iostream>
 #include <map>
 
-#include "types.h"
 #include "port.h"
 
 class Block

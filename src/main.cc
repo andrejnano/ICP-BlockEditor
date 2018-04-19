@@ -20,7 +20,6 @@
 
 // project headers
 #include "utilities.h"
-#include "types.h"
 #include "port.h"
 #include "blocks.h"
 

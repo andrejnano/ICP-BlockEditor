@@ -9,7 +9,6 @@
 #include <map>
 #include <list>
 
-#include "types.h"
 
 enum data_type {t_simple};
 
@@ -17,10 +16,12 @@ class Port
 {
   protected:
     data_type type;
-    std::list<Type> values;
+    std::map<std::string, double> data;
 
   public:
     Port(data_type new_type);
+    void setValue(std::string name, double value);
+    void print();
 };
 
 #endif
