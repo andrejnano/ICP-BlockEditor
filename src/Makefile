@@ -1,9 +1,13 @@
 # ICP project - Block Editor
 
-FLAGS=-o
-TARGET=blockeditor # name of program
-FILES=main.cc blocks.cc port.cc types.cc # all source files
+CXX = g++
+CXXFLAGS = -O2 -std=c++14 -Wall
 
-# $^ contains names of all dependencies
-all: $(FILES)
-	g++ $(FLAGS) $(TARGET) $^
+TARGET=blockeditor 			# name of program
+FILES=$(wildcard *.cc) 	# all C++ source files
+
+
+all: build
+
+build: $(FILES)
+	$(CXX) $(CXXFLAGS) $(FILES) -o $(TARGET)

@@ -23,8 +23,8 @@ class simple: public Type
 {
     public:
         simple();
-        setValue(double value);
-        print();
+        void setValue(double value);
+        void print();
 
 };
 
