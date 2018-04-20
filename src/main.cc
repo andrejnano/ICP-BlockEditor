@@ -22,6 +22,7 @@
 #include "utilities.h"
 #include "port.h"
 #include "blocks.h"
+#include "scheme.h"
 
 // commonly used std objects.. really no need to be careful about poluting namespace
 using std::cout;
@@ -39,10 +40,38 @@ using std::string;
  */
 int main(int argc, char **argv)
 {
-  // simple drat;
-  // drat.print();
-  // drat.setValue(1.25);
-  // drat.print();
+
+  // testing code
+
+  /*Port myPort(1,t_simple);
+  myPort.print();
+  myPort.setValue("val",1.25);
+  myPort.print();*/
+
+  /*Block soucet1(b_sum,1012,t_simple,t_simple);
+  soucet1.print();
+  soucet1.setPortValue(0,"val",2.26);
+  soucet1.setPortValue(1,"val",1.15);
+  soucet1.print();
+  soucet1.compute();
+  soucet1.print();*/
+
+  Scheme a("Schema A");
+  a.print();
+  a.addBlock(b_sum,1001,t_simple,t_simple);
+  a.setBlockPortValue(0, 0, "val", 1.25);
+  a.setBlockPortValue(0, 1, "val", 1.75);
+  a.computeBlock(0);
+  a.addBlock(b_sum,1002,t_simple,t_simple);
+  a.setBlockPortValue(1, 0, "val", 2.05);
+  a.setBlockPortValue(1, 0, "val", 2.91);
+  a.connect(23,68);
+  a.connect(1234,4321);
+  a.connect(1,333);
+  a.print();
+
+  // end of testing code
+
 
   cout << CL::BOLD << "BlockEditor started" << CL::ENDC << endl;
 

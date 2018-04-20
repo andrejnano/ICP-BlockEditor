@@ -23,12 +23,14 @@ enum data_type {t_simple};
 class Port
 {
   protected:
+    int id;
     data_type type;
     std::map<std::string, double> data;
 
   public:
-    Port(data_type new_type);
+    Port(int new_id, data_type new_type);
     void setValue(std::string name, double value);
+    double getValue(std::string name);
     void print();
 };
 
