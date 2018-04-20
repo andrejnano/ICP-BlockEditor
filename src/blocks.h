@@ -23,6 +23,11 @@ class Block
 {
   protected:
     std::map<std::string, double> data;
+
+  public:
+
+    std::vector<Port> in_ports;
+    std::vector<Port> out_ports;
 };
 
 #endif

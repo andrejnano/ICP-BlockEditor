@@ -1,3 +1,5 @@
+
+Files
   [X] Makefile
   [ ] main.cc
     -> load schema
@@ -11,3 +13,62 @@
   [ ] types.cc
   [ ] loader.cc (xml,...)
   [ ] scheduler.cc (kontrola loopu)
+
+  block
+    in_ports
+    out_ports
+
+  port
+    direction [OUT/IN]
+    type      
+    connection_to [BLOCK]
+    value     []
+
+Problems to solve:
+  [ ] Serialization   // JSON, XML, YAML,... custom format
+  [ ] Deserialization
+
+
+Block
+{
+  id
+  calculation
+  in_ports[]
+  out_ports[]
+}
+
+Port
+{
+  id
+  type
+  value
+  direction
+  connection_to
+}
+
+Schema
+{
+  name = ""
+  blocks[]
+}
+
+
+Serialized : 
+
+.blockeditor_schema
+name = 'my_new_schema'
+blocks = 3
+types = ["type1", "type2", "type3", "type4"]
+
+1:
+[I, *, "type1"], [I, *, "type1"], [I, *, "type1"]
+[O, 2, "type2"], [O, 2, "type2"], [O, 3, "type2"]
+
+2:
+[I, 1, "type2"], [I, 1, "type2"]
+[O, 3, "type3"]
+
+3:
+[I, 2, "type3"], [I, 1, "type2"]
+[O, *, "type4"]
+
