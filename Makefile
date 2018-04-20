@@ -14,6 +14,7 @@ all: build
 
 build:
 	$(MAKE) -C $(SOURCE_DIR)
+	mv ./src/blockeditor ./blockeditor
 
 run:
-	$(SOURCE_DIR)/$(EXECUTABLE)
+	./$(EXECUTABLE)
