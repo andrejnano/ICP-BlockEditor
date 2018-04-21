@@ -69,6 +69,15 @@ void Block::setPortValue(unsigned port_num, std::string val_name, double new_val
 }
 
 /**
+ * @brief gets ID of block
+ * @return identification number of block
+ */
+unsigned Block::getBlockID()
+{
+    return this->id;
+}
+
+/**
  * @brief call function to compute block operation and sets result to output ports
  */
 void Block::compute()

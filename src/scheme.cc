@@ -20,7 +20,7 @@
 Scheme::Scheme(std::string new_name)
 {
     this->name = new_name;
-    block_id = 1;// this ID will be set to first crated block
+    block_id = 1001;// this ID will be set to first crated block
 }
 
 /**
@@ -37,7 +37,7 @@ void Scheme::print()
     std::cout << "WIRES:" << std::endl;
     for(unsigned i = 0; i < this->wires.size(); i++)
     {
-        std::cout << "  OUT: " << this->wires[i].id_out << " | IN: " << this->wires[i].id_in << std::endl;
+        std::cout << "  OUT: " << this->wires[i].id_out << " (" << this->wires[i].index_out << ") | IN: " << this->wires[i].id_in << " (" << this->wires[i].index_in << ")" << std::endl;
     }
 }
 
@@ -55,23 +55,29 @@ void Scheme::addBlock(block_type new_type, data_type input_type, data_type outpu
 
 /**
  * @brief calls compute function for given block
- * @param block_num index of block in vector [0-n]
+ * @param block_id identification number of block
  */
-void Scheme::computeBlock(unsigned block_num)
+void Scheme::computeBlock(unsigned block_id)
 {
-    this->blocks[block_num].compute();
+    if(this->getBlockByID(block_id) != NULL)
+    {
+        this->getBlockByID(block_id)->compute();
+    }
 }
 
 /**
  * @brief sets value of port
- * @param block_num index of block in vector [0-n]
+ * @param block_id identification number of block
  * @param port_num index of port in block [0-n]
  * @param val_name name of value in data type ("val" in simple type)
  * @param new_value value to be set
  */
-void Scheme::setBlockPortValue(unsigned block_num, unsigned port_num, std::string val_name, double new_value)
+void Scheme::setBlockPortValue(unsigned block_id, unsigned port_num, std::string val_name, double new_value)
 {
-    this->blocks[block_num].setPortValue(port_num, val_name, new_value);
+    if(this->getBlockByID(block_id) != NULL)
+    {
+        this->getBlockByID(block_id)->setPortValue(port_num, val_name, new_value);
+    }
 }
 
 /**
@@ -79,10 +85,29 @@ void Scheme::setBlockPortValue(unsigned block_num, unsigned port_num, std::strin
  * @param out_port_id source - id of output port
  * @param in_port_id destination - id of input port
  */
-void Scheme::connect(unsigned out_port_id, unsigned in_port_id)
+void Scheme::connect(unsigned out_block_id, unsigned out_port_index, unsigned in_block_id, unsigned in_port_index)
 {
     wire tmp;
-    tmp.id_out = out_port_id;
-    tmp.id_in = in_port_id;
+    tmp.id_out = out_block_id;
+    tmp.index_out = out_port_index;
+    tmp.id_in = in_block_id;
+    tmp.index_in = in_port_index;
     this->wires.push_back(tmp);
+}
+
+/**
+ * @brief finds block with given ID
+ * @param searched_id identification number of searched block
+ * @return pointer to searched block, NULL if not found
+ */
+Block* Scheme::getBlockByID(unsigned searched_id)
+{
+    for(unsigned i = 0; i < this->blocks.size(); i++)
+    {
+        if(this->blocks[i].getBlockID() == searched_id)
+        {
+            return &(this->blocks[i]);
+        }
+    }
+    return NULL;
 }

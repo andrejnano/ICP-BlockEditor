@@ -59,15 +59,15 @@ int main(int argc, char **argv)
   Scheme a("Schema A");
   a.print();
   a.addBlock(b_sum, t_simple, t_simple);
-  a.setBlockPortValue(0, 0, "val", 1.25);
-  a.setBlockPortValue(0, 1, "val", 1.75);
-  a.computeBlock(0);
+  a.setBlockPortValue(1001, 0, "val", 1.25);
+  a.setBlockPortValue(1001, 1, "val", 1.75);
+  a.computeBlock(1001);
   a.addBlock(b_sum, t_simple, t_simple);
-  a.setBlockPortValue(1, 0, "val", 2.05);
-  a.setBlockPortValue(1, 0, "val", 2.91);
-  a.connect(23,68);
-  a.connect(1234,4321);
-  a.connect(1,333);
+  a.setBlockPortValue(1002, 0, "val", 2.05);
+  a.setBlockPortValue(1002, 0, "val", 2.91);
+  a.connect(23, 0, 68, 2);
+  a.connect(1234, 1, 4321, 1);
+  a.connect(1, 0, 333, 3);
   a.print();
 
   // end of testing code
