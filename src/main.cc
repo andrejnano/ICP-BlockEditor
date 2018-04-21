@@ -30,6 +30,7 @@ using std::cin;
 using std::cerr;
 using std::endl;
 using std::string;
+using std::stoul;
 
 
 /**
@@ -72,6 +73,7 @@ int main(int argc, char **argv)
   
   // end of testing code
 
+  Scheme actual_scheme("My Scheme");
 
   cout << CL::BOLD << "BlockEditor started" << CL::ENDC << endl;
 
@@ -107,6 +109,55 @@ int main(int argc, char **argv)
       // Loader();
       // schema loaded
       // -> execute
+    }
+    else if (user_input == "print")
+    {
+      actual_scheme.print();
+    }
+    else if (user_input == "add")
+    {
+      string type_of_block;
+      cin >> type_of_block;
+
+      if(type_of_block == "sum")
+      {
+        actual_scheme.addBlock(b_sum, t_simple, t_simple);
+      }
+      else
+      {
+        cout << "Unrecognized block type! Try 'add sum'" << endl;
+      }
+    }
+    else if (user_input == "connect")
+    {
+      string a;
+      cin >> a;
+      string b;
+      cin >> b;
+      string c;
+      cin >> c;
+      string d;
+      cin >> d;
+
+      actual_scheme.connect(stoul(a), stoul(b), stoul(c), stoul(d));
+    }
+    else if (user_input == "set")
+    {
+      string id;
+      cin >> id;
+      string index;
+      cin >> index;
+      string value;
+      cin >> value;
+
+      actual_scheme.setBlockPortValue(stoul(id), stoul(index), "val", stoul(value));
+    }
+    else if (user_input == "compute")
+    {
+      string id;
+      cin >> id;
+
+      actual_scheme.computeBlock(stoul(id));
     }
     else
     {

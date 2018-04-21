@@ -62,6 +62,7 @@ void Scheme::computeBlock(unsigned block_id)
     if(this->getBlockByID(block_id) != NULL)
     {
         this->getBlockByID(block_id)->compute();
+        this->propagate(block_id);
     }
 }
 
