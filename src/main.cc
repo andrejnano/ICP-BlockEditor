@@ -122,7 +122,19 @@ int main(int argc, char **argv)
 
       if(type_of_block == "sum")
       {
-        actual_scheme.addBlock(b_sum, t_simple, t_simple);
+        actual_scheme.addBlock(SUM, t_simple, t_simple);
+      }
+      else if(type_of_block == "avg")
+      {
+        actual_scheme.addBlock(AVG, t_simple, t_simple);
+      }
+      else if(type_of_block == "min")
+      {
+        actual_scheme.addBlock(MIN, t_simple, t_simple);
+      }
+      else if(type_of_block == "max")
+      {
+        actual_scheme.addBlock(MAX, t_simple, t_simple);
       }
       else
       {

@@ -16,20 +16,6 @@
 
 #include "blocks.h"
 
-/**
- * @brief function which computes sum of values from input ports
- * @param inputs vector of input ports
- * @return sum of input values
- */
-double c_sum(std::vector<Port> inputs)
-{
-    double result = 0;
-    for(unsigned i = 0; i < inputs.size(); i++)
-    {
-        result += inputs[i].getValue("val");
-    }
-    return result;
-}
 
 /**
  * @brief Block constructor
@@ -38,23 +24,30 @@ double c_sum(std::vector<Port> inputs)
  * @param input_type data type of input ports
  * @param output_type data type of result
  */
-Block::Block(block_type new_type, unsigned new_id, data_type input_type, data_type output_type)
+Block::Block(unsigned new_id, data_type input_type, data_type output_type) : id {new_id}
 {
-    this->type = new_type;
-    switch(new_type)
-    {
-        case b_sum:
-            std::cout << "[new block (SUM)]" << std::endl;
-            computation = c_sum;
-            break;
-        default:
-            std::cout << "[trying to add unrecognized block]" << std::endl;
-            break;
-    }
-    this->id = new_id;
+    operation_ = nullptr;
     this->in_ports.push_back(Port(2,t_simple));
     this->in_ports.push_back(Port(3,t_simple));
     this->out_ports.push_back(Port(5,t_simple));
+}
+
+
+/**
+ * @brief Sets operation for the block
+ * @param op_type type of operation
+ */
+void Block::setOperation(operation_type_t type)
+{
+  delete operation_;
+
+  switch (type)
+  {
+    case SUM: operation_ = new SumOp(); break;
+    case AVG: operation_ = new AvgOp(); break;
+    case MIN: operation_ = new MinOp(); break;
+    case MAX: operation_ = new MaxOp(); break;
+  }
 }
 
 /**
@@ -105,17 +98,6 @@ unsigned Block::getOutSize()
 {
     return this->out_ports.size();
 }
-/**
- * @brief call function to compute block operation and sets result to output ports
- */
-void Block::compute()
-{
-    double result = c_sum(this->in_ports);
-    for(unsigned i = 0; i < this->out_ports.size(); i++)
-    {
-        this->out_ports[i].setValue("val", result);
-    }
-}
 
 /**
  * @brief prints information about block and call print functions for ports
@@ -124,12 +106,14 @@ void Block::print()
 {
     std::cout << "--------- BLOCK ---------" << std::endl;
     std::cout << "ID: " << this->id << std::endl;
-    std::cout << "TYPE: " << this->type << std::endl;
+    // std::cout << "TYPE: " << this->type << std::endl; // @TODO: replace 
+    
     std::cout << "INPUTS:" << std::endl;
     for(unsigned i = 0; i < this->in_ports.size(); i++)
     {
         this->in_ports[i].print();
     }
+    
     std::cout << "OUTPUTS:" << std::endl;
     for(unsigned i = 0; i < this->out_ports.size(); i++)
     {
@@ -138,3 +122,82 @@ void Block::print()
     std::cout << "-------------------------" << std::endl;
 }
 
+/*****************************************************************************/
+// Specific operations
+/*****************************************************************************/
+
+/**
+ * @brief executes the operation and sets output ports with the result
+ */
+void Operation::execute(std::vector<Port> inputs, std::vector<Port> outputs)
+{
+    double result = expression(inputs);
+
+    for(int i = 0; i < outputs.size(); i++)
+    {
+        outputs[i].setValue("val", result);
+    }
+}
+
+
+/**
+ * @brief SUM operation
+ */
+double SumOp::expression(std::vector<Port> inputs)
+{
+    double sum {0.0};
+
+    for(int i = 0; i < inputs.size(); i++)
+    {
+        sum += inputs[i].getValue("val");
+    }
+
+    return sum;
+}
+
+/**
+ * @brief AVG operation
+ */
+double AvgOp::expression(std::vector<Port> inputs)
+{
+    double sum {0.0};
+
+    for(int i = 0; i < inputs.size(); i++)
+    {
+        sum += inputs[i].getValue("val");
+    }
+
+    return sum/inputs.size();
+}
+
+/**
+ * @brief MIN operation
+ */
+double MinOp::expression(std::vector<Port> inputs)
+{
+    double min = inputs[0].getValue("val");
+
+    for(int i = 1; i < inputs.size(); i++)
+    {
+        if (min > inputs[i].getValue("val"))
+            min = inputs[i].getValue("val");
+    }
+
+    return min;
+}
+
+/**
+ * @brief MAX operation
+ */
+double MaxOp::expression(std::vector<Port> inputs)
+{
+    double max = inputs[0].getValue("val");
+
+    for(int i = 1; i < inputs.size(); i++)
+    {
+        if (max < inputs[i].getValue("val"))
+            max = inputs[i].getValue("val");
+    }
+
+    return max;
+}

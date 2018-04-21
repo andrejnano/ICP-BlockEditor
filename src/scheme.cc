@@ -17,11 +17,8 @@
  * @brief Scheme constructor
  * @param new_name name of scheme
  */
-Scheme::Scheme(std::string new_name)
-{
-    this->name = new_name;
-    block_id = 1001;// this ID will be set to first crated block
-}
+Scheme::Scheme(std::string new_name) : name {new_name}, block_id {1001}
+{}
 
 /**
  * @brief print scheme name, calls print functions for blocks, and prints wires
@@ -32,12 +29,13 @@ void Scheme::print()
     std::cout << "PORTS:" << std::endl;
     for(unsigned i = 0; i < this->blocks.size(); i++)
     {
-        this->blocks[i].print();
+        this->blocks[i]->print();
     }
     std::cout << "WIRES:" << std::endl;
     for(unsigned i = 0; i < this->wires.size(); i++)
     {
-        std::cout << "  OUT: " << this->wires[i].id_out << " (" << this->wires[i].index_out << ") | IN: " << this->wires[i].id_in << " (" << this->wires[i].index_in << ")" << std::endl;
+        std::cout << "  OUT: " << this->wires[i].id_out << " (" << this->wires[i].index_out 
+                << ") | IN: " << this->wires[i].id_in << " (" << this->wires[i].index_in << ")" << std::endl;
     }
 }
 
@@ -47,9 +45,17 @@ void Scheme::print()
  * @param input_type data type of block inputs
  * @param output_type data type of block outputs
  */
-void Scheme::addBlock(block_type new_type, data_type input_type, data_type output_type)
+void Scheme::addBlock(operation_type_t new_type, data_type input_type, data_type output_type)
 {
-    this->blocks.push_back(Block(new_type, block_id, input_type, output_type));
+    // creates new block object
+    Block* new_block = new Block(block_id, input_type, output_type);
+    
+    // sets operation type
+    new_block->setOperation(new_type);
+
+    // adds to the scheme
+    this->blocks.push_back(new_block);
+
     block_id++;
 }
 
@@ -75,7 +81,7 @@ void Scheme::computeBlock(unsigned block_id)
  */
 void Scheme::setBlockPortValue(unsigned block_id, unsigned port_num, std::string val_name, double new_value)
 {
-    if(this->getBlockByID(block_id) != NULL)
+    if(this->getBlockByID(block_id) != nullptr)
     {
         this->getBlockByID(block_id)->setInPortValue(port_num, val_name, new_value);
     }
@@ -90,7 +96,7 @@ void Scheme::setBlockPortValue(unsigned block_id, unsigned port_num, std::string
  */
 double Scheme::getBlockPortValue(unsigned block_id, unsigned port_num, std::string val_name)
 {
-    if(this->getBlockByID(block_id) != NULL)
+    if(this->getBlockByID(block_id) != nullptr)
     {
         return this->getBlockByID(block_id)->getOutPortValue(port_num, val_name);
     }
@@ -107,7 +113,7 @@ double Scheme::getBlockPortValue(unsigned block_id, unsigned port_num, std::stri
  */
 bool Scheme::connect(unsigned out_block_id, unsigned out_port_index, unsigned in_block_id, unsigned in_port_index)
 {
-    if(this->getBlockByID(out_block_id) == NULL || this->getBlockByID(in_block_id) == NULL)
+    if(this->getBlockByID(out_block_id) == nullptr || this->getBlockByID(in_block_id) == nullptr)
     {
         std::cout << "*conection NOT made*" << std::endl;
         return false;// ID of block does not exist
@@ -224,10 +230,10 @@ Block* Scheme::getBlockByID(unsigned searched_id)
 {
     for(unsigned i = 0; i < this->blocks.size(); i++)
     {
-        if(this->blocks[i].getBlockID() == searched_id)
+        if(this->blocks[i]->getBlockID() == searched_id)
         {
-            return &(this->blocks[i]);
+            return this->blocks[i];
         }
     }
-    return NULL;
+    return nullptr;
 }
