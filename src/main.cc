@@ -31,6 +31,7 @@ using std::cerr;
 using std::endl;
 using std::string;
 using std::stoul;
+using std::stod;
 
 
 /**
@@ -57,7 +58,7 @@ int main(int argc, char **argv)
   soucet1.compute();
   soucet1.print();*/
 
-  Scheme a("Schema A");
+  /*Scheme a("Schema A");
   a.print();
   a.addBlock(b_sum, t_simple, t_simple);
   a.setBlockPortValue(1001, 0, "val", 1.25);
@@ -69,7 +70,7 @@ int main(int argc, char **argv)
   a.propagate(1001);
   a.computeBlock(1002);
   a.print();
-  a.propagate(1002);
+  a.propagate(1002);*/
   
   // end of testing code
 
@@ -150,7 +151,7 @@ int main(int argc, char **argv)
       string value;
       cin >> value;
 
-      actual_scheme.setBlockPortValue(stoul(id), stoul(index), "val", stoul(value));
+      actual_scheme.setBlockPortValue(stoul(id), stoul(index), "val", stod(value));
     }
     else if (user_input == "compute")
     {
