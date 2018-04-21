@@ -87,7 +87,7 @@ void Block::print()
 {
     std::cout << "--------- BLOCK ---------" << std::endl;
     std::cout << "ID: " << this->id << std::endl;
-    std::cout << "TYPE: " << this->id << std::endl;
+    std::cout << "TYPE: " << this->type << std::endl;
     std::cout << "INPUTS:" << std::endl;
     for(unsigned i = 0; i < this->in_ports.size(); i++)
     {

@@ -58,11 +58,11 @@ int main(int argc, char **argv)
 
   Scheme a("Schema A");
   a.print();
-  a.addBlock(b_sum,1001,t_simple,t_simple);
+  a.addBlock(b_sum, t_simple, t_simple);
   a.setBlockPortValue(0, 0, "val", 1.25);
   a.setBlockPortValue(0, 1, "val", 1.75);
   a.computeBlock(0);
-  a.addBlock(b_sum,1002,t_simple,t_simple);
+  a.addBlock(b_sum, t_simple, t_simple);
   a.setBlockPortValue(1, 0, "val", 2.05);
   a.setBlockPortValue(1, 0, "val", 2.91);
   a.connect(23,68);

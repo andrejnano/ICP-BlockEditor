@@ -27,11 +27,12 @@ class Scheme
 {
   private:
     std::string name;
+    unsigned block_id;
     std::vector<Block> blocks;
     std::vector<wire> wires;
   public:
     Scheme(std::string new_name);
-    void addBlock(block_type new_type, unsigned new_id, data_type input_type, data_type output_type);
+    void addBlock(block_type new_type, data_type input_type, data_type output_type);
     void setBlockPortValue(unsigned block_num, unsigned port_num, std::string val_name, double new_value);
     void computeBlock(unsigned block_num);
     void connect(unsigned out_port_id, unsigned in_port_id);

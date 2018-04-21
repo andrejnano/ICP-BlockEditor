@@ -20,6 +20,7 @@
 Scheme::Scheme(std::string new_name)
 {
     this->name = new_name;
+    block_id = 1;// this ID will be set to first crated block
 }
 
 /**
@@ -43,13 +44,13 @@ void Scheme::print()
 /**
  * @brief adds new block to scheme
  * @param new_type type of new block
- * @param new_id id of new block
  * @param input_type data type of block inputs
  * @param output_type data type of block outputs
  */
-void Scheme::addBlock(block_type new_type, unsigned new_id, data_type input_type, data_type output_type)
+void Scheme::addBlock(block_type new_type, data_type input_type, data_type output_type)
 {
-    this->blocks.push_back(Block(new_type, new_id, input_type, output_type));
+    this->blocks.push_back(Block(new_type, block_id, input_type, output_type));
+    block_id++;
 }
 
 /**
