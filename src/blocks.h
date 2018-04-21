@@ -25,7 +25,8 @@ enum operation_type_t
   SUM,
   AVG,
   MIN,
-  MAX
+  MAX,
+  COUNT
 };
 
 /* 
@@ -42,7 +43,7 @@ class Operation
     virtual ~Operation() {};
 
     // outside interface for executing
-    void execute(std::vector<Port> inputs, std::vector<Port> outputs);
+    void execute(std::vector<Port> &inputs, std::vector<Port> &outputs);
 
   private:
     // internal expression execution, defined for each specific operation
@@ -81,6 +82,15 @@ class MaxOp : public Operation
 {
   public:
     MaxOp(): Operation(){}
+
+  private:
+    double expression(std::vector<Port> inputs) override;
+};
+
+class CountOp : public Operation
+{
+  public:
+    CountOp(): Operation(){}
 
   private:
     double expression(std::vector<Port> inputs) override;
@@ -131,8 +141,6 @@ class Block
     // prints information about the block
     void print();
 };
-
-
 
 
 #endif

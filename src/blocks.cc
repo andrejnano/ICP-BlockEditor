@@ -47,6 +47,7 @@ void Block::setOperation(operation_type_t type)
     case AVG: operation_ = new AvgOp(); break;
     case MIN: operation_ = new MinOp(); break;
     case MAX: operation_ = new MaxOp(); break;
+    case COUNT: operation_ = new CountOp(); break;
   }
 }
 
@@ -129,7 +130,7 @@ void Block::print()
 /**
  * @brief executes the operation and sets output ports with the result
  */
-void Operation::execute(std::vector<Port> inputs, std::vector<Port> outputs)
+void Operation::execute(std::vector<Port> &inputs, std::vector<Port> &outputs)
 {
     double result = expression(inputs);
 
@@ -200,4 +201,12 @@ double MaxOp::expression(std::vector<Port> inputs)
     }
 
     return max;
+}
+
+/**
+ * @brief COUNT operation
+ */
+double CountOp::expression(std::vector<Port> inputs)
+{
+    return inputs.size();
 }
