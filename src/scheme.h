@@ -34,9 +34,12 @@ class Scheme
   public:
     Scheme(std::string new_name);
     void addBlock(block_type new_type, data_type input_type, data_type output_type);
-    void setBlockPortValue(unsigned block_num, unsigned port_num, std::string val_name, double new_value);
+    void setBlockPortValue(unsigned block_id, unsigned port_num, std::string val_name, double new_value);
+    double getBlockPortValue(unsigned block_id, unsigned port_num, std::string val_name);
     void computeBlock(unsigned block_id);
-    void connect(unsigned out_block_id, unsigned out_port_index, unsigned in_block_id, unsigned in_port_index);
+    bool connect(unsigned out_block_id, unsigned out_port_index, unsigned in_block_id, unsigned in_port_index);
+    int isConnected(unsigned block_id, bool is_input, unsigned port_index);
+    void propagate(unsigned block_id);
     Block* getBlockByID(unsigned searched_id);
     void print();
 };

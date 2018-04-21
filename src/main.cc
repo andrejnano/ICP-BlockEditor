@@ -64,12 +64,12 @@ int main(int argc, char **argv)
   a.computeBlock(1001);
   a.addBlock(b_sum, t_simple, t_simple);
   a.setBlockPortValue(1002, 0, "val", 2.05);
-  a.setBlockPortValue(1002, 0, "val", 2.91);
-  a.connect(23, 0, 68, 2);
-  a.connect(1234, 1, 4321, 1);
-  a.connect(1, 0, 333, 3);
+  a.connect(1001, 0, 1002, 1);
+  a.propagate(1001);
+  a.computeBlock(1002);
   a.print();
-
+  a.propagate(1002);
+  
   // end of testing code
 
 

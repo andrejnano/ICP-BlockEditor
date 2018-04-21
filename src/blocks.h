@@ -33,8 +33,11 @@ class Block
 
   public:
     Block(block_type new_type, unsigned new_id, data_type input_type, data_type output_type);
-    void setPortValue(unsigned port_num, std::string val_name, double new_value);
+    void setInPortValue(unsigned port_num, std::string val_name, double new_value);
     unsigned getBlockID();
+    unsigned getInSize();
+    unsigned getOutSize();
+    double getOutPortValue(unsigned port_num, std::string val_name);
     void compute();
     void print();
 };

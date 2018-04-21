@@ -76,23 +76,142 @@ void Scheme::setBlockPortValue(unsigned block_id, unsigned port_num, std::string
 {
     if(this->getBlockByID(block_id) != NULL)
     {
-        this->getBlockByID(block_id)->setPortValue(port_num, val_name, new_value);
+        this->getBlockByID(block_id)->setInPortValue(port_num, val_name, new_value);
     }
 }
 
 /**
- * @brief sets new wire between two ports
- * @param out_port_id source - id of output port
- * @param in_port_id destination - id of input port
+ * @brief gets value of port
+ * @param block_id identification number of block
+ * @param port_num index of port in block [0-n]
+ * @param val_name name of value in data type ("val" in simple type)
+ * @return value of port
  */
-void Scheme::connect(unsigned out_block_id, unsigned out_port_index, unsigned in_block_id, unsigned in_port_index)
+double Scheme::getBlockPortValue(unsigned block_id, unsigned port_num, std::string val_name)
 {
+    if(this->getBlockByID(block_id) != NULL)
+    {
+        return this->getBlockByID(block_id)->getOutPortValue(port_num, val_name);
+    }
+    return 0;
+}
+
+/**
+ * @brief sets new wire between two ports
+ * @param out_block_id id of source block
+ * @param out_port_index index of output port in block
+ * @param in_block_id id of targe block
+ * @param in_port_index index of input port in block
+ * @return true if success, false in case of failure
+ */
+bool Scheme::connect(unsigned out_block_id, unsigned out_port_index, unsigned in_block_id, unsigned in_port_index)
+{
+    if(this->getBlockByID(out_block_id) == NULL || this->getBlockByID(in_block_id) == NULL)
+    {
+        std::cout << "*conection NOT made*" << std::endl;
+        return false;// ID of block does not exist
+    }
+    if(this->getBlockByID(out_block_id)->getOutSize() <= out_port_index || this->getBlockByID(in_block_id)->getInSize() <= in_port_index)
+    {
+        std::cout << "*conection NOT made*" << std::endl;
+        return false;// index of port is out of vector               
+    }
     wire tmp;
     tmp.id_out = out_block_id;
     tmp.index_out = out_port_index;
     tmp.id_in = in_block_id;
     tmp.index_in = in_port_index;
     this->wires.push_back(tmp);
+    std::cout << "*conection made*" << std::endl;
+    return true;
+}
+
+/**
+ * @brief check if port is connected
+ * @param block_id ID of block
+ * @param id_input true if finding input port, false if finding output port
+ * @param port_index index of port in block
+ * @return 0 if port is connected, 1 if not connected, -1 if port is not found
+ */
+int Scheme::isConnected(unsigned block_id, bool is_input, unsigned port_index)
+{
+    if(is_input)
+    {
+        if(this->getBlockByID(block_id) == NULL)
+        {
+            std::cout << "*conection port NOT found*" << std::endl;
+            return -1;
+        }
+        if(this->getBlockByID(block_id)->getInSize() <= port_index)
+        {
+            std::cout << "*conection port NOT found*" << std::endl;
+            return -1;
+        }
+        for(unsigned i = 0; i < this->wires.size(); i++)
+        {
+            if(this->wires[i].id_in == block_id && this->wires[i].index_in == port_index)
+            {
+                std::cout << "*conection found*" << std::endl;
+                return 0;
+            }
+        }
+    }
+    else
+    {
+        if(this->getBlockByID(block_id) == NULL)
+        {
+            std::cout << "*conection port NOT found*" << std::endl;
+            return -1;
+        }
+        if(this->getBlockByID(block_id)->getOutSize() <= port_index)
+        {
+            std::cout << "*conection port NOT found*" << std::endl;
+            return -1;
+        }
+        for(unsigned i = 0; i < this->wires.size(); i++)
+        {
+            if(this->wires[i].id_out == block_id && this->wires[i].index_out == port_index)
+            {
+                std::cout << "*conection found*" << std::endl;
+                return 0;
+            }
+        }
+
+    }
+    std::cout << "*conection NOT found*" << std::endl;
+    return 1;
+}
+
+/**
+ * @brief propagate output value through wire or prints if port is not connected
+ * @param block_id id of source block
+ * @param port_index index of port in block
+ * @return pointer to searched block, NULL if not found
+ */
+void Scheme::propagate(unsigned block_id)
+{
+    if(this->getBlockByID(block_id))
+    {
+        double result;
+        bool found;
+        for(unsigned p = 0; p < this->getBlockByID(block_id)->getOutSize(); p++)
+        {
+            result = this->getBlockByID(block_id)->getOutPortValue(p,"val");
+            found = false;
+            for(unsigned i = 0; i < this->wires.size(); i++)
+            {
+                if(this->wires[i].id_out == block_id && this->wires[i].index_out == p)
+                {
+                    this->setBlockPortValue(this->wires[i].id_in, this->wires[i].index_in, "val", result);
+                    found = true;
+                }
+            }
+            if(found == false)
+            {
+                std::cout << "RESULT AT FREE OUT PORT: " << result << std::endl;
+            }
+        }
+    }
 }
 
 /**

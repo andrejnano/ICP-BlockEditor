@@ -63,9 +63,20 @@ Block::Block(block_type new_type, unsigned new_id, data_type input_type, data_ty
  * @param val_name name of value which should be changed ("val" in simple type)
  * @param new_value new value of port
  */
-void Block::setPortValue(unsigned port_num, std::string val_name, double new_value)
+void Block::setInPortValue(unsigned port_num, std::string val_name, double new_value)
 {
     this->in_ports[port_num].setValue(val_name, new_value);
+}
+
+/**
+ * @brief gets value of output port
+ * @param port_num index of port in array [0-n]
+ * @param val_name name of value to get ("val" in simple type)
+ * @return value of port
+ */
+double Block::getOutPortValue(unsigned port_num, std::string val_name)
+{
+    return this->out_ports[port_num].getValue(val_name);
 }
 
 /**
@@ -77,6 +88,23 @@ unsigned Block::getBlockID()
     return this->id;
 }
 
+/**
+ * @brief gets number of input ports
+ * @return size of inputs vector
+ */
+unsigned Block::getInSize()
+{
+    return this->in_ports.size();
+}
+
+/**
+ * @brief gets number of output ports
+ * @return size of outputs vector
+ */
+unsigned Block::getOutSize()
+{
+    return this->out_ports.size();
+}
 /**
  * @brief call function to compute block operation and sets result to output ports
  */
