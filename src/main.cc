@@ -24,7 +24,7 @@
 #include "blocks.h"
 #include "scheme.h"
 
-// commonly used std objects.. really no need to be careful about poluting namespace
+// commonly used std objects.. really no need to be careful about poluting the namespace
 using std::cout;
 using std::cin;
 using std::cerr;
@@ -79,7 +79,6 @@ int main(int argc, char **argv)
   
   // end of testing code
 
-  //
   Scheme actual_scheme("My Scheme");
   cout << CL::BOLD << "BlockEditor started" << CL::ENDC << endl;
 

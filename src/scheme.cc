@@ -14,13 +14,6 @@
 #include "scheme.h"
 
 /**
- * @brief Scheme constructor
- * @param new_name name of scheme
- */
-Scheme::Scheme(std::string new_name) : name {new_name}, block_id {1001}
-{}
-
-/**
  * @brief print scheme name, calls print functions for blocks, and prints wires
  */
 void Scheme::print()
