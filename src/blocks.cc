@@ -12,9 +12,17 @@
 
 #include <vector>
 #include <iostream>
+#include <iomanip>
 #include <map>
 
+using std::cout;
+using std::cin;
+using std::cerr;
+using std::endl;
+
 #include "blocks.h"
+#include "utilities.h"
+
 
 
 /**
@@ -24,7 +32,7 @@
  * @param input_type data type of input ports
  * @param output_type data type of result
  */
-Block::Block(unsigned new_id, operation_type_t new_type, data_type input_type, data_type output_type) : id {new_id}
+Block::Block(unsigned new_id, operation_type_t new_type, data_type_t input_type, data_type_t output_type) : id {new_id}
 {
     operation_ = nullptr;
     this->block_type = new_type;
@@ -155,22 +163,34 @@ bool Block::isPrepared()
  */
 void Block::print()
 {
-    std::cout << "--------- BLOCK ---------" << std::endl;
-    std::cout << "ID: " << this->id << std::endl;
-    std::cout << "TYPE: " << this->block_type << std::endl; 
+    cout << "\n+ -------- BLOCK #" << CL::BOLD << CL::UNDERLINE << this->id << CL::ENDC << " -------- +" << endl;
+    cout << "| TYPE: " << CL::OKBLUE << CL::BOLD << std::left << std::setw(23);
+
+    switch(this->block_type)
+    {
+        case SUM:   cout << "SUM"; break;
+        case AVG:   cout << "AVG"; break;
+        case MIN:   cout << "MIN"; break;
+        case MAX:   cout << "MAX"; break;
+        case COUNT: cout << "COUNT"; break;
+        default:    cout << "UNKNOWN"; break;
+    }
+    cout << CL::ENDC << " |" << std::endl; 
     
-    std::cout << "INPUTS:" << std::endl;
+    
+    std::cout << "| INPUT PORTS: " << std::setw(18) << std::right << "|" << std::endl;
     for(unsigned i = 0; i < this->in_ports.size(); i++)
     {
         this->in_ports[i].print();
     }
     
-    std::cout << "OUTPUTS:" << std::endl;
+    std::cout << "| OUTPUT PORTS: " << std::setw(17) << std::right << "|" << std::endl;
     for(unsigned i = 0; i < this->out_ports.size(); i++)
     {
         this->out_ports[i].print();
     }
-    std::cout << "-------------------------" << std::endl;
+
+    std::cout << "+ ----------------------------- +\n" << std::endl;
 }
 
 /*****************************************************************************/

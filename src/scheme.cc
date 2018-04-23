@@ -13,6 +13,7 @@
 
 #include "scheme.h"
 #include "blocks.h"
+#include "utilities.h"
 
 /**
  * @brief print scheme name, calls print functions for blocks, and prints wires
@@ -39,7 +40,7 @@ void Scheme::print()
  * @param input_type data type of block inputs
  * @param output_type data type of block outputs
  */
-void Scheme::addBlock(operation_type_t new_type, data_type input_type, data_type output_type)
+void Scheme::addBlock(operation_type_t new_type, data_type_t input_type, data_type_t output_type)
 {
     // creates new block object
     Block* new_block = new Block(block_id, new_type, input_type, output_type);
@@ -109,12 +110,12 @@ bool Scheme::connect(unsigned out_block_id, unsigned out_port_index, unsigned in
 {
     if(this->getBlockByID(out_block_id) == nullptr || this->getBlockByID(in_block_id) == nullptr)
     {
-        std::cout << "Error - block does not exist!" << std::endl;
+        std::cout << CL::FAIL << "*conection NOT made*" << CL::ENDC << std::endl;
         return false;// ID of block does not exist
     }
     if(this->getBlockByID(out_block_id)->getOutSize() <= out_port_index || this->getBlockByID(in_block_id)->getInSize() <= in_port_index)
     {
-        std::cout << "Error - block does not have such port!" << std::endl;
+        std::cout << CL::FAIL << "*conection NOT made*" << CL::ENDC << std::endl;
         return false;// index of port is out of vector               
     }
     if(isConnected(out_block_id, false, out_port_index) != 1 || isConnected(in_block_id, true, in_port_index) != 1)
@@ -128,7 +129,7 @@ bool Scheme::connect(unsigned out_block_id, unsigned out_port_index, unsigned in
     tmp.id_in = in_block_id;
     tmp.index_in = in_port_index;
     this->wires.push_back(tmp);
-    std::cout << "*conection made*" << std::endl;
+    std::cout << CL::OKGREEN <<  "*conection made*" << CL::ENDC << std::endl;
     return true;
 }
 
@@ -214,7 +215,7 @@ void Scheme::propagate(unsigned block_id)
             }
             if(found == false)
             {
-                std::cout << "RESULT AT FREE OUT PORT " << p << " IN BLOCK " << block_id << ": " << result << std::endl;
+                std::cout << "~ RESULT AT FREE OUT PORT " << p << "IN BLOCK " << block_id << ": " << result << std::endl;
             }
         }
     }

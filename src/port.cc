@@ -13,17 +13,21 @@
 
 #include <vector>
 #include <iostream>
+#include <iomanip>
 #include <map>
 #include <list>
 
 #include "port.h"
+#include "utilities.h"
+
+
 
 /**
  * @brief Port constructor
  * @param new_id identification of port (probably unnecessary)
  * @param new_type type of data in port
  */
-Port::Port(int new_id, data_type new_type)
+Port::Port(int new_id, data_type_t new_type)
 {
     this->id = new_id;
     this->type = new_type;
@@ -43,25 +47,27 @@ Port::Port(int new_id, data_type new_type)
 
 void Port::print()
 {
-    //std::cout << "----" << std::endl;
-    std::cout << "  PORT TYPE: - " << this->type << std::endl;
+    std::cout << "|  ~ PORT [";
+
     switch(this->type)
     {
         case t_simple:
+            std::cout << CL::BOLD << "SIMPLE" << CL::ENDC << "]: ";
+            
             if(this->is_set)
             {
-                std::cout << "    VALUES: val - " << this->data["val"] << std::endl;
+                std::cout << std::setw(11) << std::left << this->data["val"] << " |" <<  std::endl;
             }
             else
             {
-                std::cout << "    VALUES NOT SET" << std::endl;
+                std::cout << std::setw(11) << std::left << "Values not set" << " |" <<  std::endl;
             }
             break;
         default:
-            std::cout << "    neplatny typ" << std::endl;
+            std::cout << CL::FAIL << "UNKNOWN" << CL::ENDC << "] {}"
+            << std::setw(10) << " |" << std::endl;
             break;
     }
-    //std::cout << "----" << std::endl;
 }
 
 void Port::setValue(std::string name, double value)

@@ -42,7 +42,7 @@ class Scheme
     Scheme(std::string new_name) : name {new_name}, block_id {1001} {}
 
     // adds new block to the scheme
-    void addBlock(operation_type_t new_type, data_type input_type, data_type output_type);
+    void addBlock(operation_type_t new_type, data_type_t input_type, data_type_t output_type);
   
     // sets a new value for a specific port
     void setBlockPortValue(unsigned block_id, unsigned port_num, std::string val_name, double new_value);
