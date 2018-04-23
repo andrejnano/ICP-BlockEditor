@@ -105,13 +105,13 @@ class Block
   protected:
     unsigned id;
     operation_type_t block_type;
-    data_type in_type;
-    data_type out_type;
+    data_type_t in_type;
+    data_type_t out_type;
     std::vector<Port> in_ports;
     std::vector<Port> out_ports;
 
   public:
-    Block(unsigned new_id, operation_type_t new_type, data_type input_type, data_type output_type);
+    Block(unsigned new_id, operation_type_t new_type, data_type_t input_type, data_type_t output_type);
     
     inline ~Block()
     {

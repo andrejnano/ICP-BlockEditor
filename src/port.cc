@@ -13,12 +13,15 @@
 
 #include <vector>
 #include <iostream>
+#include <iomanip>
 #include <map>
 #include <list>
 
 #include "port.h"
+#include "utilities.h"
 
-Port::Port(int new_id, data_type new_type)
+
+Port::Port(int new_id, data_type_t new_type)
 {
     this->id = new_id;
     this->type = new_type;
@@ -37,18 +40,19 @@ Port::Port(int new_id, data_type new_type)
 
 void Port::print()
 {
-    //std::cout << "----" << std::endl;
-    std::cout << "  PORT TYPE: - " << this->type << std::endl;
+    std::cout << "|  ~ PORT [";
+
     switch(this->type)
     {
         case t_simple:
-            std::cout << "    VALUES: val - " << this->data["val"] << std::endl;
+            std::cout << CL::BOLD << "SIMPLE" << CL::ENDC << "]: "
+            << std::setw(11) << std::left << this->data["val"] << " |" <<  std::endl;
             break;
         default:
-            std::cout << "    neplatny typ" << std::endl;
+            std::cout << CL::FAIL << "UNKNOWN" << CL::ENDC << "] {}"
+            << std::setw(10) << " |" << std::endl;
             break;
     }
-    //std::cout << "----" << std::endl;
 }
 
 void Port::setValue(std::string name, double value)

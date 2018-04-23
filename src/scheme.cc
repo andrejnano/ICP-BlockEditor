@@ -39,7 +39,7 @@ void Scheme::print()
  * @param input_type data type of block inputs
  * @param output_type data type of block outputs
  */
-void Scheme::addBlock(operation_type_t new_type, data_type input_type, data_type output_type)
+void Scheme::addBlock(operation_type_t new_type, data_type_t input_type, data_type_t output_type)
 {
     // creates new block object
     Block* new_block = new Block(block_id, new_type, input_type, output_type);

@@ -18,17 +18,17 @@
 #include <map>
 #include <list>
 
-enum data_type {t_simple};
+enum data_type_t {t_simple};
 
 class Port
 {
   protected:
     int id; // maybe not necessary, ports are now indexed by array index in block
-    data_type type;
+    data_type_t type;
     std::map<std::string, double> data;
 
   public:
-    Port(int new_id, data_type new_type);
+    Port(int new_id, data_type_t new_type);
     void setValue(std::string name, double value);
     double getValue(std::string name);
     void print();
