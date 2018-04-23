@@ -47,7 +47,7 @@ Port::Port(int new_id, data_type_t new_type)
 
 void Port::print()
 {
-    std::cout << "|  ~ PORT [";
+    std::cout << "|  ~ PORT ["<< this->id <<"][";
 
     switch(this->type)
     {
@@ -56,16 +56,16 @@ void Port::print()
             
             if(this->is_set)
             {
-                std::cout << std::setw(11) << std::left << this->data["val"] << " |" <<  std::endl;
+                std::cout << std::setw(8) << std::left << this->data["val"] << " |" <<  std::endl;
             }
             else
             {
-                std::cout << std::setw(11) << std::left << "Values not set" << " |" <<  std::endl;
+                std::cout << CL::WARNING << std::setw(8) << std::left << "*" << CL::ENDC << " |" <<  std::endl;
             }
             break;
         default:
             std::cout << CL::FAIL << "UNKNOWN" << CL::ENDC << "] {}"
-            << std::setw(10) << " |" << std::endl;
+            << std::setw(7) << " |" << std::endl;
             break;
     }
 }
