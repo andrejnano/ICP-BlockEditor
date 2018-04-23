@@ -214,11 +214,11 @@ void command_menu()
 
       actual_scheme.removeBlockOutPort(stoul(id), stoul(index));
     }
-    else if (user_input == "sch_load")
+    else if (user_input == "sch-load")
     {
       actual_scheme.loadIntoScheduler();
     }
-    else if (user_input == "sch_print")
+    else if (user_input == "sch-print")
     {
       actual_scheme.printScheduler();
     }
@@ -232,6 +232,10 @@ void command_menu()
       {
         std::cout << "  CHECK FAILED!" << std::endl;
       }
+    }
+    else if (user_input == "set-free")
+    {
+      actual_scheme.setFreeInputs();
     }
     else
     {

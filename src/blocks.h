@@ -156,6 +156,9 @@ class Block
 
     // prints information about the block
     void print();
+
+    // returns true if block has set values in all input port
+    bool isPrepared();
 };
 
 

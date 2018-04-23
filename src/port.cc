@@ -21,10 +21,17 @@
 #include "utilities.h"
 
 
+
+/**
+ * @brief Port constructor
+ * @param new_id identification of port (probably unnecessary)
+ * @param new_type type of data in port
+ */
 Port::Port(int new_id, data_type_t new_type)
 {
     this->id = new_id;
     this->type = new_type;
+    this->is_set = false;
     switch(new_type)
     {
         case t_simple:
@@ -45,8 +52,16 @@ void Port::print()
     switch(this->type)
     {
         case t_simple:
-            std::cout << CL::BOLD << "SIMPLE" << CL::ENDC << "]: "
-            << std::setw(11) << std::left << this->data["val"] << " |" <<  std::endl;
+            std::cout << CL::BOLD << "SIMPLE" << CL::ENDC << "]: ";
+            
+            if(this->is_set)
+            {
+                std::cout << std::setw(11) << std::left << this->data["val"] << " |" <<  std::endl;
+            }
+            else
+            {
+                std::cout << std::setw(11) << std::left << "Values not set" << " |" <<  std::endl;
+            }
             break;
         default:
             std::cout << CL::FAIL << "UNKNOWN" << CL::ENDC << "] {}"
@@ -58,9 +73,15 @@ void Port::print()
 void Port::setValue(std::string name, double value)
 {
     this->data[name] = value;
+    this->is_set = true;
 }
 
 double Port::getValue(std::string name)
 {
     return this->data[name];
+}
+
+bool Port::isSet()
+{
+    return this->is_set;
 }

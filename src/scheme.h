@@ -78,6 +78,10 @@ class Scheme
     bool checkCycles();
     bool checkCyclesRecursion(Block* actual_block, std::vector<unsigned> visited);
 
+    // asks to set free input ports
+    void setFreeInputs();
+    double getUserValue(unsigned block_id, unsigned port_index);
+
     // cooperation with scheduler
     void loadIntoScheduler();
     void printScheduler();
