@@ -9,3 +9,20 @@
  *  @section Description
  * 
  */
+
+#include "scheduler.h"
+
+
+void Scheduler::addBlock(Block *scheme_block)
+{
+    this->blocks.push_back(scheme_block);
+}
+
+void Scheduler::print()
+{
+    std::cout << "SCHEDULER: " << std::endl;
+    for(unsigned i = 0; i < this->blocks.size(); i++)
+    {
+        std::cout << "  " << this->blocks[i]->getBlockID() << std::endl;
+    }
+}

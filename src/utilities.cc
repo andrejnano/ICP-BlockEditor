@@ -39,6 +39,9 @@ void help()
     << "- connect <src_id> <src_index> <dst_id> <dst_index>\t Make connection between two specified ports.\n\n"
     << "- set <block_id> <port_index> <value>\t Set value to specified input port.\n\n"
     << "- compute <block_id>\t Compute block operation and propagate result.\n\n"
+    << "- sch-load\t Loads actual blocks to scheduler.\n\n"
+    << "- sch-print\t Prints ID of blocks stored in scheduler.\n\n"
+    << "- check\t Check if actual scheme contains any cycle.\n\n"
     << "- load <schema_path>\t Load schema at the specified path.\n\n" << "- exit\t Exit the application.\n"
     << endl;
 }

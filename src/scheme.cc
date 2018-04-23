@@ -12,6 +12,7 @@
  */
 
 #include "scheme.h"
+#include "blocks.h"
 
 /**
  * @brief print scheme name, calls print functions for blocks, and prints wires
@@ -279,4 +280,84 @@ void Scheme::removeBlockOutPort(unsigned block_id, unsigned port_index)
     {
         this->getBlockByID(block_id)->removeOutPort(port_index);
     }
+}
+
+/**
+ * @brief checks if there are cycles in scheme
+ * @return true if scheme is ok, false if cycle is detected
+ */
+bool Scheme::checkCycles()
+{
+    std::vector<unsigned> visited;
+    std::cout << "CHECKING CYCLES:" << std::endl;
+    for(unsigned i = 0; i < this->blocks.size(); i++)
+    {
+        if(this->checkCyclesRecursion(this->blocks[i], visited) == false)
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
+/**
+ * @brief recursive function for checking cycles
+ * @param actual_block actual checked block
+ * @param visited vector containing identification numbers of already visited blocks
+ * @return true if block is visited first time, false if cycle is detected
+ */
+bool Scheme::checkCyclesRecursion(Block* actual_block, std::vector<unsigned> visited)
+{
+    std::cout << "  in block " << actual_block->getBlockID() << " <";
+    for(unsigned i = 0; i < visited.size(); i++)
+    {
+        std::cout << " " << visited[i];
+    }
+    std::cout << " >" << std::endl;
+
+    // checking if this block was already visited
+    for(unsigned i = 0; i < visited.size(); i++)
+    {
+        if(visited[i] == actual_block->getBlockID())
+        {
+            std::cout << "  I HAVE BEEN HERE! " << actual_block->getBlockID() << std::endl;
+            return false;
+        }
+    }
+    
+    bool ret = true;
+    std::vector<unsigned> new_visited = visited;
+    new_visited.push_back(actual_block->getBlockID());
+
+    // calling this function for next blocks
+    for(unsigned i = 0; i < this->wires.size(); i++)
+    {
+        if(this->wires[i].id_out == actual_block->getBlockID())
+        {
+            if(this->checkCyclesRecursion(this->getBlockByID(this->wires[i].id_in), new_visited) == false)
+            {
+                ret = false;
+            }
+        }
+    }
+    return ret;  
+}
+
+/**
+ * @brief loads pointer to blocks into scheduler
+ */
+void Scheme::loadIntoScheduler()
+{
+    for(unsigned i = 0; i < this->blocks.size(); i++)
+    {
+        this->scheduler.addBlock(this->blocks[i]);
+    }
+}
+
+/**
+ * @brief prints blocks stored in scheduler
+ */
+void Scheme::printScheduler()
+{
+    this->scheduler.print();
 }

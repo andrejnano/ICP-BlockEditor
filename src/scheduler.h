@@ -18,15 +18,19 @@
 class Scheduler
 {
   private:
-    Block* current_block;
+    //Block* current_block;
+    std::vector<Block*> blocks;
 
   public:
-    Scheduler();
-    ~Scheduler();
+    //Scheduler();
+    //~Scheduler();
+
+    void addBlock(Block *scheme_block);
+    void print();
 
     void iterate_once();
     void iterate_all();
-    Block* current_block();
+    //Block* current_block();
 
 };
 

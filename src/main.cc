@@ -23,6 +23,7 @@
 #include "port.h"
 #include "blocks.h"
 #include "scheme.h"
+#include "scheduler.h"
 
 // commonly used std objects.. really no need to be careful about poluting the namespace
 using std::cout;
@@ -79,7 +80,8 @@ int main(int argc, char **argv)
   
   // end of testing code
 
-  Scheme actual_scheme("My Scheme");
+  //Scheme actual_scheme("My Scheme");
+  //Scheduler computation_scheduler();
   cout << CL::BOLD << "BlockEditor started" << CL::ENDC << endl;
 
   command_menu();
@@ -211,6 +213,25 @@ void command_menu()
       cin >> index;
 
       actual_scheme.removeBlockOutPort(stoul(id), stoul(index));
+    }
+    else if (user_input == "sch_load")
+    {
+      actual_scheme.loadIntoScheduler();
+    }
+    else if (user_input == "sch_print")
+    {
+      actual_scheme.printScheduler();
+    }
+    else if (user_input == "check")
+    {
+      if(actual_scheme.checkCycles())
+      {
+        std::cout << "  NO CYCLES DETECTED!" << std::endl;
+      }
+      else
+      {
+        std::cout << "  CHECK FAILED!" << std::endl;
+      }
     }
     else
     {

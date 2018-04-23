@@ -16,6 +16,7 @@
 
 #include "port.h"
 #include "blocks.h"
+#include "scheduler.h"
 
 
 struct wire{
@@ -35,6 +36,7 @@ class Scheme
     unsigned block_id;          // current last available index for new block
     std::vector<Block*> blocks; // list of block pointers contained in the scheme
     std::vector<wire> wires;    // list of wires (connections) contained in the scheme
+    Scheduler scheduler;
 
   public:
     Scheme(std::string new_name) : name {new_name}, block_id {1001} {}
@@ -71,6 +73,15 @@ class Scheme
     void addBlockOutPort(unsigned block_id);
     void removeBlockInPort(unsigned block_id, unsigned port_index);
     void removeBlockOutPort(unsigned block_id, unsigned port_index);
+
+    // check if there are cycles in scheme
+    bool checkCycles();
+    bool checkCyclesRecursion(Block* actual_block, std::vector<unsigned> visited);
+
+    // cooperation with scheduler
+    void loadIntoScheduler();
+    void printScheduler();
+
 };
 
 
