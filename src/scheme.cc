@@ -209,7 +209,7 @@ void Scheme::propagate(unsigned block_id)
             }
             if(found == false)
             {
-                std::cout << "RESULT AT FREE OUT PORT: " << result << std::endl;
+                std::cout << "RESULT AT FREE OUT PORT " << p << "IN BLOCK " << block_id << ": " << result << std::endl;
             }
         }
     }

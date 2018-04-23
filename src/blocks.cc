@@ -31,7 +31,7 @@ Block::Block(unsigned new_id, operation_type_t new_type, data_type input_type, d
     this->in_type = input_type;
     this->out_type = output_type;
     this->in_ports.push_back(Port(2,t_simple));
-    //this->in_ports.push_back(Port(3,t_simple));
+    this->in_ports.push_back(Port(3,t_simple));
     this->out_ports.push_back(Port(5,t_simple));
 }
 
@@ -132,6 +132,22 @@ unsigned Block::getInSize()
 unsigned Block::getOutSize()
 {
     return this->out_ports.size();
+}
+
+/**
+ * @brief check if block has set values in all input ports
+ * @return true if all input ports are set, false if some value is missing
+ */
+bool Block::isPrepared()
+{
+    for(unsigned i = 0; i < this->in_ports.size(); i++)
+    {
+        if(this->in_ports[i].isSet() == false)
+        {
+            return false;
+        }
+    }
+    return true;
 }
 
 /**

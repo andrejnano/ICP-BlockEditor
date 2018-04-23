@@ -25,6 +25,7 @@ class Port
   protected:
     int id; // maybe not necessary, ports are now indexed by array index in block
     data_type type;
+    bool is_set;
     std::map<std::string, double> data;
 
   public:
@@ -32,6 +33,7 @@ class Port
     void setValue(std::string name, double value);
     double getValue(std::string name);
     void print();
+    bool isSet();
 };
 
 #endif
