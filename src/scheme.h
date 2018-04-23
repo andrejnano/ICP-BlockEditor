@@ -47,6 +47,12 @@ class Scheme
     void propagate(unsigned block_id);
     Block* getBlockByID(unsigned searched_id);
     void print();
+
+    // handles ports in block
+    void addBlockInPort(unsigned block_id);
+    void addBlockOutPort(unsigned block_id);
+    void removeBlockInPort(unsigned block_id, unsigned port_index);
+    void removeBlockOutPort(unsigned block_id, unsigned port_index);
 };
 
 

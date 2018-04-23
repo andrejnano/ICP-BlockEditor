@@ -33,6 +33,7 @@ using std::string;
 using std::stoul;
 using std::stod;
 
+void command_menu();
 
 /**
  * @brief Main entry point
@@ -58,7 +59,7 @@ int main(int argc, char **argv)
   soucet1.compute();
   soucet1.print();*/
 
-  Scheme a("Schema A");
+  /*Scheme a("Schema A");
   a.print();
   a.addBlock(MAX, t_simple, t_simple);
   a.setBlockPortValue(1001, 0, "val", 1.25);
@@ -74,7 +75,7 @@ int main(int argc, char **argv)
   a.computeBlock(1002);
   
   a.print();
-  a.propagate(1002);
+  a.propagate(1002);*/
   
   // end of testing code
 
@@ -82,7 +83,7 @@ int main(int argc, char **argv)
   Scheme actual_scheme("My Scheme");
   cout << CL::BOLD << "BlockEditor started" << CL::ENDC << endl;
 
-  //command_menu();
+  command_menu();
 
   return SUCCESS;
 }
@@ -146,7 +147,7 @@ void command_menu()
       }
       else
       {
-        cout << "Unrecognized block type! Try 'add sum'" << endl;
+        cout << "Unrecognized block type! Must be 'sum', 'avg', min' or 'max'" << endl;
       }
     }
     else if (user_input == "connect")
@@ -179,6 +180,38 @@ void command_menu()
       cin >> id;
 
       actual_scheme.computeBlock(stoul(id));
+    }
+    else if (user_input == "add-in")
+    {
+      string id;
+      cin >> id;
+
+      actual_scheme.addBlockInPort(stoul(id));
+    }
+    else if (user_input == "add-out")
+    {
+      string id;
+      cin >> id;
+
+      actual_scheme.addBlockOutPort(stoul(id));
+    }
+    else if (user_input == "rm-in")
+    {
+      string id;
+      cin >> id;
+      string index;
+      cin >> index;
+
+      actual_scheme.removeBlockInPort(stoul(id), stoul(index));
+    }
+    else if (user_input == "rm-out")
+    {
+      string id;
+      cin >> id;
+      string index;
+      cin >> index;
+
+      actual_scheme.removeBlockOutPort(stoul(id), stoul(index));
     }
     else
     {

@@ -23,7 +23,7 @@ enum data_type {t_simple};
 class Port
 {
   protected:
-    int id;
+    int id; // maybe not necessary, ports are now indexed by array index in block
     data_type type;
     std::map<std::string, double> data;
 

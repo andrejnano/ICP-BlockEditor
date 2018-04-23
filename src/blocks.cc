@@ -24,14 +24,48 @@
  * @param input_type data type of input ports
  * @param output_type data type of result
  */
-Block::Block(unsigned new_id, data_type input_type, data_type output_type) : id {new_id}
+Block::Block(unsigned new_id, operation_type_t new_type, data_type input_type, data_type output_type) : id {new_id}
 {
     operation_ = nullptr;
+    this->block_type = new_type;
+    this->in_type = input_type;
+    this->out_type = output_type;
     this->in_ports.push_back(Port(2,t_simple));
-    this->in_ports.push_back(Port(3,t_simple));
+    //this->in_ports.push_back(Port(3,t_simple));
     this->out_ports.push_back(Port(5,t_simple));
 }
 
+/**
+ * @brief Adds new input port to the block
+ */
+void Block::addNewInPort()
+{
+    this->in_ports.push_back(Port(1,this->in_type));
+}
+
+/**
+ * @brief Adds new output port to the block
+ */
+void Block::addNewOutPort()
+{
+    this->out_ports.push_back(Port(1,this->out_type));
+}
+
+/**
+ * @brief Removes input port at specified index in block
+ */
+void Block::removeInPort(unsigned port_index)
+{
+    this->in_ports.erase(this->in_ports.begin() + port_index);
+}
+
+/**
+ * @brief Removes output port at specified index in block
+ */
+void Block::removeOutPort(unsigned port_index)
+{
+    this->out_ports.erase(this->out_ports.begin() + port_index);
+}
 
 /**
  * @brief Sets operation for the block
@@ -107,7 +141,7 @@ void Block::print()
 {
     std::cout << "--------- BLOCK ---------" << std::endl;
     std::cout << "ID: " << this->id << std::endl;
-    // std::cout << "TYPE: " << this->type << std::endl; // @TODO: replace 
+    std::cout << "TYPE: " << this->block_type << std::endl; 
     
     std::cout << "INPUTS:" << std::endl;
     for(unsigned i = 0; i < this->in_ports.size(); i++)

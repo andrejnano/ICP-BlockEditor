@@ -104,16 +104,32 @@ class Block
 
   protected:
     unsigned id;
+    operation_type_t block_type;
+    data_type in_type;
+    data_type out_type;
     std::vector<Port> in_ports;
     std::vector<Port> out_ports;
 
   public:
-    Block(unsigned new_id, data_type input_type, data_type output_type);
+    Block(unsigned new_id, operation_type_t new_type, data_type input_type, data_type output_type);
     
     inline ~Block()
     {
       delete operation_;
     }
+
+    // adds new input port
+    void addNewInPort();
+
+    // adds new output port
+    void addNewOutPort();
+
+    // removes input port
+    void removeInPort(unsigned port_index);
+
+    // adds new output port
+    void removeOutPort(unsigned port_index);
+
     // sets value for single IN port
     void setInPortValue(unsigned port_num, std::string val_name, double new_value);
 

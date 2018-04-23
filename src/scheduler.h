@@ -13,7 +13,7 @@
 #ifndef BLOCKEDITOR_SCHEDULER_H_
 #define BLOCKEDITOR_SCHEDULER_H_
 
-#include <blocks.h>
+#include "blocks.h"
 
 class Scheduler
 {

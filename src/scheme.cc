@@ -48,7 +48,7 @@ void Scheme::print()
 void Scheme::addBlock(operation_type_t new_type, data_type input_type, data_type output_type)
 {
     // creates new block object
-    Block* new_block = new Block(block_id, input_type, output_type);
+    Block* new_block = new Block(block_id, new_type, input_type, output_type);
     
     // sets operation type
     new_block->setOperation(new_type);
@@ -236,4 +236,54 @@ Block* Scheme::getBlockByID(unsigned searched_id)
         }
     }
     return nullptr;
+}
+
+/**
+ * @brief adds new input port to given block
+ * @param block_id identification number of block
+ */
+void Scheme::addBlockInPort(unsigned block_id)
+{
+    if(this->getBlockByID(block_id) != NULL)
+    {
+        this->getBlockByID(block_id)->addNewInPort();
+    }
+}
+
+/**
+ * @brief adds new output port to given block
+ * @param block_id identification number of block
+ */
+void Scheme::addBlockOutPort(unsigned block_id)
+{
+    if(this->getBlockByID(block_id) != NULL)
+    {
+        this->getBlockByID(block_id)->addNewOutPort();
+    }
+}
+
+/**
+ * @brief removes input port in given block
+ * @param block_id identification number of block
+ * @param port_index index of port in given block
+ */
+void Scheme::removeBlockInPort(unsigned block_id, unsigned port_index)
+{
+    if(this->getBlockByID(block_id) != NULL)
+    {
+        this->getBlockByID(block_id)->removeInPort(port_index);
+    }
+}
+
+/**
+ * @brief removes output port in given block
+ * @param block_id identification number of block
+ * @param port_index index of port in given block
+ */
+void Scheme::removeBlockOutPort(unsigned block_id, unsigned port_index)
+{
+    if(this->getBlockByID(block_id) != NULL)
+    {
+        this->getBlockByID(block_id)->removeOutPort(port_index);
+    }
 }
