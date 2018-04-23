@@ -42,6 +42,7 @@ void help()
     << "- sch-load\t Loads actual blocks to scheduler.\n\n"
     << "- sch-print\t Prints ID of blocks stored in scheduler.\n\n"
     << "- check\t Check if actual scheme contains any cycle.\n\n"
+    << "- set-free\t Asks for values of free input ports.\n\n"
     << "- load <schema_path>\t Load schema at the specified path.\n\n" << "- exit\t Exit the application.\n"
     << endl;
 }

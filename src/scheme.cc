@@ -140,19 +140,19 @@ int Scheme::isConnected(unsigned block_id, bool is_input, unsigned port_index)
     {
         if(this->getBlockByID(block_id) == NULL)
         {
-            std::cout << "*conection port NOT found*" << std::endl;
+            //std::cout << "*conection port NOT found*" << std::endl;
             return -1;
         }
         if(this->getBlockByID(block_id)->getInSize() <= port_index)
         {
-            std::cout << "*conection port NOT found*" << std::endl;
+            //std::cout << "*conection port NOT found*" << std::endl;
             return -1;
         }
         for(unsigned i = 0; i < this->wires.size(); i++)
         {
             if(this->wires[i].id_in == block_id && this->wires[i].index_in == port_index)
             {
-                std::cout << "*conection found*" << std::endl;
+                //std::cout << "*conection found*" << std::endl;
                 return 0;
             }
         }
@@ -161,25 +161,25 @@ int Scheme::isConnected(unsigned block_id, bool is_input, unsigned port_index)
     {
         if(this->getBlockByID(block_id) == NULL)
         {
-            std::cout << "*conection port NOT found*" << std::endl;
+            //std::cout << "*conection port NOT found*" << std::endl;
             return -1;
         }
         if(this->getBlockByID(block_id)->getOutSize() <= port_index)
         {
-            std::cout << "*conection port NOT found*" << std::endl;
+            //std::cout << "*conection port NOT found*" << std::endl;
             return -1;
         }
         for(unsigned i = 0; i < this->wires.size(); i++)
         {
             if(this->wires[i].id_out == block_id && this->wires[i].index_out == port_index)
             {
-                std::cout << "*conection found*" << std::endl;
+                //std::cout << "*conection found*" << std::endl;
                 return 0;
             }
         }
 
     }
-    std::cout << "*conection NOT found*" << std::endl;
+    //std::cout << "*conection NOT found*" << std::endl;
     return 1;
 }
 
@@ -341,6 +341,31 @@ bool Scheme::checkCyclesRecursion(Block* actual_block, std::vector<unsigned> vis
         }
     }
     return ret;  
+}
+
+/**
+ * @brief calls function to get input from user for every free input port
+ */
+void Scheme::setFreeInputs()
+{
+    for(unsigned b = 0; b < blocks.size(); b++)
+    {
+        for(unsigned p = 0; p < this->blocks[b]->getInSize(); p++)
+        {
+            if(this->isConnected(this->blocks[b]->getBlockID(), true, p) == 1)// if port is not connected
+            {
+                this->blocks[b]->setInPortValue(p,"val", this->getUserValue(this->blocks[b]->getBlockID(), p));
+            }
+        }
+    }
+}
+
+double Scheme::getUserValue(unsigned block_id, unsigned port_index)
+{
+    std::cout << "Set the value of port " << port_index << " in block " << block_id << ": ";
+    std::string val;
+    std::cin >> val; 
+    return std::stod(val);
 }
 
 /**

@@ -233,6 +233,10 @@ void command_menu()
         std::cout << "  CHECK FAILED!" << std::endl;
       }
     }
+    else if (user_input == "set-free")
+    {
+      actual_scheme.setFreeInputs();
+    }
     else
     {
       cout << "Uknown command: " << CL::BOLD << user_input << CL::ENDC << endl;
