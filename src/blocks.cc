@@ -134,7 +134,7 @@ void Operation::execute(std::vector<Port> &inputs, std::vector<Port> &outputs)
 {
     double result = expression(inputs);
 
-    for(int i = 0; i < outputs.size(); i++)
+    for(unsigned i = 0; i < outputs.size(); i++)
     {
         outputs[i].setValue("val", result);
     }
@@ -148,7 +148,7 @@ double SumOp::expression(std::vector<Port> inputs)
 {
     double sum {0.0};
 
-    for(int i = 0; i < inputs.size(); i++)
+    for(unsigned i = 0; i < inputs.size(); i++)
     {
         sum += inputs[i].getValue("val");
     }
@@ -163,7 +163,7 @@ double AvgOp::expression(std::vector<Port> inputs)
 {
     double sum {0.0};
 
-    for(int i = 0; i < inputs.size(); i++)
+    for(unsigned i = 0; i < inputs.size(); i++)
     {
         sum += inputs[i].getValue("val");
     }
@@ -178,7 +178,7 @@ double MinOp::expression(std::vector<Port> inputs)
 {
     double min = inputs[0].getValue("val");
 
-    for(int i = 1; i < inputs.size(); i++)
+    for(unsigned i = 1; i < inputs.size(); i++)
     {
         if (min > inputs[i].getValue("val"))
             min = inputs[i].getValue("val");
@@ -194,7 +194,7 @@ double MaxOp::expression(std::vector<Port> inputs)
 {
     double max = inputs[0].getValue("val");
 
-    for(int i = 1; i < inputs.size(); i++)
+    for(unsigned i = 1; i < inputs.size(); i++)
     {
         if (max < inputs[i].getValue("val"))
             max = inputs[i].getValue("val");
