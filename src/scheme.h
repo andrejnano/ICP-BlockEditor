@@ -82,6 +82,9 @@ class Scheme
     void setFreeInputs();
     double getUserValue(unsigned block_id, unsigned port_index);
 
+    // makes next step of computation - computes next prepared block
+    void step();
+
     // cooperation with scheduler
     void loadIntoScheduler();
     void printScheduler();

@@ -237,6 +237,10 @@ void command_menu()
     {
       actual_scheme.setFreeInputs();
     }
+    else if (user_input == "step")
+    {
+      actual_scheme.step();
+    }
     else
     {
       cout << "Uknown command: " << CL::BOLD << user_input << CL::ENDC << endl;

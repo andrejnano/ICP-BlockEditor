@@ -19,7 +19,7 @@ class Scheduler
 {
   private:
     //Block* current_block;
-    std::vector<Block*> blocks;
+    std::list<Block*> blocks;
 
   public:
     //Scheduler();
@@ -28,8 +28,11 @@ class Scheduler
     void addBlock(Block *scheme_block);
     void print();
 
-    void iterate_once();
-    void iterate_all();
+    // returns pointer to next prepared (with all inputs set) block
+    Block* getNext();
+
+    //void iterate_once();
+    //void iterate_all();
     //Block* current_block();
 
 };

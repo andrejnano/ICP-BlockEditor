@@ -109,13 +109,18 @@ bool Scheme::connect(unsigned out_block_id, unsigned out_port_index, unsigned in
 {
     if(this->getBlockByID(out_block_id) == nullptr || this->getBlockByID(in_block_id) == nullptr)
     {
-        std::cout << "*conection NOT made*" << std::endl;
+        std::cout << "Error - block does not exist!" << std::endl;
         return false;// ID of block does not exist
     }
     if(this->getBlockByID(out_block_id)->getOutSize() <= out_port_index || this->getBlockByID(in_block_id)->getInSize() <= in_port_index)
     {
-        std::cout << "*conection NOT made*" << std::endl;
+        std::cout << "Error - block does not have such port!" << std::endl;
         return false;// index of port is out of vector               
+    }
+    if(isConnected(out_block_id, false, out_port_index) != 1 || isConnected(in_block_id, true, in_port_index) != 1)
+    {
+        std::cout << "Error - port is already connected!" << std::endl;
+        return false;// port is already connected 
     }
     wire tmp;
     tmp.id_out = out_block_id;
@@ -209,7 +214,7 @@ void Scheme::propagate(unsigned block_id)
             }
             if(found == false)
             {
-                std::cout << "RESULT AT FREE OUT PORT " << p << "IN BLOCK " << block_id << ": " << result << std::endl;
+                std::cout << "RESULT AT FREE OUT PORT " << p << " IN BLOCK " << block_id << ": " << result << std::endl;
             }
         }
     }
@@ -385,4 +390,20 @@ void Scheme::loadIntoScheduler()
 void Scheme::printScheduler()
 {
     this->scheduler.print();
+}
+
+/**
+ * @brief gets next prepared block from scheduler and computes it
+ */
+void Scheme::step()
+{
+    Block* next_block = this->scheduler.getNext();
+    if(next_block == NULL)
+    {
+        std::cout << "all blocks were computed!" << std::endl;
+    }
+    else
+    {
+        this->computeBlock(next_block->getBlockID()); // computeBlock function contains also propagating result
+    }
 }
