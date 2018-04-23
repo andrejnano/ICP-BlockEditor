@@ -110,17 +110,17 @@ bool Scheme::connect(unsigned out_block_id, unsigned out_port_index, unsigned in
 {
     if(this->getBlockByID(out_block_id) == nullptr || this->getBlockByID(in_block_id) == nullptr)
     {
-        std::cout << CL::FAIL << "*conection NOT made*" << CL::ENDC << std::endl;
+        std::cout << CL::FAIL << "block does not exist!" << CL::ENDC << std::endl;
         return false;// ID of block does not exist
     }
     if(this->getBlockByID(out_block_id)->getOutSize() <= out_port_index || this->getBlockByID(in_block_id)->getInSize() <= in_port_index)
     {
-        std::cout << CL::FAIL << "*conection NOT made*" << CL::ENDC << std::endl;
+        std::cout << CL::FAIL << "index is out of vector!" << CL::ENDC << std::endl;
         return false;// index of port is out of vector               
     }
     if(isConnected(out_block_id, false, out_port_index) != 1 || isConnected(in_block_id, true, in_port_index) != 1)
     {
-        std::cout << "Error - port is already connected!" << std::endl;
+        std::cout << CL::FAIL << "port is already connected!" << CL::ENDC << std::endl;
         return false;// port is already connected 
     }
     wire tmp;
@@ -215,7 +215,7 @@ void Scheme::propagate(unsigned block_id)
             }
             if(found == false)
             {
-                std::cout << "~ RESULT AT FREE OUT PORT " << p << "IN BLOCK " << block_id << ": " << result << std::endl;
+                std::cout << CL::OKBLUE << "~ RESULT AT FREE OUT PORT " << p << " IN BLOCK " << block_id << ": " << result << CL::ENDC << std::endl;
             }
         }
     }

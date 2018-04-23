@@ -226,11 +226,11 @@ void command_menu()
     {
       if(actual_scheme.checkCycles())
       {
-        std::cout << "  NO CYCLES DETECTED!" << std::endl;
+        std::cout << CL::OKGREEN << CL::BOLD << "  NO CYCLES DETECTED!" << CL::ENDC << std::endl;
       }
       else
       {
-        std::cout << "  CHECK FAILED!" << std::endl;
+        std::cout << CL::FAIL << CL::BOLD << "  CHECK FAILED!" << CL::ENDC << std::endl;
       }
     }
     else if (user_input == "set-free")
