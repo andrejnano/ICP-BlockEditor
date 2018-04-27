@@ -151,6 +151,13 @@ void command_menu()
         cout << "Unrecognized block type! Must be 'sum', 'avg', min' or 'max'" << endl;
       }
     }
+    else if (user_input == "rm")
+    {
+      string a;
+      cin >> a;
+
+      actual_scheme.removeBlock(stoul(a));
+    }
     else if (user_input == "connect")
     {
       string a;
@@ -163,6 +170,19 @@ void command_menu()
       cin >> d;
 
       actual_scheme.connect(stoul(a), stoul(b), stoul(c), stoul(d));
+    }
+    else if (user_input == "rm-wire")
+    {
+      string a;
+      cin >> a;
+      string b;
+      cin >> b;
+      string c;
+      cin >> c;
+      string d;
+      cin >> d;
+
+      actual_scheme.removeConnection(stoul(a), stoul(b), stoul(c), stoul(d));
     }
     else if (user_input == "set")
     {

@@ -55,6 +55,44 @@ void Scheme::addBlock(operation_type_t new_type, data_type_t input_type, data_ty
 }
 
 /**
+ * @brief removes block with given ID
+ * @param block_id ID of block which should be removed
+ */
+void Scheme::removeBlock(unsigned block_id)
+{
+    // remove wires
+    bool removed = true;
+    while(removed == true)
+    {
+        removed = false;
+        std::vector<wire>::iterator it_wire = this->wires.begin();
+        for(; it_wire != this->wires.end(); it_wire++)
+        {
+            if((*it_wire).id_out == block_id || (*it_wire).id_in == block_id)
+            {
+                removed = true;
+                break;
+            }
+        }
+        if(removed == true)
+        {
+            this->wires.erase(it_wire);
+        }
+    }
+
+    // remove blocks
+    std::vector<Block*>::iterator it = this->blocks.begin();
+    for(; it != this->blocks.end(); it++)
+    {
+        if((*it)->getBlockID() == block_id)
+        {
+            break;
+        }
+    }
+    this->blocks.erase(it);
+}
+
+/**
  * @brief calls compute function for given block
  * @param block_id identification number of block
  */
@@ -131,6 +169,26 @@ bool Scheme::connect(unsigned out_block_id, unsigned out_port_index, unsigned in
     this->wires.push_back(tmp);
     std::cout << CL::OKGREEN <<  "*conection made*" << CL::ENDC << std::endl;
     return true;
+}
+
+/**
+ * @brief removes connection
+ * @param out_block_id id of source block
+ * @param out_port_index index of output port in block
+ * @param in_block_id id of targe block
+ * @param in_port_index index of input port in block
+ */
+void Scheme::removeConnection(unsigned out_block_id, unsigned out_port_index, unsigned in_block_id, unsigned in_port_index)
+{
+    std::vector<wire>::iterator it = this->wires.begin();
+    for(; it != this->wires.end(); it++)
+    {
+        if((*it).id_out == out_block_id && (*it).index_out == out_port_index && (*it).id_in == in_block_id && (*it).index_in == in_port_index)
+        {
+            break;
+        }
+    }
+    this->wires.erase(it);
 }
 
 /**

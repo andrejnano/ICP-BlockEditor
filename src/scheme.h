@@ -43,6 +43,9 @@ class Scheme
 
     // adds new block to the scheme
     void addBlock(operation_type_t new_type, data_type_t input_type, data_type_t output_type);
+
+    // removes block from the scheme
+    void removeBlock(unsigned block_id);
   
     // sets a new value for a specific port
     void setBlockPortValue(unsigned block_id, unsigned port_num, std::string val_name, double new_value);
@@ -53,8 +56,11 @@ class Scheme
     // executes the computation for the block and propagates the result
     void computeBlock(unsigned block_id);
     
-    // connects ports from 1 block to another
+    // connects ports from one block to another
     bool connect(unsigned out_block_id, unsigned out_port_index, unsigned in_block_id, unsigned in_port_index);
+
+    // removes connection
+    void removeConnection(unsigned out_block_id, unsigned out_port_index, unsigned in_block_id, unsigned in_port_index);
     
     // checks, if the port is connected
     int isConnected(unsigned block_id, bool is_input, unsigned port_index);
