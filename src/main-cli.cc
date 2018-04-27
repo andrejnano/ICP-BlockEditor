@@ -14,6 +14,7 @@
 
 // std libraries
 #include <iostream>
+#include <iomanip>
 #include <vector>
 #include <map>
 #include <algorithm>
@@ -34,7 +35,9 @@ using std::string;
 using std::stoul;
 using std::stod;
 
+
 void command_menu();
+
 
 /**
  * @brief Main entry point
@@ -44,46 +47,9 @@ void command_menu();
  */
 int main(int argc, char **argv)
 {
-
-  // testing code
-
-  /*Port myPort(1,t_simple);
-  myPort.print();
-  myPort.setValue("val",1.25);
-  myPort.print();*/
-
-  /*Block soucet1(b_sum,1012,t_simple,t_simple);
-  soucet1.print();
-  soucet1.setPortValue(0,"val",2.26);
-  soucet1.setPortValue(1,"val",1.15);
-  soucet1.print();
-  soucet1.compute();
-  soucet1.print();*/
-
-  /*Scheme a("Schema A");
-  a.print();
-  a.addBlock(MAX, t_simple, t_simple);
-  a.setBlockPortValue(1001, 0, "val", 1.25);
-  a.setBlockPortValue(1001, 1, "val", 1.75);
-  a.computeBlock(1001);
-
-  a.addBlock(COUNT, t_simple, t_simple);
-  a.setBlockPortValue(1002, 0, "val", 9);
-
-  a.connect(1001, 0, 1002, 1);
-  a.propagate(1001);
-
-  a.computeBlock(1002);
-  
-  a.print();
-  a.propagate(1002);*/
-  
-  // end of testing code
-
-  //Scheme actual_scheme("My Scheme");
-  //Scheduler computation_scheduler();
-  cout << CL::BOLD << "BlockEditor started" << CL::ENDC << endl;
-
+  headline(1, "BlockEditor 1.0");
+  headline(0, "Commands: ");
+  paragraph("Help  Show help and usage info.\nPrint  Print actual scheme.\nLoad <scheme>  Load the scheme.\nExit  Leave the program.\n");
   command_menu();
 
   return SUCCESS;

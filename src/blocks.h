@@ -39,8 +39,8 @@ enum operation_type_t
 class Operation
 {
   public:
-    Operation() {};
-    virtual ~Operation() {};  // needs to be virtual, as the delete is called on sub class
+    Operation() {}
+    virtual ~Operation() {} // needs to be virtual, as the delete is called on sub class
 
     // outside interface for executing
     void execute(std::vector<Port> &inputs, std::vector<Port> &outputs);

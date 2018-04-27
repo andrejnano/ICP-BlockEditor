@@ -8,13 +8,19 @@
 
 
 SOURCE_DIR = src
-EXECUTABLE = blockeditor
+EXECUTABLE_GUI = blockeditor
+EXECUTABLE_CLI = blockeditor-cli
 
 all: build
 
 build:
 	$(MAKE) -C $(SOURCE_DIR)
-	mv ./src/blockeditor ./blockeditor
 
 run:
-	./$(EXECUTABLE)
+	./$(EXECUTABLE_GUI)
+
+run-cli:
+	./$(EXECUTABLE_CLI)
+
+# doxygen:
+# 	doxygen ./$(SOURCE_DIR)/Doxyfile

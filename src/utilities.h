@@ -58,5 +58,14 @@ void error(err_code_t error_code, std::string error_msg, bool do_exit=true);
 // show help and usage informations
 void help();
 
+// printout separator line
+void separator(int chosen_char);
+
+// printout headline
+void headline(int chosen_char, std::string headline_text);
+
+// printout paragraph offset text
+void paragraph(std::string text);
+
 
 #endif // BLOCKEDITOR_MISC_H_
