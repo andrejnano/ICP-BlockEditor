@@ -159,6 +159,38 @@ bool Block::isPrepared()
 }
 
 /**
+ * @brief gets type of block
+ * @return string representating block type, empty string when not recognized
+ */
+std::string Block::getStringType()
+{
+    if(this->block_type == SUM)
+    {
+        return "sum";
+    }
+    else if(this->block_type == AVG)
+    {
+        return "avg";
+    }
+    else if(this->block_type == MIN)
+    {
+        return "min";
+    }
+    else if(this->block_type == MAX)
+    {
+        return "max";
+    }
+    else if(this->block_type == COUNT)
+    {
+        return "count";
+    }
+    else
+    {
+        return "";
+    }
+}
+
+/**
  * @brief prints information about block and call print functions for ports
  */
 void Block::print()

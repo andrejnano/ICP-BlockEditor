@@ -14,6 +14,8 @@
 
 // std libraries
 #include <iostream>
+#include <sstream>
+#include <string>
 #include <vector>
 #include <map>
 #include <algorithm>
@@ -111,15 +113,37 @@ void command_menu()
       cout << "Going to exit ..." << endl;
       exit(SUCCESS);
     }
+    else if (user_input == "save")
+    {
+      string schema_path;
+      cin >> schema_path;
+
+    cout << "Going to save scheme into '" << CL::BOLD << schema_path << CL::ENDC << "'." << endl;
+      actual_scheme.saveScheme(schema_path);
+    }
     else if (user_input == "load")
     {
       string schema_path;
       cin >> schema_path;
       
-      cout << "Going to load '" << CL::BOLD << schema_path << CL::ENDC << "'." << endl;
+      cout << "Going to load scheme from '" << CL::BOLD << schema_path << CL::ENDC << "'." << endl;
+
+      if(actual_scheme.loadScheme(schema_path) == true)
+      {
+        cout << CL::OKGREEN << "Scheme was successfully loaded" << CL::ENDC << endl;
+      }
+      else
+      {
+        cout << CL::FAIL << "Error - scheme was not load!" << CL::ENDC << endl;
+      }
+
       // Loader();
       // schema loaded
       // -> execute
+    }
+    else if (user_input == "inc-id")
+    {
+      actual_scheme.incrementID();
     }
     else if (user_input == "print")
     {

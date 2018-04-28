@@ -30,6 +30,8 @@ void help()
 {
   cout << "\n" << CL::BOLD << CL::UNDERLINE << "BlockEditor" << CL::ENDC << "\n\n"
     << "Description will go here\n\n" << "Commands: \n\n" << "- help\t Show help and usage info.\n\n"
+    << "- save <schema_path>\t Save schema to the specified path.\n\n"
+    << "- load <schema_path>\t Load schema at the specified path.\n\n"
     << "- print\t Print actual scheme.\n\n"
     << "- add <block_type>\t Add new block of specified type.\n\n"
     << "- rm <block_id>\t Removes block with given ID.\n\n"
@@ -46,6 +48,6 @@ void help()
     << "- check\t Check if actual scheme contains any cycle.\n\n"
     << "- set-free\t Asks for values of free input ports.\n\n"
     << "- step\t Computes next prepared block.\n\n"
-    << "- load <schema_path>\t Load schema at the specified path.\n\n" << "- exit\t Exit the application.\n"
+    << "- exit\t Exit the application.\n"
     << endl;
 }

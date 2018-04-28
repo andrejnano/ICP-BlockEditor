@@ -18,6 +18,7 @@
 #include "blocks.h"
 #include "scheduler.h"
 
+#define FIRST_ID 1001
 
 struct wire{
     unsigned id_out;    // ID of output block (source)
@@ -39,7 +40,7 @@ class Scheme
     Scheduler scheduler;
 
   public:
-    Scheme(std::string new_name) : name {new_name}, block_id {1001} {}
+    Scheme(std::string new_name) : name {new_name}, block_id {FIRST_ID} {}
 
     // adds new block to the scheme
     void addBlock(operation_type_t new_type, data_type_t input_type, data_type_t output_type);
@@ -95,6 +96,12 @@ class Scheme
     void loadIntoScheduler();
     void printScheduler();
 
+    // loading and saving scheme
+    void saveScheme(std::string file_path);
+    bool loadScheme(std::string file_path);
+
+    // increment actual ID value
+    void incrementID();
 };
 
 

@@ -10,6 +10,7 @@
  * 
  *  
  */
+#include <fstream>
 
 #include "scheme.h"
 #include "blocks.h"
@@ -433,7 +434,7 @@ double Scheme::getUserValue(unsigned block_id, unsigned port_index)
 }
 
 /**
- * @brief loads pointer to blocks into scheduler
+ * @brief ds pointer to blocks into scheduler
  */
 void Scheme::loadIntoScheduler()
 {
@@ -465,4 +466,117 @@ void Scheme::step()
     {
         this->computeBlock(next_block->getBlockID()); // computeBlock function contains also propagating result
     }
+}
+
+/**
+ * @brief saves into file commands describing scheme
+ * @param file_path path to file
+ */
+void Scheme::saveScheme(std::string file_path)
+{
+    std::ofstream file (file_path);
+
+    // blocks
+    for(unsigned i = 0; i < this->blocks.size(); i++)
+    {
+        file << this->blocks[i]->getStringType() << std::endl;
+        file << this->blocks[i]->getBlockID() << std::endl;
+        file << this->blocks[i]->getInSize() << std::endl;
+        file << this->blocks[i]->getOutSize() << std::endl;
+    }
+    // connections
+    for(unsigned i = 0; i < this->wires.size(); i++)
+    {
+        file << "wire" << std::endl;
+        file << this->wires[i].id_out << std::endl;
+        file << this->wires[i].index_out << std::endl;
+        file << this->wires[i].id_in << std::endl;
+        file << this->wires[i].index_in << std::endl;
+    }
+
+    file.close();
+}
+
+/**
+ * @brief loads scheme from file with commands
+ * @param file_path path to file
+ */
+bool Scheme::loadScheme(std::string file_path)
+{
+    std::string opcode, a, b, c, d;
+    unsigned id, ins, outs;
+    std::ifstream file (file_path);
+    if (file.is_open())
+    {
+        while ( getline (file, opcode) )
+        {
+            std::cout << opcode << std::endl;
+
+            getline (file, a);
+            getline (file, b);
+            getline (file, c);
+            if(opcode == "wire")
+            {
+                getline (file, d);
+                this->connect(std::stoul(a), std::stoul(b), std::stoul(c), std::stoul(d));
+            }
+            else
+            {
+                id = std::stoul(a);
+                ins = std::stoul(b);
+                outs = std::stoul(c);
+                Block* new_block;
+                if(opcode == "sum")
+                {
+                    new_block = new Block(id, SUM, t_simple, t_simple);
+                    new_block->setOperation(SUM);
+                }
+                else if(opcode == "avg")
+                {
+                    new_block = new Block(id, AVG, t_simple, t_simple);
+                    new_block->setOperation(AVG);
+                }
+                else if(opcode == "min")
+                {
+                    new_block = new Block(id, AVG, t_simple, t_simple);
+                    new_block->setOperation(AVG);
+                }
+                else if(opcode == "max")
+                {
+                    new_block = new Block(id, AVG, t_simple, t_simple);
+                    new_block->setOperation(AVG);
+                }
+                else
+                {
+                    std::cout << "Unrecognized block type! Must be 'sum', 'avg', min' or 'max'" << std::endl;
+                    file.close();
+                    return false;
+                }
+
+                // same for all block types
+                this->blocks.push_back(new_block);
+                this->block_id = id + 1;
+
+                // set number of ports
+                for(unsigned i = ins; i > 2; i--)
+                {
+                    this->addBlockInPort(id);
+                }
+                for(unsigned i = outs; i > 1; i--)
+                {
+                    this->addBlockOutPort(id);
+                }
+            }
+        }
+        file.close();
+    }
+    return true;
+}
+
+/**
+ * @brief increments actual ID value
+ */
+void Scheme::incrementID()
+{
+    this->block_id++;
 }
