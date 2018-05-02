@@ -27,6 +27,7 @@
 #include "blocks.h"
 #include "scheme.h"
 #include "scheduler.h"
+#include "loader.h"
 
 // commonly used std objects.. really no need to be careful about poluting the namespace
 using std::cout;
@@ -61,7 +62,9 @@ int main(int argc, char **argv)
 /* handle input, decide what to do */
 void command_menu()
 {
-  Scheme actual_scheme("My Scheme");
+  Scheme* active_scheme = new Scheme("My Scheme");
+  Loader* loader = new Loader();
+
   string user_input;
 
   while(true)
@@ -83,9 +86,9 @@ void command_menu()
     {
       string schema_path;
       cin >> schema_path;
-
-    cout << "Going to save scheme into '" << CL::BOLD << schema_path << CL::ENDC << "'." << endl;
-      actual_scheme.saveScheme(schema_path);
+      
+      cout << "Going to save scheme into '" << CL::BOLD << schema_path << CL::ENDC << "'." << endl;
+      loader->saveScheme(schema_path, active_scheme);
     }
     else if (user_input == "load")
     {
@@ -94,7 +97,7 @@ void command_menu()
       
       cout << "Going to load scheme from '" << CL::BOLD << schema_path << CL::ENDC << "'." << endl;
 
-      if(actual_scheme.loadScheme(schema_path) == true)
+      if(active_scheme = loader->loadScheme(schema_path))
       {
         cout << CL::OKGREEN << "Scheme was successfully loaded" << CL::ENDC << endl;
       }
@@ -102,18 +105,14 @@ void command_menu()
       {
         cout << CL::FAIL << "Error - scheme was not load!" << CL::ENDC << endl;
       }
-
-      // Loader();
-      // schema loaded
-      // -> execute
     }
     else if (user_input == "inc-id")
     {
-      actual_scheme.incrementID();
+      active_scheme->incrementID();
     }
     else if (user_input == "print")
     {
-      actual_scheme.print();
+      active_scheme->print();
     }
     else if (user_input == "add")
     {
@@ -122,19 +121,19 @@ void command_menu()
 
       if(type_of_block == "sum")
       {
-        actual_scheme.addBlock(SUM, t_simple, t_simple);
+        active_scheme->addBlock(SUM, t_simple, t_simple);
       }
       else if(type_of_block == "avg")
       {
-        actual_scheme.addBlock(AVG, t_simple, t_simple);
+        active_scheme->addBlock(AVG, t_simple, t_simple);
       }
       else if(type_of_block == "min")
       {
-        actual_scheme.addBlock(MIN, t_simple, t_simple);
+        active_scheme->addBlock(MIN, t_simple, t_simple);
       }
       else if(type_of_block == "max")
       {
-        actual_scheme.addBlock(MAX, t_simple, t_simple);
+        active_scheme->addBlock(MAX, t_simple, t_simple);
       }
       else
       {
@@ -146,7 +145,7 @@ void command_menu()
       string a;
       cin >> a;
 
-      actual_scheme.removeBlock(stoul(a));
+      active_scheme->removeBlock(stoul(a));
     }
     else if (user_input == "connect")
     {
@@ -159,7 +158,7 @@ void command_menu()
       string d;
       cin >> d;
 
-      actual_scheme.connect(stoul(a), stoul(b), stoul(c), stoul(d));
+      active_scheme->connect(stoul(a), stoul(b), stoul(c), stoul(d));
     }
     else if (user_input == "rm-wire")
     {
@@ -172,7 +171,7 @@ void command_menu()
       string d;
       cin >> d;
 
-      actual_scheme.removeConnection(stoul(a), stoul(b), stoul(c), stoul(d));
+      active_scheme->removeConnection(stoul(a), stoul(b), stoul(c), stoul(d));
     }
     else if (user_input == "set")
     {
@@ -183,28 +182,28 @@ void command_menu()
       string value;
       cin >> value;
 
-      actual_scheme.setBlockPortValue(stoul(id), stoul(index), "val", stod(value));
+      active_scheme->setBlockPortValue(stoul(id), stoul(index), "val", stod(value));
     }
     else if (user_input == "compute")
     {
       string id;
       cin >> id;
 
-      actual_scheme.computeBlock(stoul(id));
+      active_scheme->computeBlock(stoul(id));
     }
     else if (user_input == "add-in")
     {
       string id;
       cin >> id;
 
-      actual_scheme.addBlockInPort(stoul(id));
+      active_scheme->addBlockInPort(stoul(id));
     }
     else if (user_input == "add-out")
     {
       string id;
       cin >> id;
 
-      actual_scheme.addBlockOutPort(stoul(id));
+      active_scheme->addBlockOutPort(stoul(id));
     }
     else if (user_input == "rm-in")
     {
@@ -213,7 +212,7 @@ void command_menu()
       string index;
       cin >> index;
 
-      actual_scheme.removeBlockInPort(stoul(id), stoul(index));
+      active_scheme->removeBlockInPort(stoul(id), stoul(index));
     }
     else if (user_input == "rm-out")
     {
@@ -222,19 +221,19 @@ void command_menu()
       string index;
       cin >> index;
 
-      actual_scheme.removeBlockOutPort(stoul(id), stoul(index));
+      active_scheme->removeBlockOutPort(stoul(id), stoul(index));
     }
     else if (user_input == "sch-load")
     {
-      actual_scheme.loadIntoScheduler();
+      active_scheme->loadIntoScheduler();
     }
     else if (user_input == "sch-print")
     {
-      actual_scheme.printScheduler();
+      active_scheme->printScheduler();
     }
     else if (user_input == "check")
     {
-      if(actual_scheme.checkCycles())
+      if(active_scheme->checkCycles())
       {
         std::cout << CL::OKGREEN << CL::BOLD << "  NO CYCLES DETECTED!" << CL::ENDC << std::endl;
       }
@@ -245,11 +244,11 @@ void command_menu()
     }
     else if (user_input == "set-free")
     {
-      actual_scheme.setFreeInputs();
+      active_scheme->setFreeInputs();
     }
     else if (user_input == "step")
     {
-      actual_scheme.step();
+      active_scheme->step();
     }
     else
     {

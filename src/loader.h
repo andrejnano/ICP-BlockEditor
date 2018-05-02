@@ -14,4 +14,19 @@
 #ifndef BLOCKEDITOR_LOADER_H_
 #define BLOCKEDITOR_LOADER_H_
 
+#include "scheme.h"
+
+class Loader
+{
+  public:
+    // creates new blank scheme
+    Scheme * createScheme(std::string scheme_name);
+
+    // loads and returns a scheme from the file_path
+    Scheme * loadScheme(std::string file_path);
+
+    // saves the *scheme to the file_path
+    bool saveScheme(std::string file_path, Scheme *scheme);
+};
+
 #endif
