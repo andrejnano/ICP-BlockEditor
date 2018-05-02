@@ -408,3 +408,8 @@ void Scheme::step()
         this->computeBlock(next_block->getBlockID()); // computeBlock function contains also propagating result
     }
 }
+
+std::string Scheme::getName()
+{
+    return this->name;
+}

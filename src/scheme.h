@@ -89,6 +89,9 @@ class Scheme
     void loadIntoScheduler();
     void printScheduler();
 
+    // return the scheme name
+    std::string getName();
+
 };
 
 

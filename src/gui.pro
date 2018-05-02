@@ -4,11 +4,13 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui widgets
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+CONFIG += c++11
 
-QMAKE_CXXFLAGS += -std=c++11
+# for mac-os-x, forbid creation of app subdirectories
+CONFIG -= app_bundle
+
 TARGET = ../blockeditor
 TEMPLATE = app
 
@@ -33,6 +35,7 @@ SOURCES += \
         scheduler.cc \
         scheme.cc \
         utilities.cc \
+    visualblock.cc
 
 HEADERS += \
         blocks.h \
@@ -42,6 +45,7 @@ HEADERS += \
         scheduler.h \
         scheme.h \
         utilities.h \
+    visualblock.h
 
 FORMS += \
         mainwindow.ui
