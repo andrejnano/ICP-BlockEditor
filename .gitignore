@@ -31,12 +31,14 @@
 *.out
 *.app
 
+# vscode specific
 .vscode/settings.json
-
-src/blockeditor
-
-blockeditor
-
 .vscode/c_cpp_properties.json
 
+# executables
+src/blockeditor
+blockeditor
 blockeditor-cli
+
+# documentation 
+doc

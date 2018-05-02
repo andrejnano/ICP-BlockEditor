@@ -159,6 +159,9 @@ class Block
 
     // returns true if block has set values in all input port
     bool isPrepared();
+
+    // return string representating type of block
+    std::string getStringType();
 };
 
 

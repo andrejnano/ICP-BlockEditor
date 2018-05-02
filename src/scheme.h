@@ -18,6 +18,7 @@
 #include "blocks.h"
 #include "scheduler.h"
 
+#define FIRST_ID 1001
 
 struct wire{
     unsigned id_out;    // ID of output block (source)
@@ -39,10 +40,13 @@ class Scheme
     Scheduler scheduler;
 
   public:
-    Scheme(std::string new_name) : name {new_name}, block_id {1001} {}
+    Scheme(std::string new_name) : name {new_name}, block_id {FIRST_ID} {}
 
     // adds new block to the scheme
     void addBlock(operation_type_t new_type, data_type_t input_type, data_type_t output_type);
+
+    // removes block from the scheme
+    void removeBlock(unsigned block_id);
   
     // sets a new value for a specific port
     void setBlockPortValue(unsigned block_id, unsigned port_num, std::string val_name, double new_value);
@@ -53,8 +57,11 @@ class Scheme
     // executes the computation for the block and propagates the result
     void computeBlock(unsigned block_id);
     
-    // connects ports from 1 block to another
+    // connects ports from one block to another
     bool connect(unsigned out_block_id, unsigned out_port_index, unsigned in_block_id, unsigned in_port_index);
+
+    // removes connection
+    void removeConnection(unsigned out_block_id, unsigned out_port_index, unsigned in_block_id, unsigned in_port_index);
     
     // checks, if the port is connected
     int isConnected(unsigned block_id, bool is_input, unsigned port_index);
@@ -92,6 +99,12 @@ class Scheme
     // return the scheme name
     std::string getName();
 
+    // loading and saving scheme
+    void saveScheme(std::string file_path);
+    bool loadScheme(std::string file_path);
+
+    // increment actual ID value
+    void incrementID();
 };
 
 
