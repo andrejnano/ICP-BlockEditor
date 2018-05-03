@@ -77,6 +77,9 @@ public:
     // bind some existing scheme to this scheduler
     void bindScheme(Scheme* scheme);
 
+    // current scheme getter
+    Scheme* currentScheme();
+
     // reloads all the blocks from the scheme into the queue
     void resetQueue();
 

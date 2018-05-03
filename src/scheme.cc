@@ -45,7 +45,7 @@ void Scheme::print()
 void Scheme::addBlock(operation_type_t new_type, data_type_t input_type, data_type_t output_type)
 {
     // creates new block object
-    Block* new_block = new Block(block_id, new_type, input_type, output_type);
+    Block* new_block = new Block(last_block_id, new_type, input_type, output_type);
     
     // sets operation type
     new_block->setOperation(new_type);
@@ -53,18 +53,19 @@ void Scheme::addBlock(operation_type_t new_type, data_type_t input_type, data_ty
     // adds to the scheme
     this->blocks.push_back(new_block);
 
-    block_id++;
+    last_block_id++;
 }
 
 /**
  * @brief removes block with given ID
  * @param block_id ID of block which should be removed
+ * TODO: refactor
  */
 void Scheme::removeBlock(unsigned block_id)
 {
     // remove wires
     bool removed = true;
-    while(removed == true)
+    while(removed)
     {
         removed = false;
         std::vector<wire>::iterator it_wire = this->wires.begin();
@@ -357,26 +358,9 @@ double Scheme::getUserValue(unsigned block_id, unsigned port_index)
     return std::stod(val);
 }
 
-/**
- * @brief prints blocks stored in scheduler
- */
-void Scheme::printScheduler()
-{
-    this->scheduler.print();
-}
 
-
-// returns the name.. @TODO: fix
+// returns the name
 std::string Scheme::getName()
 {
-    return this->name;
-}
-
-
-/**
- * @brief increments actual ID value
- */
-void Scheme::incrementID()
-{
-    this->block_id++;
+    return name;
 }

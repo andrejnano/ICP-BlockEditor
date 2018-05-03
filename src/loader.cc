@@ -80,7 +80,7 @@ Scheme * Loader::loadScheme(std::string file_path)
 
                 // same for all block types
                 new_scheme->blocks.push_back(new_block);
-                new_scheme->block_id = id + 1; // TODO: ideally switch to incrementID() method
+                new_scheme->last_block_id = id + 1;
 
                 // set number of ports
                 for(unsigned i = ins; i > 2; i--)

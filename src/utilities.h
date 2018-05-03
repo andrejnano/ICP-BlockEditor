@@ -15,8 +15,12 @@
 
 #include <string>
 #include <cstdio>  //required for printf
+#include <memory>
 
-enum err_code_t
+#include "scheduler.h"
+#include "loader.h"
+
+enum Err_code_t
 {
   // default success exit
   SUCCESS         = 0,
@@ -51,9 +55,8 @@ namespace CL {
   auto const UNDERLINE  = "\033[4m";
 }
 
-
 // default is to exit, but can be turned of by passing false
-void error(err_code_t error_code, std::string error_msg, bool do_exit=true);
+void error(Err_code_t error_code, std::string error_msg, bool do_exit=true);
 
 // show help and usage informations
 void help();
@@ -66,6 +69,64 @@ void headline(int chosen_char, std::string headline_text);
 
 // printout paragraph offset text
 void paragraph(std::string text);
+
+
+// Application run modes
+enum Mode_t 
+{ 
+    GUI_MODE = 0, 
+    CLI_MODE = 1
+};
+
+// All the possible commands, both for GUI && CLI
+enum Command_t
+{
+    INVALID,
+    HELP,
+    SAVE,
+    LOAD,
+    PRINT,
+    ADD,
+    RM,
+    ADD_IN,
+    ADD_OUT,
+    RM_IN,
+    RM_OUT,
+    CONNECT,
+    DISCONNECT,
+    SET,
+    COMPUTE,
+    BIND,
+    SCHEDULE,
+    CHECK,
+    SET_FREE,
+    STEP,
+    RUN,
+    UNDO,
+    EXIT
+};
+
+class CommandHandler
+{
+private:
+    // GUI/CLI handling switch
+    Mode_t mode;
+    
+    // loader & scheduler that has to be used by commands
+    std::shared_ptr<Loader> loader;
+    std::shared_ptr<Scheduler> scheduler;
+    
+    // evaluates the string and finds the corresponding Command
+    Command_t eval(string command);
+
+public:
+    CommandHandler(Mode_t mode = GUI_MODE) : mode {mode}, loader {loader}, scheduler {scheduler}
+    {}
+
+    // execute the supplied command
+    bool exec(string command);
+};
+
 
 
 #endif // BLOCKEDITOR_MISC_H_

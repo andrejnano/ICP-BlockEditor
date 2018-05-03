@@ -68,6 +68,12 @@ void Scheduler::bindScheme(Scheme* scheme)
     }
 }
 
+// return pointer to the current active scheme
+Scheme* Scheduler::currentScheme()
+{
+    return current_scheme;
+}
+
 
 // reloads all the blocks from the scheme into the queue
 void Scheduler::resetQueue()
@@ -79,7 +85,6 @@ void Scheduler::resetQueue()
     // fill with the scheme blocks
     for(unsigned i = 0; i < current_scheme->blocks.size(); i++)
         queued_blocks.push(current_scheme->blocks[i]);
-
 }
 
 // starts executing the whole scheme
@@ -92,12 +97,17 @@ void Scheduler::run()
     std::cout << "all blocks were computed!" << std::endl;
 }
 
-// executes just 1 step, creates new history
+/**
+ * @brief Executes a new step and creates a new history.
+ */
 void Scheduler::step()
 {
+    // TODO: possible improvement: do 'redo'
+    //       if the step is the same 
+
     history = new SchedulerHistory(this);
 
-    // compute on the front of queue
+    // compute on the first 'prepared' block on the queue
     Block* next_block = getNext();
     if (next_block)
     {
@@ -108,10 +118,11 @@ void Scheduler::step()
         // No more blocks !
         std::cout << "all blocks were computed!" << std::endl;
     }
-
 }
 
-// undoes 1 step, loads the history
+/**
+ * @brief Go back to the previous state.
+ */
 void Scheduler::undo()
 {
     if (history)
@@ -129,8 +140,15 @@ void Scheduler::undo()
     }
 }
 
+
+/**
+ * @brief gradually sets all the ports which require user input
+ */
 void Scheduler::setFreeInputs()
 {
+    // note: Scheduler class is a 'friend' of the Scheme class
+    //       Therefore, it has access to all of it's members.
+
     for(unsigned b = 0; b < current_scheme->blocks.size(); b++)
     {
         for(unsigned p = 0; p < current_scheme->blocks[b]->getInSize(); p++)
@@ -204,11 +222,4 @@ bool Scheduler::checkCyclesRecursion(Block* actual_block, std::vector<unsigned> 
         }
     }
     return ret;  
-}
-
-// prints identification numbers of blocks in scheduler
-// TODO: is really needed?
-void Scheduler::print()
-{
-
 }

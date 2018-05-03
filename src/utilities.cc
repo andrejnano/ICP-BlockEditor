@@ -19,16 +19,20 @@
 
 // commonly used std objects.. really no need to be careful about poluting namespace
 using std::cout;
+using std::cin;
 using std::cerr;
 using std::endl;
 using std::string;
 
-void error(err_code_t error_code, string error_msg, bool do_exit)
+
+// Error printout wrapper + option to exit
+void error(Err_code_t error_code, string error_msg, bool do_exit)
 {
   cout << " Error " << error_code << " >> " << error_msg << endl;
   do_exit ? exit(error_code) : void();
 }
 
+// Help printout wrapper
 void help()
 {
   cout << "\n" << CL::BOLD << CL::UNDERLINE << "BlockEditor" << CL::ENDC << "\n\n"
@@ -55,9 +59,9 @@ void help()
     << endl;
 }
 
+// Terminal printout separator
 void separator(int chosen_char)
 {
-
   char separators[]
   {
     '~',
@@ -81,9 +85,9 @@ void separator(int chosen_char)
   std::cout << " " << std::endl;
 }
 
+// Terminal printout headline
 void headline(int chosen_char, std::string headline_text)
 {
-
   char separators[]
   {
     ' ',
@@ -108,16 +112,320 @@ void headline(int chosen_char, std::string headline_text)
   std::cout << " " << std::endl;
 }
 
+// Terminal paragraph of text
 void paragraph(std::string text)
 {
-  std::istringstream f(text);
-  std::string line;
+    std::istringstream f(text);
+    std::string line;
 
-  while (std::getline(f, line))
-  {
-    std::cout << "\t" << line << std::endl;
-  }
+    while (std::getline(f, line))
+        std::cout << "\t" << line << std::endl;
 
-  std::cout << std::endl;
+    std::cout << std::endl;
+}
 
+
+//
+// COMMAND HANDLING
+//
+
+/**
+ * @brief Conversion from string to actual command in a structured way
+ */
+bool CommandHandler::exec(string command)
+{
+    // lowercase it
+    std::transform(command.begin(), command.end(), command.begin(), ::tolower);
+
+    // evaluate it
+    Command_t cmd = eval(command);
+
+    // if not used efficiently -> remove
+    Scheme *active_scheme { scheduler->currentScheme() };
+
+
+    // Most of the commands require a scheme to be active
+    // In case it is not active, it would be unnecessary to go through
+    // the whole switch case.
+    switch (cmd)
+    {
+        // (Only INVALID, HELP, LOAD and EXIT do not require an active scheme)
+        case INVALID:
+        case HELP:
+        case LOAD:
+        case EXIT:
+            break;
+        default:
+        {
+            if (!active_scheme)
+            {
+                cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                error(E_SCHEMA_OTHER, "No scheme active!");
+                return false;
+            }
+            break;
+        }
+    }
+
+    // GUI SPECIFIC COMMAND EXECUTION
+    if (mode == GUI_MODE)
+    {
+        // not yet implemented
+    }
+    else
+    // CLI SPECIFIC COMMAND EXECUTION
+    if (mode == CLI_MODE)
+    {
+        switch (cmd)
+        {
+            case INVALID:
+            {
+                error(E_INTERNAL, "Invalid command. Enter 'help' to display possible commands.");
+                return false;
+            }
+
+            case HELP:
+            {
+                help();
+                break;
+            }
+
+            case SAVE:
+            {
+                string scheme_file_path;
+                cin >> scheme_file_path;
+        
+                cout << "Saving the current scheme to '" << CL::BOLD << scheme_file_path << CL::ENDC << "'..." << endl;
+                loader->saveScheme(scheme_file_path, active_scheme);
+                break;
+            }
+
+            case LOAD:
+            {
+                string scheme_file_path;
+                cin >> scheme_file_path;
+                cout << "Going to load scheme from '" << CL::BOLD << scheme_file_path << CL::ENDC << "'." << endl;
+
+                if( active_scheme = loader->loadScheme(scheme_file_path) )
+                    cout << CL::OKGREEN << "Scheme was successfully loaded" << CL::ENDC << endl;
+                else
+                    cout << CL::FAIL << "Error - scheme was not load!" << CL::ENDC << endl;
+                break;
+            }
+
+            case PRINT:
+            {
+                active_scheme->print();
+                break;
+            }
+
+            case ADD:
+            {
+                string operation;
+                cin >> operation;
+
+                // lowercase it
+                std::transform(operation.begin(), operation.end(), operation.begin(), ::tolower);
+
+                if ( operation == "sum") active_scheme->addBlock(SUM, t_simple, t_simple);
+                else
+                if ( operation == "avg") active_scheme->addBlock(AVG, t_simple, t_simple);
+                else
+                if ( operation == "min") active_scheme->addBlock(MIN, t_simple, t_simple);
+                else
+                if ( operation == "max") active_scheme->addBlock(MAX, t_simple, t_simple);
+                else
+                {
+                    cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                    error(E_SCHEMA_OTHER, "Unrecognized operation type! Must be 'sum', 'avg', min' or 'max'");
+                }
+                break;
+            }
+
+            case RM:
+            {
+                string block_id;
+                cin >> block_id;
+
+                active_scheme->removeBlock(stoul(block_id));
+                break;
+            }
+
+            case ADD_IN:
+            {
+                string block_id;
+                cin >> block_id;
+
+                active_scheme->addBlockInPort(stoul(block_id));
+                break;
+            }
+
+            case ADD_OUT:
+            {
+                string block_id;
+                cin >> block_id;
+
+                active_scheme->addBlockOutPort(stoul(block_id));
+                break;
+            }
+
+            case RM_IN:
+            {
+                string block_id;
+                cin >> block_id;
+                string port_idx;
+                cin >> port_idx;
+
+                active_scheme->removeBlockInPort(stoul(block_id), stoul(port_idx));
+                break;
+            }
+
+            case RM_OUT:
+            {
+                string block_id;
+                cin >> block_id;
+                string port_idx;
+                cin >> port_idx;
+
+                active_scheme->removeBlockOutPort(stoul(block_id), stoul(port_idx));
+                break;
+            }
+
+            case CONNECT:
+            {                
+                string out_block_id;
+                cin >> out_block_id;
+                string out_port_idx;
+                cin >> out_port_idx;
+                
+                string in_block_id;
+                cin >> in_block_id;
+                string in_port_idx;
+                cin >> in_port_idx;
+
+                active_scheme->connect(stoul(out_block_id), stoul(out_port_idx), stoul(in_block_id), stoul(in_port_idx));
+                break;
+            }
+
+            case DISCONNECT:
+            {
+                string out_block_id;
+                cin >> out_block_id;
+                string out_port_idx;
+                cin >> out_port_idx;
+                
+                string in_block_id;
+                cin >> in_block_id;
+                string in_port_idx;
+                cin >> in_port_idx;
+
+                active_scheme->removeConnection(stoul(out_block_id), stoul(out_port_idx), stoul(in_block_id), stoul(in_port_idx));
+                break;
+            }
+
+            case SET:
+            {
+                string block_id;
+                cin >> block_id;
+                string port_idx;
+                cin >> port_idx;
+                string port_val;
+                cin >> port_val;
+
+                active_scheme->setBlockPortValue(stoul(block_id), stoul(port_idx), "val", stod(port_val));
+                break;
+            }
+
+            case COMPUTE:
+            {
+                string block_id;
+                cin >> block_id;
+
+                active_scheme->computeBlock(stoul(block_id));
+                break;
+            }
+
+            case BIND:
+            {
+                scheduler->bindScheme(active_scheme);
+                break;
+            }
+
+            case SCHEDULE:
+            {
+                scheduler->print();
+                break;
+            }
+
+            case CHECK:
+            {
+                scheduler->checkCycles();
+                break;
+            }
+
+            case SET_FREE:
+            {
+                scheduler->setFreeInputs();
+                break;
+            }
+
+            case STEP:
+            {
+                scheduler->step();
+                break;
+            }
+
+            case UNDO:
+            {
+                scheduler->undo();
+                break;
+            }
+
+            case RUN:
+            {
+                scheduler->run();
+                break;
+            }
+
+            case EXIT:
+            {
+                cout << "Going to exit ..." << endl;
+                exit(SUCCESS);
+                break;
+            }
+            
+            default: error(E_UNDEF, "No such command. Not even 'INVALID'!", true); break;
+        }
+    }
+}
+
+/**
+ * @brief Evaluation part of the command execution
+ */
+Command_t CommandHandler::eval(std::string command)
+{
+    if( command ==  "help")         return HELP;
+    if( command ==  "save")         return SAVE;
+    if( command ==  "load")         return LOAD;
+    if( command ==  "print")        return PRINT;
+    if( command ==  "add")          return ADD;
+    if( command ==  "rm")           return RM;
+    if( command ==  "add-in")       return ADD_IN;
+    if( command ==  "add-out")      return ADD_OUT;
+    if( command ==  "rm-in")        return RM_IN;
+    if( command ==  "rm-out")       return RM_OUT;
+    if( command ==  "connect")      return CONNECT;
+    if( command ==  "disconnect")   return DISCONNECT;
+    if( command ==  "set")          return SET;
+    if( command ==  "compute")      return COMPUTE;
+    if( command ==  "bind")         return BIND;
+    if( command ==  "schedule")     return SCHEDULE;
+    if( command ==  "check")        return CHECK;
+    if( command ==  "set-free")     return SET_FREE;
+    if( command ==  "step")         return STEP;
+    if( command ==  "undo")         return UNDO;
+    if( command ==  "run")          return RUN;
+    if( command ==  "exit")         return EXIT;
+
+    return INVALID;
 }
