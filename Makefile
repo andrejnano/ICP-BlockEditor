@@ -23,3 +23,6 @@ run-cli:
 
 doxygen:
 	doxygen ./$(SOURCE_DIR)/Doxyfile
+
+clean:
+	$(MAKE) clean -C $(SOURCE_DIR)

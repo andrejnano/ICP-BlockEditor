@@ -32,6 +32,9 @@
     <property name="styleSheet">
      <string notr="true">QStackedWidget { background: #fafafa; border: 2px solid #222;}</string>
     </property>
+    <property name="currentIndex">
+     <number>3</number>
+    </property>
     <widget class="QWidget" name="main_menu_page">
      <property name="styleSheet">
       <string notr="true">QWidget { background: #fafafa; }</string>
@@ -106,6 +109,26 @@
       </property>
       <property name="text">
        <string>some small description</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="help_page">
+     <widget class="QLabel" name="label_3">
+      <property name="geometry">
+       <rect>
+        <x>360</x>
+        <y>100</y>
+        <width>231</width>
+        <height>161</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>24</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Help page</string>
       </property>
      </widget>
     </widget>

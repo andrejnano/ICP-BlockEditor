@@ -14,7 +14,6 @@
 #include "utilities.h"
 #include "scheme.h"
 
-
 /**
  * @brief Scheduler history memo creation
  */
@@ -88,7 +87,13 @@ void Scheduler::bindScheme(std::shared_ptr<Scheme> scheme)
     {
         current_scheme = scheme;
         resetQueue();
-        setFreeInputs(); // what about GUI?
+        
+        switch (RUN_MODE)
+        {
+            case GUI_MODE: break; // TODO:
+            case CLI_MODE: setFreeInputs(); break;
+            default: error(E_UNDEF,"undefined runmode");
+        }
     }
     else
     {

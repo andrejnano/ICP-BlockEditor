@@ -6,6 +6,10 @@
 #include <QTextStream>
 
 #include "scheme.h"
+#include "loader.h"
+#include "scheduler.h"
+#include "utilities.h"
+
 #include "mainwindow.h"
 #include "visualblock.h"
 #include "ui_mainwindow.h"
@@ -15,6 +19,14 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    // SPAWN THE ESSENTIAL BLOCK EDITOR OBJECTS: Loader, Scheduler & Command Handler
+    std::shared_ptr<Loader>             loader;
+    std::shared_ptr<Scheduler>          scheduler;
+
+    loader      = std::make_shared<Loader>();
+    scheduler   = std::make_shared<Scheduler>();
+    cmd         = std::make_unique<CommandHandler>(ui, loader, scheduler);
 }
 
 MainWindow::~MainWindow()
@@ -27,7 +39,7 @@ MainWindow::~MainWindow()
 // BLOCK EDITOR | loads the scheme and works with it
 /*****************************************************************************/
 
-void MainWindow::editor(std::shared_ptr<Scheme> scheme)
+void MainWindow::editor()
 {
     // change the page
     QWidget *editor_page = ui->editor_page;
@@ -46,8 +58,8 @@ void MainWindow::editor(std::shared_ptr<Scheme> scheme)
 void MainWindow::on_new_scheme_btn_clicked()
 {
     // create new scheme
-    Scheme *actual_scheme = new Scheme("New Scheme");
-    editor(actual_scheme);
+    cmd->exec("new");
+    editor();
 }
 
 
@@ -68,31 +80,30 @@ void MainWindow::on_load_file_btn_clicked()
     // open a file dialog
     QString fileName = QFileDialog::getOpenFileName(this, tr("Open Scheme"), "~/", tr("Block Scheme Files (*.scheme *.sch)"));
 
-    // 
+    // store the text inside a text field
+    // now it is editable manually or just can be opened by clicking
+    // the button next to it
     ui->lineEdit->setText( fileName );
-
-     QFile file( fileName );
-     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
-         return;
 }
 
 
-// load the scheme
+// load the scheme in to the loader and start the editor
+// also bind the scheme
 void MainWindow::on_open_file_btn_clicked()
 {
     QString fileName = ui->lineEdit->text();
 
     QFile file (fileName);
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+        ui->lineEdit->setText("ERROR: Cannot open the file !");
         return;
+    }
 
+    // gui 'load' case, takes input from the input box
+    cmd->exec("load");
 
-    // temp scheme solution..
-
-    // loader should be implemented here and then, schema passed to the editor
-    Scheme * loaded_schema = new Scheme("Loaded Schema");
-    // start the editor with loded file
-    editor(loaded_schema);
+    editor();
 }
 
 

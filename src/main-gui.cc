@@ -38,6 +38,8 @@
 // Project GUI header
 #include "mainwindow.h"
 
+// GUI/CLI different handling switch
+const Mode_t RUN_MODE {GUI_MODE};
 
 /**
  * @brief GUI Main entry point

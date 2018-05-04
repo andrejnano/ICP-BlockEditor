@@ -6,7 +6,7 @@
 
 QT       += core gui widgets
 
-CONFIG += c++11
+CONFIG += c++14 strict_c++
 
 # for mac-os-x, forbid creation of app subdirectories
 CONFIG -= app_bundle

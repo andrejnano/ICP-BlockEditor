@@ -160,7 +160,7 @@ bool Block::isPrepared()
 
 /**
  * @brief gets type of block
- * @return string representating block type, empty string when not recognized
+ * @return string representing block type, empty string when not recognized
  */
 std::string Block::getStringType()
 {

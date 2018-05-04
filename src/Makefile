@@ -3,7 +3,7 @@
 # Repository: https://github.com/andrejnano/ICP-BlockEditor
 
 CXX = g++
-CXXFLAGS = -std=c++14 -Wall -Weffc++ -O2
+CXXFLAGS = -std=c++14 -stdlib=libc++ -Wall -Weffc++ -O2
 
 EXEC_GUI = blockeditor
 EXEC_CLI = blockeditor-cli
@@ -11,8 +11,7 @@ EXEC_CLI = blockeditor-cli
 # all C++ source files
 SOURCES = blocks.cc loader.cc port.cc scheduler.cc scheme.cc utilities.cc
 
-all: $(EXEC_CLI) clean
-#all: $(EXEC_GUI) $(EXEC_CLI) clean
+all: $(EXEC_GUI) $(EXEC_CLI) clean
 
 $(EXEC_CLI): $(SOURCES) main-cli.cc
 	$(CXX) $(CXXFLAGS) $(SOURCES) main-cli.cc -o ../$(EXEC_CLI)

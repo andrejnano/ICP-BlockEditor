@@ -1,13 +1,16 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include <scheme.h>
-
-#include <QMainWindow>
+// #include <QMainWindow>
 #include <QFile>
+#include <QMainWindow>
 
-namespace Ui {
-class MainWindow;
+//cmd forward declaration
+class CommandHandler;
+
+namespace Ui
+{
+    class MainWindow;
 }
 
 class MainWindow : public QMainWindow
@@ -19,16 +22,19 @@ public:
     ~MainWindow();
 
 private slots:
+    // button actions
     void on_new_scheme_btn_clicked();
     void on_load_scheme_btn_clicked();
     void on_load_file_btn_clicked();
     void on_open_file_btn_clicked();
     void on_main_menu_btn_clicked();
 
-    void editor(Scheme* scheme);
+    // the visual representation of the scheme
+    void editor();
 
 private:
     Ui::MainWindow *ui;
+    std::unique_ptr<CommandHandler> cmd;
 };
 
 #endif // MAINWINDOW_H

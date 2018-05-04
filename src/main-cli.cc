@@ -1,3 +1,4 @@
+
 /**
  *  @file       main-cli.cc
  *  @authors    Andrej Nano (xnanoa00), Stanislav Mechl (xmechl00)
@@ -40,6 +41,10 @@ using std::stoul;
 using std::stod;
 
 
+// GUI/CLI different handling switch
+const Mode_t RUN_MODE {CLI_MODE};
+
+
 /**
  * @brief CLI Main entry point
  * @param argc arg count
@@ -61,7 +66,7 @@ int main(int argc, char **argv)
 
     loader      = std::make_shared<Loader>();
     scheduler   = std::make_shared<Scheduler>();
-    cmd         = std::make_unique<CommandHandler>(CLI_MODE, loader, scheduler);
+    cmd         = std::make_unique<CommandHandler>(nullptr, loader, scheduler);
 
     // buffer for the input from user in the terminal
     string user_input;

@@ -9,6 +9,7 @@
  *  @section Description
  * 
  */
+#include <QMessageBox>
 
 #include <iostream>
 #include <iomanip>
@@ -23,6 +24,8 @@ using std::cin;
 using std::cerr;
 using std::endl;
 using std::string;
+
+
 
 
 // Error printout wrapper + option to exit
@@ -71,7 +74,7 @@ void separator(int chosen_char)
     '@'
   };
 
-  if (chosen_char < 0 || chosen_char >= strlen(separators))
+  if (chosen_char < 0 || chosen_char >= static_cast<int>(strlen(separators)))
   {
     std::cerr << "Index is out of the range of array of chars." << std::endl;
     exit(EXIT_FAILURE);
@@ -97,7 +100,7 @@ void headline(int chosen_char, std::string headline_text)
     '@'
   };
 
-  if (chosen_char < 0 || chosen_char >= strlen(separators))
+  if (chosen_char < 0 || chosen_char >= static_cast<int>(strlen(separators)))
   {
     std::cerr << "Index is out of the range of array of chars." << std::endl;
     exit(EXIT_FAILURE);
@@ -169,13 +172,56 @@ bool CommandHandler::exec(string command)
     }
 
     // GUI SPECIFIC COMMAND EXECUTION
-    if (mode == GUI_MODE)
+    if (RUN_MODE == GUI_MODE)
     {
-        // not yet implemented
+        switch (cmd)
+        {
+            case INVALID:
+            {
+                QMessageBox messageBox;
+                messageBox.critical(0,"Error","Unknown command received by the Command Handler!");
+                messageBox.setFixedSize(500,200);
+                return true;
+            }
+
+            case HELP:
+            {
+                // change the page
+                QWidget *help_page = ui->help_page;
+                ui->stackedWidget->setCurrentWidget(help_page);
+                break;
+            }
+
+            case SAVE:
+            {
+                //TODO:
+                break;
+            }
+
+            case LOAD:
+            {
+                std::string scheme_file_path = ui->lineEdit->text().toStdString();
+                
+                active_scheme = loader->loadScheme(scheme_file_path);
+
+                if (active_scheme)
+                {
+                    scheduler->bindScheme(active_scheme);
+                }
+                else
+                {
+                    QMessageBox messageBox;
+                    messageBox.critical(0,"Error","Scheme could not be loaded.");
+                    messageBox.setFixedSize(500,200);
+                    return false;
+                }
+                break;
+            }
+        }
     }
     else
     // CLI SPECIFIC COMMAND EXECUTION
-    if (mode == CLI_MODE)
+    if (RUN_MODE == CLI_MODE)
     {
         switch (cmd)
         {

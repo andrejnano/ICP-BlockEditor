@@ -22,6 +22,8 @@ using std::string;
 
 #include "scheduler.h"
 #include "loader.h"
+#include "ui_mainwindow.h"
+
 
 enum Err_code_t
 {
@@ -81,6 +83,9 @@ enum Mode_t
     CLI_MODE = 1
 };
 
+// definition is inside the corresponding main [main-cli/main-gui]
+extern const Mode_t RUN_MODE;
+
 // All the possible commands, both for GUI && CLI
 enum Command_t
 {
@@ -110,11 +115,11 @@ enum Command_t
     EXIT
 };
 
+
 class CommandHandler
 {
 private:
-    // GUI/CLI handling switch
-    Mode_t mode;
+    Ui::MainWindow *ui; // if it's gui this points to the UI
     
     // loader & scheduler that has to be used by commands
     std::shared_ptr<Loader> loader;
@@ -124,11 +129,12 @@ private:
     Command_t eval(string command);
 
 public:
-    CommandHandler( Mode_t active_mode,
+    CommandHandler(
+        Ui::MainWindow *ui_passed,
         std::shared_ptr<Loader> used_loader, 
         std::shared_ptr<Scheduler> used_scheduler
     ) :
-        mode {active_mode},
+        ui {ui_passed},
         loader {used_loader}, 
         scheduler {used_scheduler}
     {}
