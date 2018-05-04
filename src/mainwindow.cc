@@ -5,7 +5,7 @@
 #include <QFileDialog>
 #include <QTextStream>
 
-#include <scheme.h>
+#include "scheme.h"
 #include "mainwindow.h"
 #include "visualblock.h"
 #include "ui_mainwindow.h"
@@ -27,33 +27,14 @@ MainWindow::~MainWindow()
 // BLOCK EDITOR | loads the scheme and works with it
 /*****************************************************************************/
 
-void MainWindow::editor(Scheme *scheme)
+void MainWindow::editor(std::shared_ptr<Scheme> scheme)
 {
     // change the page
     QWidget *editor_page = ui->editor_page;
     ui->stackedWidget->setCurrentWidget(editor_page);
 
-    QGraphicsScene * scene = new QGraphicsScene();
+    // draw all the blocks corresponding to the scheme
 
-    // create an item to put into the scene
-    VisualBlock * rect = new VisualBlock();
-    rect->setRect(10,10,50,100);
-
-    scene->addItem(rect);
-
-    // make block focusable
-    //->setFlag(Q)
-
-    QGraphicsTextItem * text = new QGraphicsTextItem();
-    QString temp = QString::fromStdString(scheme->getName());
-    text->setPlainText(temp);
-
-    scene->addItem(text);
-
-    // add a view
-    QGraphicsView * view = ui->graphicsView;
-    view->setScene(scene);
-    view->show();
 }
 
 
@@ -84,10 +65,11 @@ void MainWindow::on_load_scheme_btn_clicked()
 // just load the filename into the textbox
 void MainWindow::on_load_file_btn_clicked()
 {
-    QString fileName = QFileDialog::getOpenFileName(this,
-         tr("Open Scheme"), "~/", tr("Block Scheme Files (*.scheme *.xml)"));
+    // open a file dialog
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Open Scheme"), "~/", tr("Block Scheme Files (*.scheme *.sch)"));
 
-     ui->lineEdit->setText( fileName );
+    // 
+    ui->lineEdit->setText( fileName );
 
      QFile file( fileName );
      if (!file.open(QIODevice::ReadOnly | QIODevice::Text))

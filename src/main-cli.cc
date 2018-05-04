@@ -1,10 +1,10 @@
 /**
- *  @file       main.cc
+ *  @file       main-cli.cc
  *  @authors    Andrej Nano (xnanoa00), Stanislav Mechl (xmechl00)
  *  @date       2018-05-05
  *  @version    0.1
  * 
- *  @brief ICP 2018, Project - Block Editor. Main source file.
+ *  @brief ICP 2018, Project - Block Editor. CLI main source file.
  *  
  *  @section Description
  * 
@@ -54,11 +54,10 @@ int main(int argc, char **argv)
     paragraph("Help  Show help and usage info.\nPrint  Print actual scheme.\nLoad <scheme>  Load the scheme.\nExit  Leave the program.\n");
     // // // // // // // // // // // // // // // // // // // // // // // // // // 
 
+    // SPAWN THE ESSENTIAL BLOCK EDITOR OBJECTS: Loader, Scheduler & Command Handler
     std::shared_ptr<Loader>             loader;
     std::shared_ptr<Scheduler>          scheduler;
     std::unique_ptr<CommandHandler>     cmd;
-
-    // SPAWN THE ESSENTIAL BLOCK EDITOR OBJECTS: Loader, Scheduler & Command Handler
 
     loader      = std::make_shared<Loader>();
     scheduler   = std::make_shared<Scheduler>();
@@ -66,7 +65,7 @@ int main(int argc, char **argv)
 
     // buffer for the input from user in the terminal
     string user_input;
-
+    
     for(;;)
     {
         cout << "~> "; cin >> user_input;
@@ -75,6 +74,3 @@ int main(int argc, char **argv)
 
     return SUCCESS;
 }
-
-
-

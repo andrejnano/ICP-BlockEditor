@@ -14,47 +14,75 @@
 #include "utilities.h"
 #include "scheme.h"
 
+
+/**
+ * @brief Scheduler history memo creation
+ */
+// const ref version
+SchedulerHistory::SchedulerHistory(const Scheduler& present) : 
+    history_memo { present.history }, 
+    current_scheme_memo { present.current_scheme },
+    queued_blocks_memo { present.queued_blocks },
+    visited_blocks_memo { present.visited_blocks }
+{}
+
+// pointer version TRY BOTH
+// SchedulerHistory::SchedulerHistory(Scheduler *present) : 
+//     history_memo { present->history }, 
+//     current_scheme_memo { present->current_scheme },
+//     queued_blocks_memo { present->queued_blocks },
+//     visited_blocks_memo { present->visited_blocks }
+// {}
+
+
+
 /**
  * @brief prints identification numbers of blocks in scheduler
  */
-// void Scheduler::print()
-// {
-//     std::cout << "SCHEDULER: " << std::endl;
-//     for (std::list<Block*>::iterator it = queued_blocks.begin(); it != this->blocks.end(); ++it){
-//         std::cout << "  " << (*it)->getBlockID() << std::endl;
-//     }
-// }
+void Scheduler::print()
+{
+    std::cout << "SCHEDULER: " << std::endl;
+    
+    for (std::list<unsigned>::iterator it = queued_blocks.begin(); it != queued_blocks.end(); ++it)
+    {
+        std::cout << " |" << *it << " | "<< std::endl;
+    }
+}
 
 /**
  * @brief finds next block, which has set all input port values
  * @return pointer to next prepared block
  */
-Block* Scheduler::getNext()
+unsigned Scheduler::getNext()
 {
     if(!queued_blocks.empty())
     {
-        Block* active_block = queued_blocks.front();
-        queued_blocks.pop();
-        
+        unsigned active_block_idx = queued_blocks.front();
+        queued_blocks.pop_front();
+
+        // get pointer to the block by ID
+        std::shared_ptr<Block> active_block_ptr { current_scheme->getBlockByID(active_block_idx) };
+
         // if block is not prepared, pointer is pushed to the end of queue
-        while (active_block->isPrepared() != true)
+        while (active_block_ptr->isPrepared() != true)
         {
-            queued_blocks.push(active_block);
-            active_block = queued_blocks.front();
-            queued_blocks.pop();
+            queued_blocks.push_back(active_block_idx);
+            active_block_idx = queued_blocks.front();
+            active_block_ptr = current_scheme->getBlockByID(active_block_idx);
+            queued_blocks.pop_front();
         }
 
-        return active_block;
+        return active_block_idx;
     }
     else
     {
-        return nullptr;
+        return 0;
     }
 }
 
 
 // bind some existing scheme to this scheduler
-void Scheduler::bindScheme(Scheme* scheme)
+void Scheduler::bindScheme(std::shared_ptr<Scheme> scheme)
 {
     if (scheme)
     {
@@ -69,7 +97,7 @@ void Scheduler::bindScheme(Scheme* scheme)
 }
 
 // return pointer to the current active scheme
-Scheme* Scheduler::currentScheme()
+std::shared_ptr<Scheme> Scheduler::currentScheme()
 {
     return current_scheme;
 }
@@ -80,45 +108,51 @@ void Scheduler::resetQueue()
 {
     // empty the queue
     while(!queued_blocks.empty())
-        queued_blocks.pop();
+        queued_blocks.pop_front();
 
-    // fill with the scheme blocks
+    // fill with the scheme blocks IDs
     for(unsigned i = 0; i < current_scheme->blocks.size(); i++)
-        queued_blocks.push(current_scheme->blocks[i]);
+        queued_blocks.push_back(current_scheme->blocks[i]->getBlockID());
 }
 
-// starts executing the whole scheme
+
+/**
+ * @brief Executes all steps until the queue is empty
+ */
 void Scheduler::run()
 {
-    while(!queued_blocks.empty)
+    this->checkCycles();
+
+    while(!queued_blocks.empty())
     {
-        step();
+        this->step();
     }
-    std::cout << "all blocks were computed!" << std::endl;
+    std::cout << "All blocks were computed in a single run!" << std::endl;
 }
+
 
 /**
  * @brief Executes a new step and creates a new history.
  */
 void Scheduler::step()
 {
-    // TODO: possible improvement: do 'redo'
-    //       if the step is the same 
-
-    history = new SchedulerHistory(this);
+    // create a snapshot of the current state
+    history = std::make_shared<SchedulerHistory>(*this);
 
     // compute on the first 'prepared' block on the queue
-    Block* next_block = getNext();
-    if (next_block)
+    unsigned next_block_idx = getNext();
+
+    if (next_block_idx > 0)
     {
-        current_scheme->computeBlock(next_block->getBlockID);
+        current_scheme->computeBlock(next_block_idx);
     }
     else
     {
         // No more blocks !
-        std::cout << "all blocks were computed!" << std::endl;
+        std::cout << "Reached the end. All blocks were computed!" << std::endl;
     }
 }
+
 
 /**
  * @brief Go back to the previous state.
@@ -126,7 +160,8 @@ void Scheduler::step()
 void Scheduler::undo()
 {
     if (history)
-    {
+    {  
+        // copy everything from the memo
         current_scheme = history->current_scheme_memo;
         queued_blocks = history->queued_blocks_memo;
         visited_blocks = history->visited_blocks_memo;
@@ -138,6 +173,8 @@ void Scheduler::undo()
     {
         error(E_SCHEDULER, "Cannot undo. Nothing was done yet.");
     }
+    
+    this->print();
 }
 
 
@@ -187,7 +224,7 @@ bool Scheduler::checkCycles()
  * @param visited vector containing identification numbers of already visited blocks
  * @return true if block is visited first time, false if cycle is detected
  */
-bool Scheduler::checkCyclesRecursion(Block* actual_block, std::vector<unsigned> visited)
+bool Scheduler::checkCyclesRecursion(std::shared_ptr<Block> actual_block, std::vector<unsigned> visited)
 {
     std::cout << "  in block " << actual_block->getBlockID() << " <";
     for(unsigned i = 0; i < visited.size(); i++)

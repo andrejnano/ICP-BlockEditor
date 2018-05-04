@@ -141,7 +141,7 @@ bool CommandHandler::exec(string command)
     Command_t cmd = eval(command);
 
     // if not used efficiently -> remove
-    Scheme *active_scheme { scheduler->currentScheme() };
+    std::shared_ptr<Scheme> active_scheme = scheduler->currentScheme();
 
 
     // Most of the commands require a scheme to be active
@@ -149,10 +149,11 @@ bool CommandHandler::exec(string command)
     // the whole switch case.
     switch (cmd)
     {
-        // (Only INVALID, HELP, LOAD and EXIT do not require an active scheme)
+        // (Only INVALID, HELP, LOAD, NEW and EXIT do not require an active scheme)
         case INVALID:
         case HELP:
         case LOAD:
+        case NEW:
         case EXIT:
             break;
         default:
@@ -189,7 +190,11 @@ bool CommandHandler::exec(string command)
                 help();
                 break;
             }
-
+            
+            // // // // // // // // // // //
+            //   COMMANDS WITH ARGUMENTS  //
+            // // // // // // // // // // //
+    
             case SAVE:
             {
                 string scheme_file_path;
@@ -206,16 +211,25 @@ bool CommandHandler::exec(string command)
                 cin >> scheme_file_path;
                 cout << "Going to load scheme from '" << CL::BOLD << scheme_file_path << CL::ENDC << "'." << endl;
 
-                if( active_scheme = loader->loadScheme(scheme_file_path) )
+                active_scheme = loader->loadScheme(scheme_file_path);
+
+                if(active_scheme)
+                {
+                    scheduler->bindScheme(active_scheme);
                     cout << CL::OKGREEN << "Scheme was successfully loaded" << CL::ENDC << endl;
+                }
                 else
-                    cout << CL::FAIL << "Error - scheme was not load!" << CL::ENDC << endl;
+                    cout << CL::FAIL << "Error - scheme was not loaded!" << CL::ENDC << endl;
                 break;
             }
 
-            case PRINT:
+            case NEW:
             {
-                active_scheme->print();
+                string new_scheme_name;
+                cin >> new_scheme_name;
+
+                active_scheme = loader->createScheme(new_scheme_name);
+                scheduler->bindScheme(active_scheme);
                 break;
             }
 
@@ -345,48 +359,21 @@ bool CommandHandler::exec(string command)
                 break;
             }
 
-            case BIND:
-            {
-                scheduler->bindScheme(active_scheme);
-                break;
-            }
 
-            case SCHEDULE:
-            {
-                scheduler->print();
-                break;
-            }
+            // // // // // // // // // // //
+            //  COMMANDS W/ NO ARGUMENTS  //
+            // // // // // // // // // // //
+            
+            case PRINT:     active_scheme->print(); break;
 
-            case CHECK:
-            {
-                scheduler->checkCycles();
-                break;
-            }
-
-            case SET_FREE:
-            {
-                scheduler->setFreeInputs();
-                break;
-            }
-
-            case STEP:
-            {
-                scheduler->step();
-                break;
-            }
-
-            case UNDO:
-            {
-                scheduler->undo();
-                break;
-            }
-
-            case RUN:
-            {
-                scheduler->run();
-                break;
-            }
-
+            case BIND:      scheduler->bindScheme(active_scheme); break;
+            case SCHEDULE:  scheduler->print(); break;
+            case CHECK:     scheduler->checkCycles(); break;
+            case SET_FREE:  scheduler->setFreeInputs(); break;
+            case STEP:      scheduler->step(); break;
+            case UNDO:      scheduler->undo(); break;
+            case RUN:       scheduler->run(); break;
+            
             case EXIT:
             {
                 cout << "Going to exit ..." << endl;
@@ -397,6 +384,7 @@ bool CommandHandler::exec(string command)
             default: error(E_UNDEF, "No such command. Not even 'INVALID'!", true); break;
         }
     }
+    return true;
 }
 
 /**
@@ -407,6 +395,7 @@ Command_t CommandHandler::eval(std::string command)
     if( command ==  "help")         return HELP;
     if( command ==  "save")         return SAVE;
     if( command ==  "load")         return LOAD;
+    if( command ==  "new")          return NEW;
     if( command ==  "print")        return PRINT;
     if( command ==  "add")          return ADD;
     if( command ==  "rm")           return RM;

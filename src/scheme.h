@@ -16,8 +16,6 @@
 
 #include "port.h"
 #include "blocks.h"
-#include "scheduler.h"
-#include "loader.h"
 
 #define FIRST_ID 1001
 
@@ -40,7 +38,7 @@ friend class Scheduler;         // to enable direct loading into the scheduler
 private:
     std::string name;           // name of the scheme
     unsigned last_block_id;     // current last available index for new block
-    std::vector<Block*> blocks; // list of block pointers contained in the scheme
+    std::vector<std::shared_ptr<Block>> blocks; // list of block pointers contained in the scheme
     std::vector<wire> wires;    // list of wires (connections) contained in the scheme
 
 public:
@@ -77,7 +75,7 @@ public:
     void propagate(unsigned block_id);
 
     // returns a pointer to the block looked up by ID
-    Block* getBlockByID(unsigned searched_id);
+    std::shared_ptr<Block> getBlockByID(unsigned searched_id);
 
     /* useful for CLI, TODO: create GUI version of this.. */
     // outputs information about the block

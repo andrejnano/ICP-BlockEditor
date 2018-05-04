@@ -255,6 +255,9 @@ double SumOp::expression(std::vector<Port> inputs)
         sum += inputs[i].getValue("val");
     }
 
+    // alternative lambda version
+    // for_each(inputs.begin(), inputs.end(), [&sum](Port p){ sum += p.getValue("val"); });
+
     return sum;
 }
 

@@ -34,6 +34,7 @@
 
 */
 
+class SchedulerHistory;
 class Scheduler;
 
 /*
@@ -44,18 +45,15 @@ class SchedulerHistory
 friend class Scheduler;
 
 private:
-    SchedulerHistory* history_memo;
-    Scheme* current_scheme_memo;
-    std::queue<Block*> queued_blocks_memo; 
+    std::shared_ptr<SchedulerHistory> history_memo;
+    std::shared_ptr<Scheme> current_scheme_memo;
+    std::list<unsigned> queued_blocks_memo; 
     std::vector<unsigned> visited_blocks_memo;
 
 public:
-    SchedulerHistory(Scheduler* recent) :
-        history_memo { recent->history },
-        current_scheme_memo { recent->current_scheme },
-        queued_blocks_memo { recent->queued_blocks },
-        visited_blocks_memo  { recent->visited_blocks }
-    {}
+    // const ref version
+    SchedulerHistory(const Scheduler& present);
+
 };
 
 
@@ -64,21 +62,24 @@ class Scheduler
 friend class SchedulerHistory;
 
 private:
-    SchedulerHistory* history;
-    Scheme* current_scheme; // loaded scheme
-    std::queue<Block*> queued_blocks; // blocks waiting in a queue
-    std::vector<unsigned> visited_blocks; // history of execution
+    std::shared_ptr<SchedulerHistory> history;              // previous state
+    std::shared_ptr<Scheme> current_scheme;                 // loaded scheme
+    std::list<unsigned> queued_blocks;      // blocks waiting in a queue
+    std::vector<unsigned> visited_blocks;   // history of execution
 
 public:
-    Scheduler() : history {nullptr}, current_scheme {nullptr},
-    queued_blocks {std::queue<Block*>()}, visited_blocks {std::vector<unsigned>()}
+    Scheduler() : 
+        history {nullptr}, 
+        current_scheme {nullptr}, 
+        queued_blocks {std::list<unsigned>()}, 
+        visited_blocks { std::vector<unsigned>()}
     {}
 
     // bind some existing scheme to this scheduler
-    void bindScheme(Scheme* scheme);
+    void bindScheme(std::shared_ptr<Scheme> scheme);
 
     // current scheme getter
-    Scheme* currentScheme();
+    std::shared_ptr<Scheme> currentScheme();
 
     // reloads all the blocks from the scheme into the queue
     void resetQueue();
@@ -95,18 +96,16 @@ public:
     // calls function to get input from user for every free input port
     void setFreeInputs();
 
-    // returns pointer to next prepared (with all inputs set) block
-    Block* getNext();
+    // returns index to next prepared (with all inputs set) block
+    unsigned getNext();
 
     // checks if there are any cycles in the scheme
     bool checkCycles();
-    bool checkCyclesRecursion(Block* actual_block, std::vector<unsigned> visited);
+    bool checkCyclesRecursion(std::shared_ptr<Block> actual_block, std::vector<unsigned> visited);
 
     // prints identification numbers of blocks in scheduler
     // TODO: is really needed?
     void print();
-    
-
 
 };
 

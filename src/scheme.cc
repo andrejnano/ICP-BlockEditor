@@ -45,12 +45,12 @@ void Scheme::print()
 void Scheme::addBlock(operation_type_t new_type, data_type_t input_type, data_type_t output_type)
 {
     // creates new block object
-    Block* new_block = new Block(last_block_id, new_type, input_type, output_type);
+    std::shared_ptr<Block> new_block = std::make_shared<Block>(last_block_id, new_type, input_type, output_type);
     
     // sets operation type
     new_block->setOperation(new_type);
 
-    // adds to the scheme
+    // adds block pointer to the scheme
     this->blocks.push_back(new_block);
 
     last_block_id++;
@@ -63,7 +63,7 @@ void Scheme::addBlock(operation_type_t new_type, data_type_t input_type, data_ty
  */
 void Scheme::removeBlock(unsigned block_id)
 {
-    // remove wires
+    // remove wires connected to the block
     bool removed = true;
     while(removed)
     {
@@ -84,15 +84,18 @@ void Scheme::removeBlock(unsigned block_id)
     }
 
     // remove blocks
-    std::vector<Block*>::iterator it = this->blocks.begin();
-    for(; it != this->blocks.end(); it++)
+    auto block_iter = this->blocks.begin();
+
+    while (block_iter != this->blocks.end())
     {
-        if((*it)->getBlockID() == block_id)
+        if((*block_iter).get()->getBlockID() == block_id)
         {
             break;
         }
+
+        block_iter++;
     }
-    this->blocks.erase(it);
+    this->blocks.erase(block_iter);
 }
 
 /**
@@ -250,6 +253,7 @@ int Scheme::isConnected(unsigned block_id, bool is_input, unsigned port_index)
     return 1;
 }
 
+
 /**
  * @brief propagate output value through wire or prints if port is not connected
  * @param block_id id of source block
@@ -282,12 +286,13 @@ void Scheme::propagate(unsigned block_id)
     }
 }
 
+
 /**
  * @brief finds block with given ID
  * @param searched_id identification number of searched block
  * @return pointer to searched block, NULL if not found
  */
-Block* Scheme::getBlockByID(unsigned searched_id)
+std::shared_ptr<Block> Scheme::getBlockByID(unsigned searched_id)
 {
     for(unsigned i = 0; i < this->blocks.size(); i++)
     {

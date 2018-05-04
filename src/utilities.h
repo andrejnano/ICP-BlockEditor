@@ -17,6 +17,9 @@
 #include <cstdio>  //required for printf
 #include <memory>
 
+// commonly used std objects..
+using std::string;
+
 #include "scheduler.h"
 #include "loader.h"
 
@@ -56,7 +59,7 @@ namespace CL {
 }
 
 // default is to exit, but can be turned of by passing false
-void error(Err_code_t error_code, std::string error_msg, bool do_exit=true);
+void error(Err_code_t error_code, string error_msg, bool do_exit=false);
 
 // show help and usage informations
 void help();
@@ -65,10 +68,10 @@ void help();
 void separator(int chosen_char);
 
 // printout headline
-void headline(int chosen_char, std::string headline_text);
+void headline(int chosen_char, string headline_text);
 
 // printout paragraph offset text
-void paragraph(std::string text);
+void paragraph(string text);
 
 
 // Application run modes
@@ -85,6 +88,7 @@ enum Command_t
     HELP,
     SAVE,
     LOAD,
+    NEW,
     PRINT,
     ADD,
     RM,
@@ -120,7 +124,13 @@ private:
     Command_t eval(string command);
 
 public:
-    CommandHandler(Mode_t mode = GUI_MODE) : mode {mode}, loader {loader}, scheduler {scheduler}
+    CommandHandler( Mode_t active_mode,
+        std::shared_ptr<Loader> used_loader, 
+        std::shared_ptr<Scheduler> used_scheduler
+    ) :
+        mode {active_mode},
+        loader {used_loader}, 
+        scheduler {used_scheduler}
     {}
 
     // execute the supplied command
