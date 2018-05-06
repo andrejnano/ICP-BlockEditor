@@ -1,6 +1,8 @@
 #ifndef VISUALBLOCK_H
 #define VISUALBLOCK_H
 
+#include <memory>
+
 #include <QWidget>
 #include <QGraphicsItem>
 #include <QPainter>
