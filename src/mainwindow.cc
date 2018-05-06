@@ -215,8 +215,7 @@ void MainWindow::on_help_menu_btn_clicked()
     //QWidget *help_page = ui->help_page;
     //ui->stackedWidget->setCurrentWidget(help_page);
     QMessageBox::about(this, tr("BlockEditor"),
-                       tr("Hello <b> This is a test </b>. "
-                          "....."));
+                       tr("BlockEditor allows you to edit block schemes. Schemes can be loaded or created from scratch."));
 }
 
 void MainWindow::on_editor_menu_btn_clicked()
