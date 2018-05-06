@@ -1,3 +1,17 @@
+/**
+ *  @file       portview.h
+ *  @authors    Andrej Nano (xnanoa00), Stanislav Mechl (xmechl00)
+ *  @date       2018-05-05
+ *  @version    1.0
+ * 
+ *  @brief ICP 2018, Project - Block Editor. Portview class header.
+ *  
+ *  @section Description
+ * 
+ *  @section Usage
+ *  
+ */
+
 #ifndef PORTVIEW_H
 #define PORTVIEW_H
 

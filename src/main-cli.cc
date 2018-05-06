@@ -1,4 +1,3 @@
-
 /**
  *  @file       main-cli.cc
  *  @authors    Andrej Nano (xnanoa00), Stanislav Mechl (xmechl00)
