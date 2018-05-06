@@ -1,8 +1,10 @@
-#-------------------------------------------------
 #
-# Project created by QtCreator 2018-04-27T16:26:17
-#
-#-------------------------------------------------
+#  @file       gui.pro
+#  @authors    Andrej Nano (xnanoa00), Stanislav Mechl (xmechl00)
+#  @date       2018-05-05
+#  @version    1.0
+# 
+#  @brief ICP 2018, Project - Block Editor. GUI Qt project.
 
 QT       += core gui widgets
 

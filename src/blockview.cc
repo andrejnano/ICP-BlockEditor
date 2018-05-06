@@ -1,3 +1,15 @@
+/**
+ *  @file       blockview.cc
+ *  @authors    Andrej Nano (xnanoa00), Stanislav Mechl (xmechl00)
+ *  @date       2018-05-05
+ *  @version    1.0
+ * 
+ *  @brief ICP 2018, Project - Block Editor. Blockview class.
+ *  
+ *  @section Description 
+ * 
+ */
+
 #include <QDebug>
 #include <QGraphicsWidget>
 #include <QGraphicsSceneMouseEvent>
