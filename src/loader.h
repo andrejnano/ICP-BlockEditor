@@ -14,6 +14,8 @@
 #ifndef BLOCKEDITOR_LOADER_H_
 #define BLOCKEDITOR_LOADER_H_
 
+#include <memory>
+
 #include "scheme.h"
 
 class Loader

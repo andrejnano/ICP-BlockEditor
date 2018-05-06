@@ -1,6 +1,8 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include <memory>
+
 // #include <QMainWindow>
 #include <QFile>
 #include <QMainWindow>
