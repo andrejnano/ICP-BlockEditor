@@ -22,6 +22,7 @@ public:
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
+    std::shared_ptr<Block> getDataBlock();
     void addPort(Port newPort, bool isOutputPort);
 
 protected:

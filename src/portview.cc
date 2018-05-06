@@ -53,11 +53,6 @@ void PortView::setOutput(bool _setOutput)
 {
     isOutput = _setOutput;
 
-    // get the text size and create bounding box for it
-    QFontMetrics fm(scene()->font());
-    QRect r = fm.boundingRect(Type);
-
-
     if (isOutput)
     {
         TextLabel->setPos(-5 - 2 - TextLabel->boundingRect().width(), TextLabel->boundingRect().height()/2);
@@ -66,7 +61,6 @@ void PortView::setOutput(bool _setOutput)
     {
         TextLabel->setPos(5 + 2, - TextLabel->boundingRect().height()/2);
     }
-
 
 }
 

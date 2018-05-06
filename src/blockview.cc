@@ -17,6 +17,12 @@ BlockView::BlockView(std::shared_ptr<Block> newDataBlock)
 
 }
 
+std::shared_ptr<Block> BlockView::getDataBlock()
+{
+    return DataBlock;
+}
+
+
 QRectF BlockView::boundingRect() const
 {
     return QRectF(0,0,100,100);
@@ -44,9 +50,10 @@ void BlockView::addPort(Port newPort, bool _isOutputPort)
 
     int y = -height / 2 + 5 + 5;
 
-    foreach(QGraphicsItem *port_item, childItems())
+    foreach(QGraphicsItem *item, childItems())
     {
-        PortView* port = (PortView*)port_item;
+        PortView* port = qgraphicsitem_cast<PortView*>(item);
+        if (!port) continue;
 
         if (port->isOutput())
         {

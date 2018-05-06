@@ -207,6 +207,9 @@ void MainWindow::editor()
         return;
     }
 
+
+    // VERY CHAOTIC SOLUTION ...
+
     WireView* wireview {nullptr};
     for (auto wire: currentScheme->getWires())
     {
@@ -216,6 +219,33 @@ void MainWindow::editor()
         unsigned SourcePortIDX = wire->index_out;
         unsigned TargetPortIDX = wire->index_in;
 
+        // check every block in the scene for ID
+        foreach(QGraphicsItem *item, view->scene()->items())
+        {
+            BlockView* blockview = qgraphicsitem_cast<BlockView *>(item);
+            if (!blockview) continue;
+
+            // get ptr to the data model
+            auto direct_block_ptr = blockview->getDataBlock();
+
+            if ( direct_block_ptr->getBlockID() == SourceBlockID || direct_block_ptr->getBlockID() == TargetBlockID)
+            {
+                bool isSource = direct_block_ptr->getBlockID() == SourceBlockID ? true : false;
+
+                foreach(QGraphicsItem *item2, view->scene()->items())
+                {
+                    BlockView* blockview2 = qgraphicsitem_cast<BlockView *>(item2);
+                    if (!blockview2) continue;
+
+                    // get ptr to the data model
+                    auto direct_block_ptr2 = blockview2->getDataBlock();
+
+                    if (isSource && direct_block_ptr2->getBlockID() == TargetBlockID)
+                    {
+                        //...
+                    }
+
+        }
 
 
         WireView* wireview = new WireView(this); // dealloc?
