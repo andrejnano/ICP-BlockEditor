@@ -101,3 +101,13 @@ void PortView::setCurrentWire(WireView* wire)
 {
     CurrentWire = wire;
 }
+
+void PortView::setId(unsigned id)
+{
+    Id = id;
+}
+
+unsigned PortView::getId()
+{
+   return Id;
+}

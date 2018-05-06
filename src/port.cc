@@ -27,9 +27,9 @@
  * @param new_id identification of port (probably unnecessary)
  * @param new_type type of data in port
  */
-Port::Port(int new_id, data_type_t new_type)
+Port::Port(unsigned new_id, data_type_t new_type)
 {
-    this->id = new_id;
+    this->Id = new_id;
     this->type = new_type;
     this->is_set = false;
     switch(new_type)
@@ -47,7 +47,7 @@ Port::Port(int new_id, data_type_t new_type)
 
 void Port::print()
 {
-    std::cout << "|  ~ PORT ["<< this->id <<"][";
+    std::cout << "|  ~ PORT ["<< this->Id <<"][";
 
     switch(this->type)
     {
@@ -84,4 +84,9 @@ double Port::getValue(std::string name)
 bool Port::isSet()
 {
     return this->is_set;
+}
+
+unsigned Port::getId()
+{
+    return this->Id;
 }

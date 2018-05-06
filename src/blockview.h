@@ -7,6 +7,7 @@
 
 
 #include "blocks.h"
+#include "portview.h"
 
 
 class BlockView : public QGraphicsItem
@@ -23,7 +24,7 @@ public:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
     std::shared_ptr<Block> getDataBlock();
-    void addPort(Port newPort, bool isOutputPort);
+    PortView* addPort(Port newPort, bool isOutputPort);
 
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent);

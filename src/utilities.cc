@@ -206,7 +206,7 @@ bool CommandHandler::exec(string command)
 
                 if (active_scheme)
                 {
-                    scheduler->bindScheme(active_scheme);
+                    scheduler->bindScheme(active_scheme, ui->editor_page);
                 }
                 else
                 {

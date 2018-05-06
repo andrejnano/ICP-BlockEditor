@@ -37,7 +37,7 @@ SOURCES += \
         scheme.cc \
         utilities.cc \
         wireview.cc \
-    portview.cc
+        portview.cc
 
 
 HEADERS += \
@@ -50,7 +50,7 @@ HEADERS += \
         scheme.h \
         utilities.h \
         wireview.h \
-    portview.h
+        portview.h
 
 FORMS += \
         mainwindow.ui

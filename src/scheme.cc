@@ -13,6 +13,8 @@
 #include <fstream>
 #include <string>
 
+#include <QInputDialog>
+
 #include "scheme.h"
 #include "blocks.h"
 #include "utilities.h"
@@ -371,9 +373,22 @@ void Scheme::removeBlockOutPort(unsigned block_id, unsigned port_index)
 
 double Scheme::getUserValue(unsigned block_id, unsigned port_index)
 {
+//    if (RUN_MODE == GUI_MODE)
+//    {
+//        bool status;
+//        std::stringstream msgstream;
+//        msgstream << "Set the value of port " << port_index << " in block " <<  block_id << ": ";
+//        std::string const msg(msgstream.str());
+
+//        //QString value = QInputDialog::getText(nullptr, QString::fromStdString(msg), QLineEdit::Normal, QString::null, &status, this );
+//        QString value = QInputDialog::getText(nullptr, tr("QInputDialog::getText()"),
+//                                                 tr("User name:"), QLineEdit::Normal,
+//                                                 QDir::home().dirName(), &status);
+//        return value.toDouble();
+//    }
     std::cout << "Set the value of port " << port_index << " in block " << block_id << ": ";
     std::string val;
-    std::cin >> val; 
+    std::cin >> val;
     return std::stod(val);
 }
 

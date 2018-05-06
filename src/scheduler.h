@@ -14,6 +14,9 @@
 #define BLOCKEDITOR_SCHEDULER_H_
 
 #include <queue>
+
+#include <QWidget>
+
 #include "blocks.h"
 #include "scheme.h"
 
@@ -28,10 +31,6 @@
   Actions:
     - step (only 1x)
     - run (the whole scheme)
-
-
-  GUI NOTE: if a step occurs, there should be an event so the view is refreshed.
-
 */
 
 class SchedulerHistory;
@@ -76,7 +75,7 @@ public:
     {}
 
     // bind some existing scheme to this scheduler
-    void bindScheme(std::shared_ptr<Scheme> scheme);
+    void bindScheme(std::shared_ptr<Scheme> scheme, QWidget* optional_parent = 0);
 
     // current scheme getter
     std::shared_ptr<Scheme> currentScheme();
@@ -95,6 +94,7 @@ public:
 
     // calls function to get input from user for every free input port
     void setFreeInputs();
+    void setFreeInputsGui(QWidget* parent);
 
     // returns index to next prepared (with all inputs set) block
     unsigned getNext();

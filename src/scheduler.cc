@@ -10,6 +10,10 @@
  * 
  */
 
+#include <sstream>
+
+#include <QInputDialog>
+
 #include "scheduler.h"
 #include "utilities.h"
 #include "scheme.h"
@@ -82,7 +86,7 @@ unsigned Scheduler::getNext()
 
 // bind some existing scheme to this scheduler
 // TODO: probably rename, as it also resets the scheduler.. 
-void Scheduler::bindScheme(std::shared_ptr<Scheme> scheme)
+void Scheduler::bindScheme(std::shared_ptr<Scheme> scheme, QWidget* optional_parent)
 {
     if (scheme)
     {
@@ -91,7 +95,7 @@ void Scheduler::bindScheme(std::shared_ptr<Scheme> scheme)
         
         switch (RUN_MODE)
         {
-            case GUI_MODE: break; // TODO:
+            case GUI_MODE: setFreeInputsGui(optional_parent); break;
             case CLI_MODE: setFreeInputs(); break;
             default: error(E_UNDEF,"undefined runmode");
         }
@@ -199,6 +203,31 @@ void Scheduler::setFreeInputs()
             if(current_scheme->isConnected(current_scheme->blocks[b]->getBlockID(), true, p) == 1) // if port is not connected
             {
                 current_scheme->blocks[b]->setInPortValue(p,"val", current_scheme->getUserValue(current_scheme->blocks[b]->getBlockID(), p));
+            }
+        }
+    }
+}
+
+void Scheduler::setFreeInputsGui(QWidget* parent)
+{
+    if (!parent)
+        return;
+
+    for(unsigned b = 0; b < current_scheme->blocks.size(); b++)
+    {
+        for(unsigned p = 0; p < current_scheme->blocks[b]->getInSize(); p++)
+        {
+            if(current_scheme->isConnected(current_scheme->blocks[b]->getBlockID(), true, p) == 1) // if port is not connected
+            {
+                // create input dialog for every required user input
+               bool status;
+               std::stringstream msgstream;
+               msgstream << "Set the value of port " << current_scheme->blocks[b]->getBlockID() << " in block " <<  p << ": ";
+               std::string const msg(msgstream.str());
+
+               QString value = QInputDialog::getText(parent, "BlockEditor prompt", QString::fromStdString(msg), QLineEdit::Normal, "a", &status);
+
+               current_scheme->blocks[b]->setInPortValue(p,"val", value.toDouble());
             }
         }
     }

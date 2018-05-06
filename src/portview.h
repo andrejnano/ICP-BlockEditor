@@ -15,6 +15,7 @@ class PortView : public QGraphicsPathItem
 {
 private:
     QString Name;
+    unsigned Id;
     BlockView* ParentBlock;
     WireView* CurrentWire;
     QGraphicsTextItem *TextLabel;
@@ -36,7 +37,10 @@ public:
 
     //void addPort(Port newPort, bool _isOutputPort);
 
+    void setId(unsigned id);
     void setCurrentWire(WireView* wire);
+
+    unsigned getId();
     WireView* getCurrentWire();
     BlockView* getParentBlock() const;
 

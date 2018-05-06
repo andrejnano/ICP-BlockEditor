@@ -89,7 +89,7 @@ public:
     void removeBlockInPort(unsigned block_id, unsigned port_index);
     void removeBlockOutPort(unsigned block_id, unsigned port_index);
 
-    // get input from user for some port, TODO: create GUI version of this
+    // get input from user for some port
     double getUserValue(unsigned block_id, unsigned port_index);
 
     std::vector<std::shared_ptr<Block>> getBlockPointers();

@@ -48,7 +48,8 @@ Block::Block(unsigned new_id, operation_type_t new_type, data_type_t input_type,
  */
 void Block::addNewInPort()
 {
-    this->in_ports.push_back(Port(1,this->in_type));
+    unsigned new_index = in_ports.end()->getId();
+    this->in_ports.push_back(Port(new_index,this->in_type));
 }
 
 /**
@@ -56,7 +57,8 @@ void Block::addNewInPort()
  */
 void Block::addNewOutPort()
 {
-    this->out_ports.push_back(Port(1,this->out_type));
+    unsigned new_index = out_ports.end()->getId();
+    this->out_ports.push_back(Port(new_index,this->out_type));
 }
 
 /**

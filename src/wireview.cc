@@ -1,5 +1,7 @@
 #include <QGraphicsScene>
+
 #include "wireview.h"
+#include "portview.h"
 
 
 WireView::WireView(QGraphicsItem *parent) :
@@ -11,17 +13,17 @@ WireView::WireView(QGraphicsItem *parent) :
     DestPort = 0;
 }
 
-inline void WireView::setSourcePoint(const QPointF &point)
+void WireView::setSourcePoint(const QPointF &point)
 {
     SourcePoint = point;
 }
 
-inline void WireView::setDestPoint(const QPointF &point)
+void WireView::setDestPoint(const QPointF &point)
 {
     DestPoint = point;
 }
 
-inline void WireView::setSourcePort(PortView *port)
+void WireView::setSourcePort(PortView *port)
 {
     SourcePort = port;
 }

@@ -1,5 +1,6 @@
 #include <QDebug>
 #include <QGraphicsSceneMouseEvent>
+#include <QGraphicsDropShadowEffect>
 
 #include "blockview.h"
 #include "portview.h"
@@ -40,9 +41,6 @@ void BlockView::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
     painter->fillPath(path, QColor(255,255,255));
     painter->drawPath(path);
 
-//    QBrush brush(Qt::black);
-//    painter->fillRect(rec,brush);
-
     // block id and type
     QString block_id = QString::number(DataBlock->getBlockID());
     QString block_type = QString::fromStdString(DataBlock->getStringType());
@@ -57,10 +55,11 @@ void BlockView::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
     painter->drawText(rec, Qt::AlignVCenter | Qt::AlignHCenter, block_type);
 }
 
-void BlockView::addPort(Port newPort, bool _isOutputPort)
+PortView* BlockView::addPort(Port newPort, bool _isOutputPort)
 {
     PortView* portview = new PortView(this);
     portview->setOutput(_isOutputPort);
+    portview->setId(newPort.getId());
     portview->setName("Type");
     portview->setParentBlock(this);
 
@@ -82,6 +81,8 @@ void BlockView::addPort(Port newPort, bool _isOutputPort)
         }
         y += 20;
     }
+
+    return portview;
 }
 
 

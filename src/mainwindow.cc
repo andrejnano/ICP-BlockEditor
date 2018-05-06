@@ -158,16 +158,8 @@ void MainWindow::editor()
     QWidget *editor_page = ui->editor_page;
     ui->stackedWidget->setCurrentWidget(editor_page);
 
-    // for each wire draw a line
-
-    // enable the buttons executing commands such as
-    // add block, step, undo, run, reset
-    //
-
     QGraphicsView* view = ui->view;
     view->setRenderHint(QPainter::Antialiasing);
-    view->scale(qreal(0.8), qreal(0.8));
-    view->setMinimumSize(this->width(), this->height());
     view->setScene(new QGraphicsScene());
 
     QBrush bgcolor(QColor(9, 12, 29));
@@ -186,22 +178,29 @@ void MainWindow::editor()
         return;
     }
 
+    // store all the blocks and ports for easy access
+    std::vector<BlockView*> blockviewlist;
+    std::vector<PortView*> portviewlist;
+
     BlockView* blockview {nullptr};
     for (auto block_ptr : currentScheme->getBlockPointers())
     {
         BlockView* blockview = new BlockView(block_ptr); // dealloc?
         view->scene()->addItem(blockview);
+        blockviewlist.push_back(blockview);
 
         // in port draw
         for (auto port_ptr : block_ptr->getInPorts())
         {
-            blockview->addPort(port_ptr, false);
+            // add portview to the blockview and save the pointer to the list
+            portviewlist.push_back(blockview->addPort(port_ptr, false));
         }
 
         // out port draw
         for (auto port_ptr : block_ptr->getOutPorts())
         {
-            blockview->addPort(port_ptr, true);
+            // add portview to the blockview and save the pointer to the list
+            portviewlist.push_back(blockview->addPort(port_ptr, true));
         }
     }
 
@@ -212,17 +211,67 @@ void MainWindow::editor()
         return;
     }
 
+    WireView* wireview {nullptr};
+    for (auto wire: currentScheme->getWires())
+    {
+        for (auto blockview_first : blockviewlist) // every block SOURCE/TARGET
+            for (auto blockview_second : blockviewlist) // every other block TARGET/SOURCE
+            {
+                // the first is source
+                if ( blockview_first->getDataBlock()->getBlockID() == wire.id_out && blockview_second->getDataBlock()->getBlockID() == wire.id_in)
+                {
+                    for(auto portview_first : portviewlist)
+                        for(auto portview_second : portviewlist)
+                        {
+                            if (portview_first->getParentBlock() == blockview_first && portview_first->getId() == wire.index_out)
+                                if (portview_second->getParentBlock() == blockview_second && portview_second->getId() == wire.index_in)
+                                {
+                                    wireview = new WireView(0);
+                                    wireview->setSourcePort(portview_first);
+                                    wireview->setDestPort(portview_second);
+
+                                    portview_first->setCurrentWire(wireview);
+                                    portview_second->setCurrentWire(wireview);
+
+                                    view->scene()->addItem(wireview);
+                                }
+                        }
+                }
+                else if ( blockview_first->getDataBlock()->getBlockID() == wire.id_in && blockview_second->getDataBlock()->getBlockID() == wire.id_out)
+                {
+                    for(auto portview_first : portviewlist)
+                        for(auto portview_second : portviewlist)
+                        {
+                            if (portview_first->getParentBlock() == blockview_first && portview_first->getId() == wire.index_in)
+                                if (portview_second->getParentBlock() == blockview_second && portview_second->getId() == wire.index_out)
+                                {
+                                    wireview = new WireView(0);
+                                    wireview->setSourcePort(portview_first);
+                                    wireview->setDestPort(portview_second);
+
+                                    portview_first->setCurrentWire(wireview);
+                                    portview_second->setCurrentWire(wireview);
+
+                                    view->scene()->addItem(wireview);
+                                }
+                        }
+                }
+            }
+    }
+
 
     // VERY CHAOTIC SOLUTION ...
+
+
 
 //    WireView* wireview {nullptr};
 //    for (auto wire: currentScheme->getWires())
 //    {
 //        unsigned SourceBlockID = wire->id_out;
 //        unsigned TargetBlockID = wire->id_in;
-
 //        unsigned SourcePortIDX = wire->index_out;
 //        unsigned TargetPortIDX = wire->index_in;
+
 
 //        // check every block in the scene for ID
 //        foreach(QGraphicsItem *item, view->scene()->items())
@@ -247,7 +296,15 @@ void MainWindow::editor()
 
 //                    if (isSource && direct_block_ptr2->getBlockID() == TargetBlockID)
 //                    {
-//                        //...
+//                        for ()
+//                            blockview1
+//                        WireView *wireview = new WireView();
+//                        wireview->
+//                    }
+//                    else
+//                    if (direct_block_ptr2->getBlockID() == SourceBlockID)
+//                    {
+
 //                    }
 
 //        }
