@@ -34,6 +34,11 @@ private slots:
     void on_main_menu_btn_clicked();
     void on_help_menu_btn_clicked();
     void on_editor_menu_btn_clicked();
+    // editor menu actions
+    void on_step_btn_clicked();
+    void on_undo_btn_clicked();
+    void on_add_block_btn_clicked();
+    void on_save_scheme_btn_clicked();
 
     // the visual representation of the scheme
     void editor();

@@ -69,89 +69,6 @@ MainWindow::~MainWindow()
 /*****************************************************************************/
 
 
-class GridLockScene : public QGraphicsScene
-{
- private:
-    const QSize cellSize;
-    QGraphicsItem* DraggedItem;
-    QPointF DragOffset;
-
- public:
-    GridLockScene() : cellSize(100,100) {}
-
- protected:
-    void drawBackground(QPainter *painter, const QRectF &rect);
-    void mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent);
-    void mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent);
-    void mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent);
-};
-
-
-void GridLockScene::drawBackground(QPainter *painter, const QRectF &rect)
-{
-    qreal left = int(rect.left()) - (int(rect.left()) % cellSize.width());
-    qreal top = int(rect.top()) - (int(rect.top()) % cellSize.height());
-
-    QVarLengthArray<QLineF, 100> lines;
-
-    for (qreal x = left; x < rect.right(); x += cellSize.width())
-    {
-        lines.append(QLineF(x, rect.top(), x, rect.bottom()));
-    }
-
-    for (qreal y = top; y < rect.bottom(); y += cellSize.height())
-    {
-        lines.append(QLineF(rect.left(), y, rect.right(), y));
-    }
-
-    painter->setPen(Qt::lightGray);
-    painter->drawLines(lines.data(), lines.size());
-}
-
-
-void GridLockScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
-{
-    // try to get item where the mouse clicks
-    DraggedItem = qgraphicsitem_cast<QGraphicsItem*>(itemAt(mouseEvent->scenePos(), QTransform()));
-
-    // if there was an item,
-    if (DraggedItem)
-    {
-        DragOffset = mouseEvent->scenePos() - DraggedItem->pos();
-    }
-    else
-    {
-        QGraphicsScene::mousePressEvent(mouseEvent);
-    }
-}
-
-void GridLockScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
-{
-    if (DraggedItem)
-    {
-        // Ensure that the item's offset from the mouse cursor stays the same.
-        DraggedItem->setPos(mouseEvent->scenePos() - DragOffset);
-    }
-    else
-    {
-        QGraphicsScene::mouseMoveEvent(mouseEvent);
-    }
-}
-
-void GridLockScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
-{
-    if (DraggedItem) {
-        int x = floor(mouseEvent->scenePos().x() / cellSize.width()) * cellSize.width();
-        int y = floor(mouseEvent->scenePos().y() / cellSize.height()) * cellSize.height();
-        DraggedItem->setPos(x, y);
-        DraggedItem = 0;
-    } else
-        QGraphicsScene::mouseReleaseEvent(mouseEvent);
-}
-
-
-
-
 void MainWindow::editor()
 {
     // change the page
@@ -183,9 +100,14 @@ void MainWindow::editor()
     std::vector<PortView*> portviewlist;
 
     BlockView* blockview {nullptr};
+    int offset_x = 10;
+    int offset_y = 10;
+
     for (auto block_ptr : currentScheme->getBlockPointers())
     {
         BlockView* blockview = new BlockView(block_ptr); // dealloc?
+        blockview->setPos(QPoint(offset_x, offset_y));
+        offset_x += 110;
         view->scene()->addItem(blockview);
         blockviewlist.push_back(blockview);
 
@@ -204,118 +126,41 @@ void MainWindow::editor()
         }
     }
 
-    // in case there is nothing to show
-    if (currentScheme->getWires().empty())
-    {
-        view->show();
-        return;
-    }
-
-    WireView* wireview {nullptr};
-    for (auto wire: currentScheme->getWires())
-    {
-        for (auto blockview_first : blockviewlist) // every block SOURCE/TARGET
-            for (auto blockview_second : blockviewlist) // every other block TARGET/SOURCE
-            {
-                // the first is source
-                if ( blockview_first->getDataBlock()->getBlockID() == wire.id_out && blockview_second->getDataBlock()->getBlockID() == wire.id_in)
-                {
-                    for(auto portview_first : portviewlist)
-                        for(auto portview_second : portviewlist)
-                        {
-                            if (portview_first->getParentBlock() == blockview_first && portview_first->getId() == wire.index_out)
-                                if (portview_second->getParentBlock() == blockview_second && portview_second->getId() == wire.index_in)
-                                {
-                                    wireview = new WireView(0);
-                                    wireview->setSourcePort(portview_first);
-                                    wireview->setDestPort(portview_second);
-
-                                    portview_first->setCurrentWire(wireview);
-                                    portview_second->setCurrentWire(wireview);
-
-                                    view->scene()->addItem(wireview);
-                                }
-                        }
-                }
-                else if ( blockview_first->getDataBlock()->getBlockID() == wire.id_in && blockview_second->getDataBlock()->getBlockID() == wire.id_out)
-                {
-                    for(auto portview_first : portviewlist)
-                        for(auto portview_second : portviewlist)
-                        {
-                            if (portview_first->getParentBlock() == blockview_first && portview_first->getId() == wire.index_in)
-                                if (portview_second->getParentBlock() == blockview_second && portview_second->getId() == wire.index_out)
-                                {
-                                    wireview = new WireView(0);
-                                    wireview->setSourcePort(portview_first);
-                                    wireview->setDestPort(portview_second);
-
-                                    portview_first->setCurrentWire(wireview);
-                                    portview_second->setCurrentWire(wireview);
-
-                                    view->scene()->addItem(wireview);
-                                }
-                        }
-                }
-            }
-    }
-
-
-    // VERY CHAOTIC SOLUTION ...
-
-
-
-//    WireView* wireview {nullptr};
-//    for (auto wire: currentScheme->getWires())
+//    // in case there is nothing to show
+//    if (currentScheme->getWires().empty())
 //    {
-//        unsigned SourceBlockID = wire->id_out;
-//        unsigned TargetBlockID = wire->id_in;
-//        unsigned SourcePortIDX = wire->index_out;
-//        unsigned TargetPortIDX = wire->index_in;
-
-
-//        // check every block in the scene for ID
-//        foreach(QGraphicsItem *item, view->scene()->items())
-//        {
-//            BlockView* blockview = qgraphicsitem_cast<BlockView *>(item);
-//            if (!blockview) continue;
-
-//            // get ptr to the data model
-//            auto direct_block_ptr = blockview->getDataBlock();
-
-//            if ( direct_block_ptr->getBlockID() == SourceBlockID || direct_block_ptr->getBlockID() == TargetBlockID)
-//            {
-//                bool isSource = direct_block_ptr->getBlockID() == SourceBlockID ? true : false;
-
-//                foreach(QGraphicsItem *item2, view->scene()->items())
-//                {
-//                    BlockView* blockview2 = qgraphicsitem_cast<BlockView *>(item2);
-//                    if (!blockview2) continue;
-
-//                    // get ptr to the data model
-//                    auto direct_block_ptr2 = blockview2->getDataBlock();
-
-//                    if (isSource && direct_block_ptr2->getBlockID() == TargetBlockID)
-//                    {
-//                        for ()
-//                            blockview1
-//                        WireView *wireview = new WireView();
-//                        wireview->
-//                    }
-//                    else
-//                    if (direct_block_ptr2->getBlockID() == SourceBlockID)
-//                    {
-
-//                    }
-
-//        }
-
-
-//        WireView* wireview = new WireView(this); // dealloc?
-//        wireview->
-//        view->scene()->addItem(wireview);
+//        view->show();
+//        return;
 //    }
 
     view->show();
+}
+
+/*****************************************************************************/
+// Editor Commands
+/*****************************************************************************/
+void MainWindow::on_step_btn_clicked()
+{
+    cmd->exec("step");
+    update();
+}
+
+void MainWindow::on_undo_btn_clicked()
+{
+    cmd->exec("undo");
+    update();
+}
+
+void MainWindow::on_add_block_btn_clicked()
+{
+    cmd->exec("add");
+    editor();
+}
+
+void MainWindow::on_save_scheme_btn_clicked()
+{
+    cmd->exec("save");
+    update();
 }
 
 
@@ -339,6 +184,8 @@ void MainWindow::on_editor_menu_btn_clicked()
 }
 
 
+
+
 // start the editor with new scheme
 void MainWindow::on_new_scheme_btn_clicked()
 {
@@ -359,7 +206,7 @@ void MainWindow::on_load_scheme_btn_clicked()
 void MainWindow::on_load_file_btn_clicked()
 {
     // open a file dialog
-    QString fileName = QFileDialog::getOpenFileName(this, "Open Scheme",  QString(), "Block Scheme Files (*.scheme *.sch)");
+    QString fileName = QFileDialog::getOpenFileName(this, "Open Scheme",  QDir::currentPath(), "Block Scheme Files (*.scheme *.sch)");
 
     // store the text inside a text field
     // now it is editable manually or just can be opened by clicking

@@ -10,6 +10,8 @@
  * 
  */
 #include <QMessageBox>
+#include <QInputDialog>
+#include <QFileDialog>
 
 #include <iostream>
 #include <iomanip>
@@ -26,16 +28,21 @@ using std::endl;
 using std::string;
 
 
-
-
-// Error printout wrapper + option to exit
+/**
+ * @brief error output wrapper
+ * @param error_code
+ * @param error_msg
+ * @param do_exit
+ */
 void error(Err_code_t error_code, string error_msg, bool do_exit)
 {
   cout << " Error " << error_code << " >> " << error_msg << endl;
   do_exit ? exit(error_code) : void();
 }
 
-// Help printout wrapper
+/**
+ * @brief help output for cli
+ */
 void help()
 {
   cout << "\n" << CL::BOLD << CL::UNDERLINE << "BlockEditor" << CL::ENDC << "\n\n"
@@ -62,7 +69,10 @@ void help()
     << endl;
 }
 
-// Terminal printout separator
+/**
+ * @brief cli output separator
+ * @param chosen_char character to use to separate
+ */
 void separator(int chosen_char)
 {
   char separators[]
@@ -88,7 +98,11 @@ void separator(int chosen_char)
   std::cout << " " << std::endl;
 }
 
-// Terminal printout headline
+/**
+ * @brief cli headline output
+ * @param chosen_char
+ * @param headline_text
+ */
 void headline(int chosen_char, std::string headline_text)
 {
   char separators[]
@@ -115,7 +129,10 @@ void headline(int chosen_char, std::string headline_text)
   std::cout << " " << std::endl;
 }
 
-// Terminal paragraph of text
+/**
+ * @brief cli paragraph output
+ * @param text
+ */
 void paragraph(std::string text)
 {
     std::istringstream f(text);
@@ -128,12 +145,13 @@ void paragraph(std::string text)
 }
 
 
-//
+/***********************************************************************/
 // COMMAND HANDLING
-//
+/***********************************************************************/
 
 /**
- * @brief Conversion from string to actual command in a structured way
+ * @brief Command handler interface for executing command both for GUI & CLI
+ * @param command command to be executed
  */
 bool CommandHandler::exec(string command)
 {
@@ -194,7 +212,9 @@ bool CommandHandler::exec(string command)
 
             case SAVE:
             {
-                //TODO:
+
+                QString fileName = QFileDialog::getSaveFileName(ui->editor_page, "Save Scheme",  QDir::currentPath(), "Block Scheme Files (*.scheme *.sch)");
+                loader->saveScheme(fileName.toStdString(), active_scheme);
                 break;
             }
 
@@ -224,6 +244,39 @@ bool CommandHandler::exec(string command)
                 scheduler->bindScheme(active_scheme);
                 break;
             }
+
+            case ADD:
+            {
+                bool status;
+
+                QString operation_input = QInputDialog::getText(ui->editor_page, "BlockEditor prompt", "Choose the operation: 'SUM', 'AVG', 'MIN', 'MAX', 'COUNT':", QLineEdit::Normal, "", &status);
+
+                std::string operation = operation_input.toStdString();
+                // lowercase it
+                std::transform(operation.begin(), operation.end(), operation.begin(), ::tolower);
+
+                if ( operation == "sum") active_scheme->addBlock(SUM, t_simple, t_simple);
+                else
+                if ( operation == "avg") active_scheme->addBlock(AVG, t_simple, t_simple);
+                else
+                if ( operation == "min") active_scheme->addBlock(MIN, t_simple, t_simple);
+                else
+                if ( operation == "max") active_scheme->addBlock(MAX, t_simple, t_simple);
+                else
+                if ( operation == "count") active_scheme->addBlock(COUNT, t_simple, t_simple);
+                else
+                {
+                    QMessageBox messageBox;
+                    messageBox.critical(0,"Error","No such operation.");
+                    messageBox.setFixedSize(500,200);
+                    return false;
+                }
+                break;
+            }
+
+            case STEP:      scheduler->step(); break;
+            case UNDO:      scheduler->undo(); break;
+            case RUN:       scheduler->run(); break;
 
             default: 
             {
@@ -311,9 +364,11 @@ bool CommandHandler::exec(string command)
                 else
                 if ( operation == "max") active_scheme->addBlock(MAX, t_simple, t_simple);
                 else
+                if ( operation == "count") active_scheme->addBlock(COUNT, t_simple, t_simple);
+                else
                 {
                     cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-                    error(E_SCHEMA_OTHER, "Unrecognized operation type! Must be 'sum', 'avg', min' or 'max'");
+                    error(E_SCHEMA_OTHER, "Unrecognized operation type! Must be 'sum', 'avg', min', 'max' or 'count'");
                 }
                 break;
             }

@@ -142,6 +142,7 @@ public:
 
     // execute the supplied command
     bool exec(string command);
+
 };
 
 

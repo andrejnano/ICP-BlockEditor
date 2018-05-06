@@ -29,14 +29,6 @@ SchedulerHistory::SchedulerHistory(const Scheduler& present) :
     visited_blocks_memo { present.visited_blocks }
 {}
 
-// pointer version TRY BOTH
-// SchedulerHistory::SchedulerHistory(Scheduler *present) : 
-//     history_memo { present->history }, 
-//     current_scheme_memo { present->current_scheme },
-//     queued_blocks_memo { present->queued_blocks },
-//     visited_blocks_memo { present->visited_blocks }
-// {}
-
 
 
 /**
@@ -229,7 +221,7 @@ void Scheduler::setFreeInputsGui(QWidget* parent)
                msgstream << "Set the value of port " << current_scheme->blocks[b]->getBlockID() << " in block " <<  p << ": ";
                std::string const msg(msgstream.str());
 
-               QString value = QInputDialog::getText(parent, "BlockEditor prompt", QString::fromStdString(msg), QLineEdit::Normal, "Value:", &status);
+               QString value = QInputDialog::getText(parent, "BlockEditor prompt", QString::fromStdString(msg), QLineEdit::Normal, "", &status);
 
                current_scheme->blocks[b]->setInPortValue(p,"val", value.toDouble());
             }
