@@ -36,6 +36,20 @@ void Scheme::print()
     }
 }
 
+
+// used in GUI
+std::vector<std::shared_ptr<Block>> Scheme::getBlockPointers()
+{
+    return blocks;
+}
+
+// used in GUI
+std::vector<wire> Scheme::getWires()
+{
+    return wires;
+}
+
+
 /**
  * @brief adds new block to scheme
  * @param new_type type of new block

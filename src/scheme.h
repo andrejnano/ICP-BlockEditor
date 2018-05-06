@@ -42,7 +42,10 @@ private:
     std::vector<wire> wires;    // list of wires (connections) contained in the scheme
 
 public:
-    Scheme(std::string new_name) : name {new_name}, last_block_id {FIRST_ID} {}
+    Scheme(std::string new_name) :
+        name {new_name},
+        last_block_id {FIRST_ID}
+    {}
 
     // return the scheme name
     std::string getName();
@@ -77,8 +80,7 @@ public:
     // returns a pointer to the block looked up by ID
     std::shared_ptr<Block> getBlockByID(unsigned searched_id);
 
-    /* useful for CLI, TODO: create GUI version of this.. */
-    // outputs information about the block
+    // outputs information about the block to the terminal
     void print();
 
     // handles ports in block
@@ -89,6 +91,9 @@ public:
 
     // get input from user for some port, TODO: create GUI version of this
     double getUserValue(unsigned block_id, unsigned port_index);
+
+    std::vector<std::shared_ptr<Block>> getBlockPointers();
+    std::vector<wire> getWires();
 };
 
 

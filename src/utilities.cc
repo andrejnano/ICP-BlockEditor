@@ -217,6 +217,22 @@ bool CommandHandler::exec(string command)
                 }
                 break;
             }
+
+            case NEW:
+            {
+                active_scheme = loader->createScheme("new_scheme"); 
+                scheduler->bindScheme(active_scheme);
+                break;
+            }
+
+            default: 
+            {
+                QMessageBox messageBox;
+                messageBox.critical(0,"Error","No such command. Not even 'INVALID'!");
+                messageBox.setFixedSize(500,200);
+                error(E_UNDEF, "No such command. Not even 'INVALID'!", true);
+            }
+
         }
     }
     else

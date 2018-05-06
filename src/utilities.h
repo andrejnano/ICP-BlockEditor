@@ -22,8 +22,9 @@ using std::string;
 
 #include "scheduler.h"
 #include "loader.h"
-#include "ui_mainwindow.h"
 
+// qt
+#include "ui_mainwindow.h"
 
 enum Err_code_t
 {

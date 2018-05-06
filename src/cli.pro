@@ -1,8 +1,4 @@
-#-------------------------------------------------
-#
-# Project created by QtCreator 2018-04-27T16:26:17
-#
-#-------------------------------------------------
+
 
 QT       += core gui widgets
 
@@ -11,7 +7,7 @@ CONFIG += c++14 strict_c++
 # for mac-os-x, forbid creation of app subdirectories
 CONFIG -= app_bundle
 
-TARGET = ../blockeditor
+TARGET = ../blockeditor-cli
 TEMPLATE = app
 
 # The following define makes your compiler emit warnings if you use
@@ -28,29 +24,17 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         blocks.cc \
-        blockview.cc \
         loader.cc \
-        main-gui.cc \
-        mainwindow.cc \
+        main-cli.cc \
         port.cc \
         scheduler.cc \
         scheme.cc \
-        utilities.cc \
-        wireview.cc \
-    portview.cc
-
+        utilities.cc
 
 HEADERS += \
         blocks.h \
-        blockview.h \
         loader.h \
-        mainwindow.h \
         port.h \
         scheduler.h \
         scheme.h \
-        utilities.h \
-        wireview.h \
-    portview.h
-
-FORMS += \
-        mainwindow.ui
+        utilities.h

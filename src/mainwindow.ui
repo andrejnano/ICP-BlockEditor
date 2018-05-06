@@ -17,23 +17,48 @@
    <string>MainWindow</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">QMainWindow {background-color: #fafafa; }</string>
+   <string notr="true">QMainWindow {
+background-color: #f1d1d1d; 
+}
+
+QMenuBar{
+background-color: #1d1d1d;
+padding: 5px;
+font: 12px &quot;Helvetica&quot;, sans-serif;
+}
+
+QmenuBar::item{
+background-color: #1d1d1d;
+color: #fafafa;
+padding:5px;
+}
+
+QMenu{
+backround: #3d3d3d;
+color: #fff;
+padding:0;
+}
+
+QMenu::item::selected{
+color:#fff;
+background-color:#00aba9;
+}</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <widget class="QStackedWidget" name="stackedWidget">
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>30</y>
+      <y>50</y>
       <width>961</width>
-      <height>521</height>
+      <height>501</height>
      </rect>
     </property>
     <property name="styleSheet">
      <string notr="true">QStackedWidget { background: #fafafa; border: 2px solid #222;}</string>
     </property>
     <property name="currentIndex">
-     <number>3</number>
+     <number>2</number>
     </property>
     <widget class="QWidget" name="main_menu_page">
      <property name="styleSheet">
@@ -150,6 +175,33 @@
         <enum>QLayout::SetDefaultConstraint</enum>
        </property>
        <item>
+        <widget class="QPushButton" name="pushButton_7">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="font">
+          <font>
+           <family>Futura</family>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>Save Scheme</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="Line" name="line_2">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QPushButton" name="pushButton_3">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
@@ -210,6 +262,39 @@
         </widget>
        </item>
        <item>
+        <widget class="Line" name="line">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_6">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="font">
+          <font>
+           <family>Futura</family>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="autoFillBackground">
+          <bool>false</bool>
+         </property>
+         <property name="styleSheet">
+          <string notr="true"/>
+         </property>
+         <property name="text">
+          <string>STEP</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QPushButton" name="pushButton_4">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
@@ -224,8 +309,34 @@
            <bold>true</bold>
           </font>
          </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: #416275;</string>
+         </property>
          <property name="text">
-          <string>START</string>
+          <string>UNDO</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_8">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="font">
+          <font>
+           <family>Futura</family>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: #416275;</string>
+         </property>
+         <property name="text">
+          <string>RUN</string>
          </property>
         </widget>
        </item>
@@ -244,20 +355,23 @@
            <bold>true</bold>
           </font>
          </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: #416275;</string>
+         </property>
          <property name="text">
-          <string>STEP</string>
+          <string>RESET</string>
          </property>
         </widget>
        </item>
       </layout>
      </widget>
-     <widget class="QGraphicsView" name="graphicsView">
+     <widget class="QGraphicsView" name="view">
       <property name="geometry">
        <rect>
         <x>0</x>
         <y>50</y>
         <width>961</width>
-        <height>511</height>
+        <height>451</height>
        </rect>
       </property>
      </widget>
@@ -349,14 +463,22 @@
    <widget class="QPushButton" name="main_menu_btn">
     <property name="geometry">
      <rect>
-      <x>0</x>
-      <y>0</y>
-      <width>113</width>
-      <height>32</height>
+      <x>10</x>
+      <y>10</y>
+      <width>121</width>
+      <height>30</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <family>Helvetica</family>
+      <pointsize>18</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
     <property name="styleSheet">
-     <string notr="true"/>
+     <string notr="true">border: 1px solid #004e92; background: #fafafa; border-radius: 5px;</string>
     </property>
     <property name="text">
      <string>Main menu</string>
@@ -365,14 +487,49 @@
    <widget class="QPushButton" name="editor_menu_btn">
     <property name="geometry">
      <rect>
-      <x>110</x>
-      <y>0</y>
+      <x>140</x>
+      <y>10</y>
       <width>113</width>
-      <height>32</height>
+      <height>30</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Helvetica</family>
+      <pointsize>18</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border: 1px solid #004e92; background: #fafafa; border-radius: 5px;</string>
     </property>
     <property name="text">
      <string>Editor</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="help_menu_btn">
+    <property name="geometry">
+     <rect>
+      <x>840</x>
+      <y>10</y>
+      <width>113</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Helvetica</family>
+      <pointsize>18</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border: 1px solid #004e92; background: #fafafa; border-radius: 5px;</string>
+    </property>
+    <property name="text">
+     <string>Help</string>
     </property>
    </widget>
   </widget>
@@ -382,7 +539,7 @@
      <x>0</x>
      <y>0</y>
      <width>960</width>
-     <height>22</height>
+     <height>27</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuBlockEditor">

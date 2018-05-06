@@ -13,6 +13,7 @@
  *  
  */
 
+
 // std libraries
 #include <iostream>
 #include <iomanip>
@@ -44,7 +45,6 @@ using std::stod;
 // GUI/CLI different handling switch
 const Mode_t RUN_MODE {CLI_MODE};
 
-
 /**
  * @brief CLI Main entry point
  * @param argc arg count
@@ -64,13 +64,24 @@ int main(int argc, char **argv)
     std::shared_ptr<Scheduler>          scheduler;
     std::unique_ptr<CommandHandler>     cmd;
 
-    loader      = std::make_shared<Loader>();
-    scheduler   = std::make_shared<Scheduler>();
-    cmd         = std::make_unique<CommandHandler>(nullptr, loader, scheduler);
+    // Loader is an object handling file->schema or schema->file conversions [LOAD/SAVE].
+    // It is also able to create blank new scheme.
+    loader = std::make_shared<Loader>();
+
+    // Scheduler is an object managing the order of computation in the scheme.
+    // It is able to run, step and undo the commands, it also checks for cycles in the scheme.
+    scheduler = std::make_shared<Scheduler>();
+
+    // Command Handler is an interface to the application logic. 
+    // It can be used both by GUI and CLI, using the same commands. 
+    // Depending on the run mode, the commands are interpreted in a different way.
+    // Additionally, it's job is to connect the Loader with the Scheduler.
+    cmd = std::make_unique<CommandHandler>(nullptr, loader, scheduler);
 
     // buffer for the input from user in the terminal
     string user_input;
     
+    // Interpreting user commands from the terminal. Runs until the 'EXIT' command is called or error occurs.
     for(;;)
     {
         cout << "~> "; cin >> user_input;

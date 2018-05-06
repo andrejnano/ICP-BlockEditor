@@ -13,12 +13,16 @@ SOURCES = blocks.cc loader.cc port.cc scheduler.cc scheme.cc utilities.cc
 
 all: $(EXEC_GUI) $(EXEC_CLI) clean
 
-$(EXEC_CLI): $(SOURCES) main-cli.cc
-	$(CXX) $(CXXFLAGS) $(SOURCES) main-cli.cc -o ../$(EXEC_CLI)
+# $(EXEC_CLI): $(SOURCES) main-cli.cc
+# 	$(CXX) $(CXXFLAGS) $(SOURCES) main-cli.cc -o ../$(EXEC_CLI)
+
+$(EXEC_CLI):
+	qmake cli.pro -o Makefile-cli
+	$(MAKE) -f Makefile-cli
 
 $(EXEC_GUI):
 	qmake gui.pro -o Makefile-gui
 	$(MAKE) -f Makefile-gui
 
 clean:
-	rm -f *.o moc_mainwindow.cpp moc_predefs.h ui_mainwindow.h blockeditor-cli Makefile-gui .qmake.stash
+	rm -f *.o moc_mainwindow.cpp moc_predefs.h ui_mainwindow.h blockeditor-cli Makefile-gui Makefile-cli .qmake.stash

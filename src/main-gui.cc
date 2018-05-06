@@ -49,16 +49,11 @@ const Mode_t RUN_MODE {GUI_MODE};
  */
 int main(int argc, char **argv)
 {
-    // // // // // // // // // // // // // // // // // // // // // // // // // // 
     QApplication a(argc, argv);
 
     // main app window
     MainWindow w;
     w.show();
-
-    // // // // // // // // // // // // // // // // // // // // // // // // // // 
-    // Not much time left :'(
-    // // // // // // // // // // // // // // // // // // // // // // // // // // 
 
     return a.exec();
 }

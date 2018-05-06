@@ -162,6 +162,18 @@ class Block
 
     // return string representating type of block
     std::string getStringType();
+
+
+    // TODO: refactor
+    std::vector<Port> getInPorts()
+    {
+        return in_ports;
+    }
+
+    std::vector<Port> getOutPorts()
+    {
+        return out_ports;
+    }
 };
 
 
