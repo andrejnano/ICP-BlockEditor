@@ -11,6 +11,7 @@
 #include <QDebug>
 
 #include <math.h>
+#include <algorithm>
 
 #include "blocks.h"
 #include "scheme.h"
@@ -95,10 +96,6 @@ void MainWindow::editor()
         return;
     }
 
-    // store all the blocks and ports for easy access
-    std::vector<BlockView*> blockviewlist;
-    std::vector<PortView*> portviewlist;
-
     BlockView* blockview {nullptr};
     int offset_x = 10;
     int offset_y = 10;
@@ -161,6 +158,35 @@ void MainWindow::on_save_scheme_btn_clicked()
 {
     cmd->exec("save");
     update();
+}
+
+void MainWindow::on_delete_block_btn_clicked()
+{
+    // find the block to remove
+    //    auto toRemove = std::remove_if(blockviewlist.begin(), blockviewlist.end(),
+    //                                   [&block_id](BlockView* b) { return b->isSelected(); } );
+
+    for (auto blockview : blockviewlist)
+    {
+        if (blockview->isSelected())
+        {
+            //cmd->exec("rm")
+            unsigned block_id = blockview->getDataBlock()->getBlockID();
+            scheduler->currentScheme()->removeBlock(block_id);
+            std::vector<BlockView*>::iterator it = std::find(blockviewlist.begin(), blockviewlist.end(), blockview);
+            blockviewlist.erase(it);
+            update();
+            return;
+        }
+    }
+}
+
+void MainWindow::deselectAllBlocks()
+{
+    for (auto blockview : blockviewlist)
+    {
+        blockview->deselect();
+    }
 }
 
 

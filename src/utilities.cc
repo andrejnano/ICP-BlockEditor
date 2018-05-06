@@ -161,7 +161,7 @@ bool CommandHandler::exec(string command)
     // evaluate it
     Command_t cmd = eval(command);
 
-    // if not used efficiently -> remove
+    // get current scheme access ptr
     std::shared_ptr<Scheme> active_scheme = scheduler->currentScheme();
 
 

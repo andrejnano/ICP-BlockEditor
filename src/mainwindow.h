@@ -2,10 +2,10 @@
 #define MAINWINDOW_H
 
 #include <memory>
-
-// #include <QMainWindow>
 #include <QFile>
 #include <QMainWindow>
+
+#include "blockview.h"
 
 //cmd forward declaration
 class CommandHandler;
@@ -25,6 +25,10 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+    // selecting actions
+public slots:
+    void deselectAllBlocks();
+
 private slots:
     // button actions
     void on_new_scheme_btn_clicked();
@@ -39,6 +43,7 @@ private slots:
     void on_undo_btn_clicked();
     void on_add_block_btn_clicked();
     void on_save_scheme_btn_clicked();
+    void on_delete_block_btn_clicked();
 
     // the visual representation of the scheme
     void editor();
@@ -46,8 +51,12 @@ private slots:
 private:
     Ui::MainWindow *ui;
     std::unique_ptr<CommandHandler> cmd;
-    std::shared_ptr<Loader>             loader;
-    std::shared_ptr<Scheduler>          scheduler;
+    std::shared_ptr<Loader> loader;
+    std::shared_ptr<Scheduler> scheduler;
+
+    // store all the blocks and ports for easy access
+    std::vector<BlockView*> blockviewlist;
+    std::vector<PortView*> portviewlist;
 };
 
 #endif // MAINWINDOW_H
