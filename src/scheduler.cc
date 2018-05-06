@@ -78,7 +78,6 @@ unsigned Scheduler::getNext()
 /**
  * @brief bind some existing scheme to this scheduler
  */
-// TODO: probably rename, as it also resets the scheduler.. 
 void Scheduler::bindScheme(std::shared_ptr<Scheme> scheme, QWidget* optional_parent)
 {
     if (scheme)

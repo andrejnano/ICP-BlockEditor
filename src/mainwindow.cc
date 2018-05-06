@@ -137,6 +137,7 @@ void MainWindow::editor()
         }
     }
 
+// Wires unfinished.
 //    // in case there is nothing to show
 //    if (currentScheme->getWires().empty())
 //    {
@@ -222,8 +223,6 @@ void MainWindow::on_editor_menu_btn_clicked()
 {
     editor();
 }
-
-
 
 
 // start the editor with new scheme

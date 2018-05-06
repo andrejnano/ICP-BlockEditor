@@ -17,7 +17,10 @@
 #include "wireview.h"
 #include "portview.h"
 
-
+/**
+ * @brief WireView constructor
+ * @param parent
+ */
 WireView::WireView(QGraphicsItem *parent) :
     QGraphicsPathItem(parent)
 {
@@ -27,26 +30,45 @@ WireView::WireView(QGraphicsItem *parent) :
     DestPort = 0;
 }
 
+/**
+ * @brief Sets the source point of wire
+ * @param point
+ */
 void WireView::setSourcePoint(const QPointF &point)
 {
     SourcePoint = point;
 }
 
+/**
+ * @brief Sets the destination point of wire
+ * @param point
+ */
 void WireView::setDestPoint(const QPointF &point)
 {
     DestPoint = point;
 }
 
+/**
+ * @brief Sets the source port of wire
+ * @param point
+ */
 void WireView::setSourcePort(PortView *port)
 {
     SourcePort = port;
 }
 
+/**
+ * @brief Sets the destination port of wire
+ * @param point
+ */
 void WireView::setDestPort(PortView *port)
 {
     DestPort = port;
 }
 
+/**
+ * @brief Updates both points of the wire from wire's ports
+ */
 void WireView::updatePoints()
 {
     // get point positions from the port positions
@@ -54,6 +76,9 @@ void WireView::updatePoints()
     DestPoint = DestPort->scenePos();
 }
 
+/**
+ * @brief Updates the path from the new points
+ */
 void WireView::updatePath()
 {
     QPainterPath path;
@@ -63,20 +88,24 @@ void WireView::updatePath()
 
     qreal dx = DestPoint.x() - SourcePoint.x();
     qreal dy = DestPoint.y() - SourcePoint.y();
-
-    QPointF ctr1(SourcePoint.x() + dx * 0.25, SourcePoint.y() + dy * 0.1);
-    QPointF ctr2(SourcePoint.x() + dx * 0.75, SourcePoint.y() + dy * 0.9);
-
-    path.cubicTo(ctr1, ctr2, DestPoint);
+    QPointF center1(SourcePoint.x() + dx * 0.25, SourcePoint.y() + dy * 0.1);
+    QPointF center2(SourcePoint.x() + dx * 0.75, SourcePoint.y() + dy * 0.9);
+    path.cubicTo(center1, center2, DestPoint);
 
     setPath(path);
 }
 
+/**
+ * @brief Source Portview getter
+ */
 PortView *WireView::getSourcePort()
 {
     return SourcePort;
 }
 
+/**
+ * @brief Destination Portview getter
+ */
 PortView *WireView::getDestPort()
 {
     return DestPort;

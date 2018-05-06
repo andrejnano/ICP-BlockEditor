@@ -19,6 +19,9 @@
 
 #define FIRST_ID 1001
 
+/**
+ * @brief Wire structure connecting ports of two blocks
+ */
 struct wire
 {
     unsigned id_out;    // ID of output block (source)
@@ -92,6 +95,7 @@ public:
     // get input from user for some port
     double getUserValue(unsigned block_id, unsigned port_index);
 
+    // getters
     std::vector<std::shared_ptr<Block>> getBlockPointers();
     std::vector<wire> getWires();
 };

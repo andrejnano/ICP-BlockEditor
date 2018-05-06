@@ -1,8 +1,7 @@
 # ICP Projekt 2018 | BlockEditor
 # Authors: Andrej Nano (xnanoa00), Stanislav Mechl (xmechl00)
+# Last Update: 06.05.2018
 # Repository: https://github.com/andrejnano/ICP-BlockEditor
-
-# @TODO: 'make pack'
 
 
 SOURCE_DIR = src
