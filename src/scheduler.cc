@@ -75,8 +75,9 @@ unsigned Scheduler::getNext()
     }
 }
 
-
-// bind some existing scheme to this scheduler
+/**
+ * @brief bind some existing scheme to this scheduler
+ */
 // TODO: probably rename, as it also resets the scheduler.. 
 void Scheduler::bindScheme(std::shared_ptr<Scheme> scheme, QWidget* optional_parent)
 {
@@ -98,14 +99,17 @@ void Scheduler::bindScheme(std::shared_ptr<Scheme> scheme, QWidget* optional_par
     }
 }
 
-// return pointer to the current active scheme
+/**
+ * @brief return pointer to the current active scheme
+ */
 std::shared_ptr<Scheme> Scheduler::currentScheme()
 {
     return current_scheme;
 }
 
-
-// reloads all the blocks from the scheme into the queue
+/**
+ * @brief reloads all the blocks from the scheme into the queue
+ */
 void Scheduler::resetQueue()
 {
     // empty the queue
