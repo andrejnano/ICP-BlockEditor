@@ -2,6 +2,7 @@
 #define WIREVIEW_H
 
 #include <QGraphicsItem>
+#include <QGraphicsPathItem>
 
 #include "portview.h"
 
@@ -14,7 +15,7 @@ private:
     PortView* DestPort;
 
 public:
-    WireView(QGraphicsItem* parent = 0, QGraphicsScene *scene = 0);
+    WireView(QGraphicsItem * parent = 0);
 
     // setters for points
     void setSourcePoint(const QPointF &point);

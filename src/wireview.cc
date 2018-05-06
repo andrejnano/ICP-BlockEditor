@@ -1,10 +1,11 @@
+#include <QGraphicsScene>
 #include "wireview.h"
 
 
-WireView::WireView(QGraphicsItem *parent, QGraphicsScene *scene) :
-    QGraphicsPathItem(parent, scene)
+WireView::WireView(QGraphicsItem *parent) :
+    QGraphicsPathItem(parent)
 {
-    setSourcePort();
+    //setSourcePort();
     setPen(QPen(Qt::green, 3));
     SourcePort = 0;
     DestPort = 0;

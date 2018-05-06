@@ -8,29 +8,37 @@
 #include "wireview.h"
 
 
-QVariant PortView::itemChange(QGraphicsItem::GraphicsItemChange change, const QVariant &value)
-{
-    if (change == ItemScenePositionHasChanged)
-    {
-        CurrentWire->updatePoints();
-        CurrentWire->updatePath();
-    }
-}
 
-PortView::PortView(QGraphicsItem *parent, QGraphicsScene *scene) :
-    QGraphicsPathItem(parent, scene)
+PortView::PortView(QGraphicsItem *parent) :
+    QGraphicsPathItem(parent)
 {
-    TextLabel {new QGraphicsTextItem(this) };
+    CurrentWire = nullptr;
+    TextLabel = new QGraphicsTextItem(this);
 
+    // circle path
     QPainterPath path;
-    path.addEllipse(-5, -5, 10, 10); // small circle
+    path.addEllipse(-5, -5, 10, 10);
     setPath(path);
 
     setPen(QPen(Qt::black));
     setBrush(Qt::red);
 
     setFlag(QGraphicsItem::ItemSendsScenePositionChanges);
+}
 
+
+// change signal
+QVariant PortView::itemChange(QGraphicsItem::GraphicsItemChange change, const QVariant &value)
+{
+    if (!CurrentWire)
+        return value;
+
+    if (change == ItemScenePositionHasChanged)
+    {
+        CurrentWire->updatePoints();
+        CurrentWire->updatePath();
+    }
+    return value;
 }
 
 
@@ -46,14 +54,15 @@ void PortView::setParentBlock(BlockView *block)
 
 void PortView::setName(const QString &str)
 {
-    Type = str;
+    Name = str;
 }
 
+// set port as output port
 void PortView::setOutput(bool _setOutput)
 {
-    isOutput = _setOutput;
+    isOutputPort = _setOutput;
 
-    if (isOutput)
+    if (isOutputPort)
     {
         TextLabel->setPos(-5 - 2 - TextLabel->boundingRect().width(), TextLabel->boundingRect().height()/2);
     }
@@ -66,12 +75,12 @@ void PortView::setOutput(bool _setOutput)
 
 bool PortView::isOutput()
 {
-    return isOutput;
+    return isOutputPort;
 }
 
 bool PortView::isConnected(PortView *next)
 {
-    if (CurrentWire->SourcePort() == next || CurrentWire->DestPort() == next)
+    if (CurrentWire->getSourcePort() == next || CurrentWire->getDestPort() == next)
         return true;
     else
         return false;
@@ -85,4 +94,10 @@ WireView *PortView::getCurrentWire()
 BlockView *PortView::getParentBlock() const
 {
     return ParentBlock;
+}
+
+
+void PortView::setCurrentWire(WireView* wire)
+{
+    CurrentWire = wire;
 }

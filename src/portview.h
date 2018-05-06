@@ -2,6 +2,7 @@
 #define PORTVIEW_H
 
 #include <QGraphicsItem>
+#include <QGraphicsPathItem>
 #include <QVariant>
 
 #include "blocks.h"
@@ -13,7 +14,7 @@ class WireView;
 class PortView : public QGraphicsPathItem
 {
 private:
-    QString Type;
+    QString Name;
     BlockView* ParentBlock;
     WireView* CurrentWire;
     QGraphicsTextItem *TextLabel;
@@ -23,7 +24,7 @@ protected:
     QVariant itemChange(GraphicsItemChange change, const QVariant &value);
 
 public:
-    PortView(QGraphicsItem *parent = 0, QGraphicsScene *scene = 0);
+    PortView(QGraphicsItem * parent = 0);
     ~PortView();
 
     void setParentBlock(BlockView* block);
@@ -31,10 +32,11 @@ public:
     void setOutput(bool _setOutput);
 
     bool isOutput();
-    bool isConnected();
+    bool isConnected(PortView *next);
 
-    void addPort(Port newPort, bool _isOutputPort);
+    //void addPort(Port newPort, bool _isOutputPort);
 
+    void setCurrentWire(WireView* wire);
     WireView* getCurrentWire();
     BlockView* getParentBlock() const;
 

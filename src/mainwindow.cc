@@ -166,7 +166,13 @@ void MainWindow::editor()
 
     QGraphicsView* view = ui->view;
     view->setRenderHint(QPainter::Antialiasing);
+    view->scale(qreal(0.8), qreal(0.8));
+    view->setMinimumSize(this->width(), this->height());
     view->setScene(new QGraphicsScene());
+
+    QBrush bgcolor(QColor(9, 12, 29));
+    view->setBackgroundBrush(bgcolor);
+
     view->setSceneRect(0,0,view->size().width(), view->size().height());
 
     // get the current scheme ptr
@@ -174,7 +180,6 @@ void MainWindow::editor()
 
 
     // Create visual representation of the blocks, ports and wires in the scheme.
-
     if (currentScheme->getBlockPointers().empty())
     {
         view->show();
@@ -210,48 +215,48 @@ void MainWindow::editor()
 
     // VERY CHAOTIC SOLUTION ...
 
-    WireView* wireview {nullptr};
-    for (auto wire: currentScheme->getWires())
-    {
-        unsigned SourceBlockID = wire->id_out;
-        unsigned TargetBlockID = wire->id_in;
+//    WireView* wireview {nullptr};
+//    for (auto wire: currentScheme->getWires())
+//    {
+//        unsigned SourceBlockID = wire->id_out;
+//        unsigned TargetBlockID = wire->id_in;
 
-        unsigned SourcePortIDX = wire->index_out;
-        unsigned TargetPortIDX = wire->index_in;
+//        unsigned SourcePortIDX = wire->index_out;
+//        unsigned TargetPortIDX = wire->index_in;
 
-        // check every block in the scene for ID
-        foreach(QGraphicsItem *item, view->scene()->items())
-        {
-            BlockView* blockview = qgraphicsitem_cast<BlockView *>(item);
-            if (!blockview) continue;
+//        // check every block in the scene for ID
+//        foreach(QGraphicsItem *item, view->scene()->items())
+//        {
+//            BlockView* blockview = qgraphicsitem_cast<BlockView *>(item);
+//            if (!blockview) continue;
 
-            // get ptr to the data model
-            auto direct_block_ptr = blockview->getDataBlock();
+//            // get ptr to the data model
+//            auto direct_block_ptr = blockview->getDataBlock();
 
-            if ( direct_block_ptr->getBlockID() == SourceBlockID || direct_block_ptr->getBlockID() == TargetBlockID)
-            {
-                bool isSource = direct_block_ptr->getBlockID() == SourceBlockID ? true : false;
+//            if ( direct_block_ptr->getBlockID() == SourceBlockID || direct_block_ptr->getBlockID() == TargetBlockID)
+//            {
+//                bool isSource = direct_block_ptr->getBlockID() == SourceBlockID ? true : false;
 
-                foreach(QGraphicsItem *item2, view->scene()->items())
-                {
-                    BlockView* blockview2 = qgraphicsitem_cast<BlockView *>(item2);
-                    if (!blockview2) continue;
+//                foreach(QGraphicsItem *item2, view->scene()->items())
+//                {
+//                    BlockView* blockview2 = qgraphicsitem_cast<BlockView *>(item2);
+//                    if (!blockview2) continue;
 
-                    // get ptr to the data model
-                    auto direct_block_ptr2 = blockview2->getDataBlock();
+//                    // get ptr to the data model
+//                    auto direct_block_ptr2 = blockview2->getDataBlock();
 
-                    if (isSource && direct_block_ptr2->getBlockID() == TargetBlockID)
-                    {
-                        //...
-                    }
+//                    if (isSource && direct_block_ptr2->getBlockID() == TargetBlockID)
+//                    {
+//                        //...
+//                    }
 
-        }
+//        }
 
 
-        WireView* wireview = new WireView(this); // dealloc?
-        wireview->
-        view->scene()->addItem(wireview);
-    }
+//        WireView* wireview = new WireView(this); // dealloc?
+//        wireview->
+//        view->scene()->addItem(wireview);
+//    }
 
     view->show();
 }
