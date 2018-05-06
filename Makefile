@@ -7,6 +7,8 @@
 SOURCE_DIR = src
 EXECUTABLE_GUI = blockeditor
 EXECUTABLE_CLI = blockeditor-cli
+PACK_NAME = xnanoa00-xmechl00.zip
+PACK_FILES = Makefile README.txt src/* doc/ examples/*
 
 all: build
 
@@ -24,3 +26,6 @@ doxygen:
 
 clean:
 	$(MAKE) clean -C $(SOURCE_DIR)
+
+pack:
+	zip $(PACK_NAME) $(PACK_FILES)
