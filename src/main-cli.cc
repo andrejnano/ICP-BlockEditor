@@ -3,7 +3,7 @@
  *  @file       main-cli.cc
  *  @authors    Andrej Nano (xnanoa00), Stanislav Mechl (xmechl00)
  *  @date       2018-05-05
- *  @version    0.1
+ *  @version    1.0
  * 
  *  @brief ICP 2018, Project - Block Editor. CLI main source file.
  *  
@@ -32,7 +32,7 @@
 #include "scheduler.h"
 #include "loader.h"
 
-// commonly used std objects.. really no need to be careful about poluting the namespace
+// commonly used std objects
 using std::cout;
 using std::cin;
 using std::cerr;

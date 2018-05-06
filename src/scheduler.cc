@@ -189,7 +189,7 @@ void Scheduler::undo()
 
 
 /**
- * @brief gradually sets all the ports which require user input
+ * @brief Set values for ports which are unconnected (CLI)
  */
 void Scheduler::setFreeInputs()
 {
@@ -208,6 +208,10 @@ void Scheduler::setFreeInputs()
     }
 }
 
+/**
+ * @brief Set values  for ports which are unconnected (GUI)
+ * @param parent widget for which to display
+ */
 void Scheduler::setFreeInputsGui(QWidget* parent)
 {
     if (!parent)
@@ -225,7 +229,7 @@ void Scheduler::setFreeInputsGui(QWidget* parent)
                msgstream << "Set the value of port " << current_scheme->blocks[b]->getBlockID() << " in block " <<  p << ": ";
                std::string const msg(msgstream.str());
 
-               QString value = QInputDialog::getText(parent, "BlockEditor prompt", QString::fromStdString(msg), QLineEdit::Normal, "a", &status);
+               QString value = QInputDialog::getText(parent, "BlockEditor prompt", QString::fromStdString(msg), QLineEdit::Normal, "Value:", &status);
 
                current_scheme->blocks[b]->setInPortValue(p,"val", value.toDouble());
             }

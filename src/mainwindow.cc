@@ -359,7 +359,7 @@ void MainWindow::on_load_scheme_btn_clicked()
 void MainWindow::on_load_file_btn_clicked()
 {
     // open a file dialog
-    QString fileName = QFileDialog::getOpenFileName(this, tr("Open Scheme"), "~/", tr("Block Scheme Files (*.scheme *.sch)"));
+    QString fileName = QFileDialog::getOpenFileName(this, "Open Scheme",  QString(), "Block Scheme Files (*.scheme *.sch)");
 
     // store the text inside a text field
     // now it is editable manually or just can be opened by clicking

@@ -58,7 +58,7 @@ background-color:#00aba9;
      <string notr="true">QStackedWidget { background: #fafafa; border: 2px solid #222;}</string>
     </property>
     <property name="currentIndex">
-     <number>2</number>
+     <number>3</number>
     </property>
     <widget class="QWidget" name="main_menu_page">
      <property name="styleSheet">
@@ -380,8 +380,8 @@ background-color:#00aba9;
      <widget class="QLabel" name="label_2">
       <property name="geometry">
        <rect>
-        <x>370</x>
-        <y>170</y>
+        <x>330</x>
+        <y>160</y>
         <width>371</width>
         <height>51</height>
        </rect>
@@ -389,7 +389,7 @@ background-color:#00aba9;
       <property name="font">
        <font>
         <family>Arial</family>
-        <pointsize>14</pointsize>
+        <pointsize>24</pointsize>
        </font>
       </property>
       <property name="text">
@@ -399,10 +399,10 @@ background-color:#00aba9;
      <widget class="QPushButton" name="load_file_btn">
       <property name="geometry">
        <rect>
-        <x>230</x>
+        <x>160</x>
         <y>240</y>
         <width>111</width>
-        <height>41</height>
+        <height>50</height>
        </rect>
       </property>
       <property name="sizePolicy">
@@ -411,6 +411,13 @@ background-color:#00aba9;
         <verstretch>0</verstretch>
        </sizepolicy>
       </property>
+      <property name="font">
+       <font>
+        <family>Helvetica</family>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
       <property name="text">
        <string>Choose a file</string>
       </property>
@@ -418,10 +425,10 @@ background-color:#00aba9;
      <widget class="QLineEdit" name="lineEdit">
       <property name="geometry">
        <rect>
-        <x>360</x>
+        <x>280</x>
         <y>240</y>
-        <width>351</width>
-        <height>31</height>
+        <width>350</width>
+        <height>50</height>
        </rect>
       </property>
       <property name="sizePolicy">
@@ -438,14 +445,17 @@ background-color:#00aba9;
       <property name="text">
        <string/>
       </property>
+      <property name="alignment">
+       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+      </property>
      </widget>
      <widget class="QPushButton" name="open_file_btn">
       <property name="geometry">
        <rect>
-        <x>720</x>
+        <x>640</x>
         <y>240</y>
         <width>111</width>
-        <height>41</height>
+        <height>50</height>
        </rect>
       </property>
       <property name="sizePolicy">
@@ -453,6 +463,13 @@ background-color:#00aba9;
         <horstretch>0</horstretch>
         <verstretch>0</verstretch>
        </sizepolicy>
+      </property>
+      <property name="font">
+       <font>
+        <family>Helvetica</family>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
       </property>
       <property name="text">
        <string>Open</string>

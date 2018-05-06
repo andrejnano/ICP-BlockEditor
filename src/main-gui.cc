@@ -2,7 +2,7 @@
  *  @file       main-gui.cc
  *  @authors    Andrej Nano (xnanoa00), Stanislav Mechl (xmechl00)
  *  @date       2018-05-05
- *  @version    0.1
+ *  @version    1.0
  * 
  *  @brief ICP 2018, Project - Block Editor. GUI main source file.
  *  
@@ -11,6 +11,7 @@
  *  @section Usage
  *  
  */
+
 // std libraries
 #include <iostream>
 #include <iomanip>
@@ -40,6 +41,7 @@
 
 // GUI/CLI different handling switch
 const Mode_t RUN_MODE {GUI_MODE};
+
 
 /**
  * @brief GUI Main entry point

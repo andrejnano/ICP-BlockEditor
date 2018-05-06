@@ -37,4 +37,5 @@ HEADERS += \
         port.h \
         scheduler.h \
         scheme.h \
-        utilities.h
+        utilities.h \
+        ui_mainwindow.h
