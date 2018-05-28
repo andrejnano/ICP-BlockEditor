@@ -113,7 +113,8 @@ enum Command_t
     STEP,
     RUN,
     UNDO,
-    EXIT
+    EXIT,
+    RESET
 };
 
 
