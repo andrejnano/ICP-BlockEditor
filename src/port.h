@@ -34,6 +34,7 @@ class Port
     double getValue(std::string name);
     void print();
     bool isSet();
+    void reset();
 
     unsigned getId();
 };

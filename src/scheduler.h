@@ -99,6 +99,9 @@ public:
     // prints identification numbers of blocks in scheduler
     void print();
 
+    // reset port values
+    void resetPortValues();
+
 };
 
 #endif

@@ -227,6 +227,22 @@ void Block::print()
     std::cout << "+ ----------------------------- +\n" << std::endl;
 }
 
+/**
+ * @brief removes values in input port
+ */
+void Block::resetInPortValues(unsigned port_index)
+{
+    this->in_ports[port_index].reset();
+}
+
+/**
+ * @brief removes values in output port
+ */
+void Block::resetOutPortValues(unsigned port_index)
+{
+    this->out_ports[port_index].reset();
+}
+
 /*****************************************************************************/
 // Specific operations
 /*****************************************************************************/

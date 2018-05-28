@@ -393,6 +393,30 @@ double Scheme::getUserValue(unsigned block_id, unsigned port_index)
 }
 
 
+/**
+ * @brief removes values in ports except input ports which are not connected
+ */
+void Scheme::resetBlocksValues()
+{
+    for(unsigned b = 0; b < this->blocks.size(); b++)
+    {
+        // input
+        for(unsigned i = 0; i < this->blocks[b]->getInSize(); i++)
+        {
+            if(this->isConnected(this->blocks[b]->getBlockID(),true,i) == 0)
+            {
+                this->blocks[b]->resetInPortValues(i);
+            }
+        }
+        // output
+        for(unsigned i = 0; i < this->blocks[b]->getOutSize(); i++)
+        {
+            this->blocks[b]->resetOutPortValues(i);
+        }
+    }
+}
+
+
 // returns the name
 std::string Scheme::getName()
 {

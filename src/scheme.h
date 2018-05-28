@@ -95,6 +95,9 @@ public:
     // get input from user for some port
     double getUserValue(unsigned block_id, unsigned port_index);
 
+    // removes values in not connected ports
+    void resetBlocksValues();
+
     // getters
     std::vector<std::shared_ptr<Block>> getBlockPointers();
     std::vector<wire> getWires();

@@ -343,6 +343,8 @@ bool CommandHandler::exec(string command)
             {
                 scheduler->resetQueue();
                 cout << CL::OKGREEN << "Scheduler was reset." << CL::ENDC << endl;
+                scheduler->resetPortValues();
+                cout << CL::OKGREEN << "Port values were reset." << CL::ENDC << endl;
                 break;
             }
 

@@ -294,3 +294,11 @@ bool Scheduler::checkCyclesRecursion(std::shared_ptr<Block> actual_block, std::v
     }
     return ret;  
 }
+
+/**
+ * @brief removes values in connected ports
+ */
+void Scheduler::resetPortValues()
+{
+    current_scheme->resetBlocksValues();
+}

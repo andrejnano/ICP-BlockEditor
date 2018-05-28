@@ -90,3 +90,8 @@ unsigned Port::getId()
 {
     return this->Id;
 }
+
+void Port::reset()
+{
+    this->is_set = false;
+}

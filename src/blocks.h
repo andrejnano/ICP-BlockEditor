@@ -164,6 +164,12 @@ class Block
     // return string representating type of block
     std::string getStringType();
 
+    // removes values in input ports
+    void resetInPortValues(unsigned port_index);
+
+    // removes values in output ports
+    void resetOutPortValues(unsigned port_index);
+
 
     // TODO: refactor
     std::vector<Port> getInPorts()
