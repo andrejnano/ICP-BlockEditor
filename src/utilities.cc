@@ -339,6 +339,13 @@ bool CommandHandler::exec(string command)
                 break;
             }
 
+            case RESET:
+            {
+                scheduler->resetQueue();
+                cout << CL::OKGREEN << "Scheduler was reset." << CL::ENDC << endl;
+                break;
+            }
+
             case NEW:
             {
                 string new_scheme_name;
@@ -533,6 +540,7 @@ Command_t CommandHandler::eval(std::string command)
     if( command ==  "undo")         return UNDO;
     if( command ==  "run")          return RUN;
     if( command ==  "exit")         return EXIT;
+    if( command ==  "reset")        return RESET;
 
     return INVALID;
 }
